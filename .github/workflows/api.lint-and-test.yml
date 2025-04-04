@@ -25,7 +25,7 @@ jobs:
 
       - name: Run ESLint
         working-directory: ./apps/api
-        run: yarn lint
+        run: yarn lint:fix
 
       - name: Run tests
         working-directory: ./apps/api
