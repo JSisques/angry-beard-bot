@@ -120,7 +120,7 @@ The bot features an intuitive configuration system:
 - Standard response time
 - Community support
 
-### Pro ($10/month)
+### Pro ($20/month)
 
 - For growing teams
 - Unlimited repositories
