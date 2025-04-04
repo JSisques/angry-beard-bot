@@ -1,6 +1,8 @@
 ---
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
+const { message, success } = Astro.props;
 ---
 
 <section id="waitlist" class="py-24 relative bg-muted/50">
@@ -17,23 +19,79 @@ import { Input } from "@/components/ui/input";
         "Oh, you want to join the waitlist? At least you're showing some interest in improving your code. Fine, leave your email below."
       </p>
 
-      <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+      <form id="waitlist-form" class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
         <div class="flex-1">
           <Input 
             type="email" 
+            name="email"
             placeholder="Enter your email..." 
             className="w-full h-12"
+            required
           />
         </div>
-        <Button size="lg" className="group h-12">
+        <Button type="submit" size="lg" className="group h-12">
           Join Waitlist
           <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M5 12h14M12 5l7 7-7 7"/>
           </svg>
         </Button>
-      </div>
+      </form>
 
-     
+      <div id="form-message" class="mt-4 text-sm hidden"></div>
     </div>
   </div>
 </section>
+
+<script>
+  const form = document.querySelector('#waitlist-form') as HTMLFormElement;
+  const messageDiv = document.getElementById('form-message');
+  const submitButton = form?.querySelector('button[type="submit"]') as HTMLButtonElement | null;
+  const originalButtonText = submitButton?.innerHTML || '';
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.innerHTML = 'Joining...';
+    }
+
+    try {
+      const formData = new FormData(form);
+      const email = formData.get('email');
+      
+      const response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const result = await response.json();
+
+      if (messageDiv) {
+        messageDiv.textContent = result.message;
+        messageDiv.classList.remove('hidden', 'text-red-600', 'text-green-600');
+        messageDiv.classList.add(result.success ? 'text-green-600' : 'text-red-600');
+        messageDiv.classList.remove('hidden');
+
+        if (result.success) {
+          form.reset();
+        }
+      }
+    } catch (error) {
+      if (messageDiv) {
+        messageDiv.textContent = 'An error occurred. Please try again.';
+        messageDiv.classList.remove('hidden', 'text-green-600');
+        messageDiv.classList.add('text-red-600');
+        messageDiv.classList.remove('hidden');
+      }
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.innerHTML = originalButtonText;
+      }
+    }
+  });
+</script>
