@@ -4,6 +4,11 @@ import { createClient } from '@supabase/supabase-js';
 // Mark this endpoint as server-rendered
 export const prerender = false;
 
+// Ensure this endpoint is included in the build
+export const config = {
+  runtime: 'edge',
+};
+
 const supabase = createClient(import.meta.env.PUBLIC_SUPABASE_URL, import.meta.env.SUPABASE_SERVICE_KEY);
 
 export const POST: APIRoute = async ({ request }) => {

@@ -69,7 +69,10 @@ const { message, success } = Astro.props;
       const formData = new FormData(form);
       const email = formData.get('email');
       
-      const response = await fetch('/api/waitlist', {
+      // Use a relative URL that works in all environments
+      const apiUrl = '/api/waitlist';
+      
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -100,6 +103,7 @@ const { message, success } = Astro.props;
         }
       }
     } catch (error) {
+      console.error('Error submitting form:', error);
       if (messageDiv) {
         messageDiv.textContent = messages.error.general;
         messageDiv.classList.remove('hidden', 'text-green-600');
