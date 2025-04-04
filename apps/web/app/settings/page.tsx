@@ -2,13 +2,12 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { AlertCircle, Github, Settings, Save, Key, Webhook, Bell, Shield, FileText, CheckCircle, Code2 } from 'lucide-react';
+import { AlertCircle, Github, Save, FileText, CheckCircle, Code2 } from 'lucide-react';
 import { useAppStore } from '@/lib/store';
 import { v4 as uuidv4 } from 'uuid';
 import { Switch } from '@/components/ui/switch';

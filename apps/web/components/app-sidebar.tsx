@@ -7,17 +7,8 @@ import {
   FileCode2,
   GitPullRequest,
   HelpCircle,
-  MessageSquare,
   Settings2,
-  Shield,
   User,
-  Zap,
-  AlertTriangle,
-  CheckCircle,
-  FileText,
-  GitBranch,
-  History,
-  Star,
 } from 'lucide-react';
 
 import { NavMain } from '@/components/nav-main';

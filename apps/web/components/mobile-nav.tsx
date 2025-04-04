@@ -9,17 +9,10 @@ import {
   HelpCircle,
   Settings2,
   User,
-  AlertTriangle,
-  CheckCircle,
-  FileText,
-  GitBranch,
-  History,
-  Star,
   Menu,
   X,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -86,7 +79,7 @@ export function MobileNav() {
           <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
             <Image src={theme === 'dark' ? '/icon_white.svg' : '/icon_black.svg'} alt="Angry Beard Bot" width={32} height={32} />
           </div>
-          <span className="font-medium">Angry Beard Bot</span>
+          <div className="font-medium">Angry Beard Bot</div>
         </div>
 
         <Button variant="ghost" size="icon" onClick={() => setIsOpen(!isOpen)}>
@@ -113,7 +106,7 @@ export function MobileNav() {
                   )}
                 >
                   <Icon className="h-5 w-5" />
-                  {item.title}
+                  <div>{item.title}</div>
                 </Link>
               );
             })}
@@ -134,7 +127,7 @@ export function MobileNav() {
                   )}
                 >
                   <Icon className="h-5 w-5" />
-                  {item.title}
+                  <div>{item.title}</div>
                 </Link>
               );
             })}
@@ -146,8 +139,8 @@ export function MobileNav() {
               <Image src={data.user.avatar} alt={data.user.name} fill className="object-cover" />
             </div>
             <div className="grid flex-1 text-sm leading-tight">
-              <span className="font-medium">{data.user.name}</span>
-              <span className="text-xs text-muted-foreground">{data.user.email}</span>
+              <div className="font-medium">{data.user.name}</div>
+              <div className="text-xs text-muted-foreground">{data.user.email}</div>
             </div>
           </div>
         </div>
