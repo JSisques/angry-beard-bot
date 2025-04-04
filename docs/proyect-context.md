@@ -44,10 +44,9 @@ The bot should be configurable to:
 - Integrate with CI/CD tools to check builds and tests.
 
 ## Implementation Details
-- **Language**: TypeScript or Python.
+- **Language**: TypeScript.
 - **Infrastructure**: GitHub Actions or Webhooks to trigger on PR events.
 - **AI Models**: Uses LLMs (GPT, Gemini, Claude) for text generation and code analysis.
-- **Optional Storage**: Lightweight database for configuration and continuous learning.
 
 ## Objective
 The goal of Angry Beard Bot is to improve code quality in repositories without needing a real senior developer, providing automated reviews with a touch of sharp humor.
