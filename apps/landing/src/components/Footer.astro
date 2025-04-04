@@ -6,9 +6,9 @@ import { Input } from "@/components/ui/input";
 <footer class="py-12 border-t bg-muted/30">
   <div class="container mx-auto px-4">
     <!-- Contenido principal -->
-    <div class="flex flex-col gap-8">
+    <div class="flex flex-col md:flex-row justify-between items-center gap-8">
       <!-- Logo, descripción y RRSS -->
-      <div class="flex flex-col items-center md:items-start max-w-md mx-auto md:mx-0">
+      <div class="flex flex-col items-center md:items-start max-w-md">
         <div class="flex items-center gap-2 mb-4">
           <img src="/img/icon_black.png" alt="Angry Beard Bot Logo" class="w-8 h-8" />
           <span class="font-bold text-xl">Angry Beard Bot</span>
@@ -31,11 +31,12 @@ import { Input } from "@/components/ui/input";
       </div>
 
       <!-- Enlaces de navegación -->
-      <nav class="flex flex-col md:flex-row items-center gap-4 md:gap-6">
+      <nav class="flex flex-col md:flex-row md:flex-wrap items-center gap-4 md:gap-6">
         <a href="#features" class="text-sm text-muted-foreground hover:text-primary transition-colors">Features</a>
         <a href="#how-it-works" class="text-sm text-muted-foreground hover:text-primary transition-colors">How it Works</a>
         <a href="#configuration" class="text-sm text-muted-foreground hover:text-primary transition-colors">Configuration</a>
         <a href="#waitlist" class="text-sm text-muted-foreground hover:text-primary transition-colors">Get Started</a>
+        <a href="#pricing" class="text-sm text-muted-foreground hover:text-primary transition-colors">Pricing</a>
       </nav>
     </div>
 
