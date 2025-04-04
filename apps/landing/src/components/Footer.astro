@@ -42,8 +42,16 @@ import { Input } from "@/components/ui/input";
     <!-- Divider y Copyright -->
     <div class="mt-8 pt-8 border-t">
       <div class="text-center text-sm text-muted-foreground">
-        <p>&copy; 2024 Angry Beard Bot. All rights reserved.</p>
+        <p>&copy; <span id="current-year"></span> Angry Beard Bot. All rights reserved.</p>
       </div>
     </div>
   </div>
-</footer> 
+</footer>
+
+<script>
+  // Set current year in the copyright notice
+  const yearElement = document.getElementById('current-year');
+  if (yearElement) {
+    yearElement.textContent = new Date().getFullYear().toString();
+  }
+</script> 
