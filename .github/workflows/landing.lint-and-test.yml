@@ -1,10 +1,6 @@
 name: Landing Page Lint and Test
 
 on:
-  push:
-    branches: [master, dev]
-    paths:
-      - 'apps/landing/**'
   pull_request:
     branches: [master, dev]
     paths:
