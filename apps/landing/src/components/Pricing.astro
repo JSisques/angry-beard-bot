@@ -13,7 +13,7 @@ import { Check } from "lucide-react";
       </p>
     </div>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-      <Card className="group hover:shadow-lg transition-all duration-300">
+      <Card className="group hover:shadow-lg transition-all duration-300 flex flex-col h-full">
         <CardHeader>
           <CardTitle className="text-2xl">Starter</CardTitle>
           <CardDescription>Perfect for small teams</CardDescription>
@@ -22,7 +22,7 @@ import { Check } from "lucide-react";
             <span class="text-muted-foreground">/month</span>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="flex-grow">
           <ul class="space-y-3">
             <li class="flex items-center">
               <Check className="w-5 h-5 text-primary mr-2" />
@@ -42,11 +42,11 @@ import { Check } from "lucide-react";
             </li>
           </ul>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="mt-auto">
           <Button className="w-full" variant="outline">Get Started</Button>
         </CardFooter>
       </Card>
-      <Card className="group hover:shadow-lg transition-all duration-300 border-primary relative">
+      <Card className="group hover:shadow-lg transition-all duration-300 border-primary relative flex flex-col h-full">
         <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 px-4 py-1 bg-primary text-primary-foreground text-sm font-medium rounded-full">
           Most Popular
         </div>
@@ -58,7 +58,7 @@ import { Check } from "lucide-react";
             <span class="text-muted-foreground">/month</span>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="flex-grow">
           <ul class="space-y-3">
             <li class="flex items-center">
               <Check className="w-5 h-5 text-primary mr-2" />
@@ -82,11 +82,11 @@ import { Check } from "lucide-react";
             </li>
           </ul>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="mt-auto">
           <Button className="w-full">Get Started</Button>
         </CardFooter>
       </Card>
-      <Card className="group hover:shadow-lg transition-all duration-300">
+      <Card className="group hover:shadow-lg transition-all duration-300 flex flex-col h-full">
         <CardHeader>
           <CardTitle className="text-2xl">Enterprise</CardTitle>
           <CardDescription>For large organizations</CardDescription>
@@ -94,7 +94,7 @@ import { Check } from "lucide-react";
             <span class="text-4xl font-bold">Custom</span>
           </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="flex-grow">
           <ul class="space-y-3">
             <li class="flex items-center">
               <Check className="w-5 h-5 text-primary mr-2" />
@@ -118,7 +118,7 @@ import { Check } from "lucide-react";
             </li>
           </ul>
         </CardContent>
-        <CardFooter>
+        <CardFooter className="mt-auto">
           <Button className="w-full" variant="outline">Contact Sales</Button>
         </CardFooter>
       </Card>
