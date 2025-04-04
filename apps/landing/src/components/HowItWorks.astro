@@ -1,0 +1,47 @@
+---
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+---
+
+<section id="how-it-works" class="py-16 md:py-24">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
+      <p class="text-xl text-muted-foreground">Simple integration, powerful results</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <Card>
+        <CardHeader>
+          <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+            <span class="text-2xl font-bold text-primary">1</span>
+          </div>
+          <CardTitle>Install the Bot</CardTitle>
+          <CardDescription>
+            Add Angry Beard Bot to your GitHub repository with just a few clicks.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+      <Card>
+        <CardHeader>
+          <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+            <span class="text-2xl font-bold text-primary">2</span>
+          </div>
+          <CardTitle>Create a PR</CardTitle>
+          <CardDescription>
+            Submit your pull request as usual. The bot will automatically detect it.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+      <Card>
+        <CardHeader>
+          <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+            <span class="text-2xl font-bold text-primary">3</span>
+          </div>
+          <CardTitle>Get Feedback</CardTitle>
+          <CardDescription>
+            Receive detailed, grumpy but helpful code reviews from your AI senior developer.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    </div>
+  </div>
+</section> 

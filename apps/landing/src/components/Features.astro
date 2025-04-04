@@ -1,0 +1,62 @@
+---
+import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+---
+
+<section id="features" class="py-16 md:py-24 bg-muted/50">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Features</h2>
+      <p class="text-xl text-muted-foreground">Everything you need for better code reviews</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <Card>
+        <CardHeader>
+          <CardTitle>PR Description Enhancement</CardTitle>
+          <CardDescription>
+            Analyzes changes and generates concise yet detailed descriptions, highlighting key modifications.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Smart Title Generation</CardTitle>
+          <CardDescription>
+            Suggests or replaces PR titles to make them clearer and more representative.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Code Review</CardTitle>
+          <CardDescription>
+            Leaves comments on PR code, pointing out bad practices, redundancies, and optimization opportunities.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Grumpy Communication</CardTitle>
+          <CardDescription>
+            Uses a sarcastic and witty tone, making code reviews entertaining while being helpful.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Conventions Validation</CardTitle>
+          <CardDescription>
+            Ensures PRs follow project standards, including naming conventions and code style.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+      <Card>
+        <CardHeader>
+          <CardTitle>Auto-Approval</CardTitle>
+          <CardDescription>
+            Automatically approves PRs that meet standards or requests changes when needed.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+    </div>
+  </div>
+</section> 

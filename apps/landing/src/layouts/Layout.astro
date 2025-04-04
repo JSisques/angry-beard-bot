@@ -1,0 +1,22 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Angry Beard Bot - Your Grumpy Code Review Partner" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/png" href="/img/icon_black.png" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html> 
