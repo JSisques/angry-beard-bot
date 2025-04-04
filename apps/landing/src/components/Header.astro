@@ -8,11 +8,80 @@ import { Button } from "@/components/ui/button";
       <img src="/img/icon_black.png" alt="Angry Beard Bot Logo" class="w-8 h-8" />
       <span class="font-bold text-xl">Angry Beard Bot</span>
     </div>
+    
+    <!-- Desktop Navigation -->
     <nav class="hidden md:flex items-center gap-6">
       <a href="#features" class="text-sm font-medium hover:text-primary">Features</a>
       <a href="#how-it-works" class="text-sm font-medium hover:text-primary">How it Works</a>
       <a href="#configuration" class="text-sm font-medium hover:text-primary">Configuration</a>
-      <Button>Get Started</Button>
+      <a href="#pricing" class="text-sm font-medium hover:text-primary">Pricing</a>
+      <a href="#waitlist">
+        <Button>Get Started</Button>
+      </a>
+    </nav>
+    
+    <!-- Mobile Menu Button -->
+    <button id="mobile-menu-button" class="md:hidden p-2 rounded-md hover:bg-muted" aria-label="Toggle menu">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </div>
+  
+  <!-- Mobile Navigation Menu -->
+  <div id="mobile-menu" class="md:hidden hidden absolute top-16 left-0 right-0 bg-background border-b shadow-lg">
+    <nav class="container mx-auto px-4 py-4 flex flex-col gap-4">
+      <a href="#features" class="text-sm font-medium hover:text-primary py-2">Features</a>
+      <a href="#how-it-works" class="text-sm font-medium hover:text-primary py-2">How it Works</a>
+      <a href="#configuration" class="text-sm font-medium hover:text-primary py-2">Configuration</a>
+      <a href="#pricing" class="text-sm font-medium hover:text-primary py-2">Pricing</a>
+      <a href="#waitlist" class="py-2">
+        <Button className="w-full">Get Started</Button>
+      </a>
     </nav>
   </div>
-</header> 
+</header>
+
+<script>
+  // Mobile menu toggle
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.contains('hidden');
+      
+      if (isOpen) {
+        mobileMenu.classList.remove('hidden');
+        // Change icon to X when menu is open
+        mobileMenuButton.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        `;
+      } else {
+        mobileMenu.classList.add('hidden');
+        // Change icon back to hamburger when menu is closed
+        mobileMenuButton.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        `;
+      }
+    });
+    
+    // Close mobile menu when clicking on a link
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+        // Change icon back to hamburger
+        mobileMenuButton.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        `;
+      });
+    });
+  }
+</script> 

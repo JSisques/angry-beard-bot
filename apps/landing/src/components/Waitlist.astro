@@ -1,0 +1,39 @@
+---
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+---
+
+<section id="waitlist" class="py-24 relative bg-muted/50">
+  <!-- Background decorations -->
+  <div class="absolute inset-0 bg-grid-black/[0.02]" />
+  <div class="absolute inset-0 flex items-center justify-center">
+    <div class="w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl" />
+  </div>
+
+  <div class="container mx-auto px-4 relative">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-4xl font-bold mb-4">Join the Grumpy Revolution</h2>
+      <p class="text-muted-foreground text-lg mb-8">
+        "Oh, you want to join the waitlist? At least you're showing some interest in improving your code. Fine, leave your email below."
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+        <div class="flex-1">
+          <Input 
+            type="email" 
+            placeholder="Enter your email..." 
+            className="w-full h-12"
+          />
+        </div>
+        <Button size="lg" className="group h-12">
+          Join Waitlist
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </Button>
+      </div>
+
+     
+    </div>
+  </div>
+</section>

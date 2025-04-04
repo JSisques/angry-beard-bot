@@ -1,52 +1,16 @@
 ---
-import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Slider } from "@/components/ui/slider";
+import { Configuration as ConfigurationComponent } from "@/components/ui/Configuration";
 ---
 
 <section id="configuration" class="py-16 md:py-24 bg-muted/50">
   <div class="container mx-auto px-4">
     <div class="text-center mb-16">
-      <h2 class="text-3xl md:text-4xl font-bold mb-4">Configuration</h2>
-      <p class="text-xl text-muted-foreground">Customize your grumpy reviewer</p>
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Make It Your Own</h2>
+      <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
+        Tailor Angry Beard Bot to match your team's needs and coding standards.
+        Customize how the bot reviews your code.
+      </p>
     </div>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-      <Card>
-        <CardHeader>
-          <CardTitle>Grumpiness Level</CardTitle>
-          <CardDescription>
-            Adjust how sarcastic and grumpy the bot should be in its reviews.
-          </CardDescription>
-          <div class="pt-4">
-            <Slider defaultValue={[50]} max={100} step={1} />
-          </div>
-        </CardHeader>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle>Review Criteria</CardTitle>
-          <CardDescription>
-            Define what aspects of the code the bot should focus on during reviews.
-          </CardDescription>
-          <div class="space-y-2 mt-4">
-            <div class="flex items-center space-x-2">
-              <input type="checkbox" id="code-style" checked />
-              <label for="code-style">Code Style</label>
-            </div>
-            <div class="flex items-center space-x-2">
-              <input type="checkbox" id="best-practices" checked />
-              <label for="best-practices">Best Practices</label>
-            </div>
-            <div class="flex items-center space-x-2">
-              <input type="checkbox" id="documentation" checked />
-              <label for="documentation">Documentation</label>
-            </div>
-            <div class="flex items-center space-x-2">
-              <input type="checkbox" id="testing" checked />
-              <label for="testing">Testing</label>
-            </div>
-          </div>
-        </CardHeader>
-      </Card>
-    </div>
+    <ConfigurationComponent client:load />
   </div>
-</section> 
+</section>

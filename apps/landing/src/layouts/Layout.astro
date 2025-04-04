@@ -18,5 +18,22 @@ const { title } = Astro.props;
 	</head>
 	<body>
 		<slot />
+		<script>
+			// Smooth scroll for all internal links
+			document.querySelectorAll('a[href^="#"]').forEach((anchor: Element) => {
+				anchor.addEventListener('click', function(e: Event) {
+					e.preventDefault();
+					const targetId = (e.currentTarget as HTMLAnchorElement).getAttribute('href');
+					const targetElement = document.querySelector(targetId || '');
+					
+					if (targetElement) {
+						targetElement.scrollIntoView({
+							behavior: 'smooth',
+							block: 'start'
+						});
+					}
+				});
+			});
+		</script>
 	</body>
 </html> 

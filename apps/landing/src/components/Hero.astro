@@ -2,19 +2,64 @@
 import { Button } from "@/components/ui/button";
 ---
 
-<section class="pt-32 pb-16 md:pt-40 md:pb-24">
+<section class="pt-32 pb-16 md:pt-40 md:pb-24 bg-gradient-to-b from-background to-muted/20 relative overflow-hidden">
+  <!-- Background decorations -->
+  <div class="absolute inset-0 bg-grid-black/[0.02] -z-10" />
+  <div class="absolute inset-0 flex items-center justify-center -z-10">
+    <div class="w-[800px] h-[800px] bg-primary/5 rounded-full blur-3xl" />
+  </div>
+  
   <div class="container mx-auto px-4">
-    <div class="flex flex-col items-center text-center max-w-3xl mx-auto">
-      <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6">
-        Meet Your Grumpy Code Review Partner
+    <div class="flex flex-col items-center text-center max-w-4xl mx-auto">
+      <h1 class="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary/60">
+        Your Grumpy Code Review Partner
       </h1>
-      <p class="text-xl text-muted-foreground mb-8">
-        Angry Beard Bot is your AI-powered senior developer with a bad temper and little patience. 
-        It reviews your PRs with sharp yet useful comments on best practices and code quality.
+      
+      <p class="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl">
+        Meet Angry Beard Bot, the AI-powered senior developer who's tired of seeing the same mistakes. 
+        Get brutally honest, technically accurate code reviews that will make you a better developer.
       </p>
-      <div class="flex gap-4">
-        <Button size="lg">Install Now</Button>
-        <Button size="lg" variant="outline">Learn More</Button>
+      
+      <div class="flex flex-col sm:flex-row gap-4 items-center justify-center mb-12">
+        <a href="#waitlist">
+          <Button size="lg" className="text-lg px-8">
+            Join the Waitlist
+            <span class="ml-2">→</span>
+          </Button>
+        </a>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-3xl">
+        <div class="flex flex-col items-center p-4 rounded-lg border bg-card/50 backdrop-blur-sm">
+          <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+              <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+            </svg>
+          </div>
+          <h3 class="font-semibold mb-1">Smart PR Reviews</h3>
+          <p class="text-sm text-muted-foreground">Auto-generates clear descriptions and highlights key changes</p>
+        </div>
+        
+        <div class="flex flex-col items-center p-4 rounded-lg border bg-card/50 backdrop-blur-sm">
+          <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+            </svg>
+          </div>
+          <h3 class="font-semibold mb-1">Adaptive Personality</h3>
+          <p class="text-sm text-muted-foreground">Customize grumpiness, technical depth, and detail level</p>
+        </div>
+        
+        <div class="flex flex-col items-center p-4 rounded-lg border bg-card/50 backdrop-blur-sm">
+          <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+            </svg>
+          </div>
+          <h3 class="font-semibold mb-1">Auto-Approval</h3>
+          <p class="text-sm text-muted-foreground">Speeds up workflow with intelligent approvals for quality PRs</p>
+        </div>
       </div>
     </div>
   </div>
