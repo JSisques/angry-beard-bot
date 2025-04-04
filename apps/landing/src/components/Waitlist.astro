@@ -37,7 +37,7 @@ const { message, success } = Astro.props;
         </Button>
       </form>
 
-      <div id="form-message" class="mt-4 text-sm hidden"></div>
+      <div id="form-message" class="mt-4 text-sm hidden font-medium"></div>
     </div>
   </div>
 </section>
@@ -48,12 +48,21 @@ const { message, success } = Astro.props;
   const submitButton = form?.querySelector('button[type="submit"]') as HTMLButtonElement | null;
   const originalButtonText = submitButton?.innerHTML || '';
 
+  const messages = {
+    success: "Fine, you're in. Don't make me regret this decision.",
+    error: {
+      required: "Oh great, another one who can't even type an email properly.",
+      duplicate: "What do you think you're doing? You're already on the list. Pay attention!",
+      general: "Ugh, something went wrong. Probably your fault. Try again.",
+    }
+  };
+
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     if (submitButton) {
       submitButton.disabled = true;
-      submitButton.innerHTML = 'Joining...';
+      submitButton.innerHTML = 'Processing...';
     }
 
     try {
@@ -71,7 +80,17 @@ const { message, success } = Astro.props;
       const result = await response.json();
 
       if (messageDiv) {
-        messageDiv.textContent = result.message;
+        let message = messages.error.general;
+        
+        if (result.success) {
+          message = messages.success;
+        } else if (result.message.includes('required')) {
+          message = messages.error.required;
+        } else if (result.message.includes('already')) {
+          message = messages.error.duplicate;
+        }
+
+        messageDiv.textContent = message;
         messageDiv.classList.remove('hidden', 'text-red-600', 'text-green-600');
         messageDiv.classList.add(result.success ? 'text-green-600' : 'text-red-600');
         messageDiv.classList.remove('hidden');
@@ -82,7 +101,7 @@ const { message, success } = Astro.props;
       }
     } catch (error) {
       if (messageDiv) {
-        messageDiv.textContent = 'An error occurred. Please try again.';
+        messageDiv.textContent = messages.error.general;
         messageDiv.classList.remove('hidden', 'text-green-600');
         messageDiv.classList.add('text-red-600');
         messageDiv.classList.remove('hidden');
