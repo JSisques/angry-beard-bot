@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@astrojs/mdx": "^4.2.3",
+    "@astrojs/tailwind": "^6.0.2",
     "@hookform/resolvers": "^5.0.1",
     "@radix-ui/react-accordion": "^1.2.3",
     "@radix-ui/react-alert-dialog": "^1.1.6",
@@ -57,6 +58,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "eslint-plugin-unused-imports": "^4.1.4"
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "tailwindcss": "^4.1.3"
   }
 }

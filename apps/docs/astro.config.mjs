@@ -8,6 +8,9 @@ import vercelServerless from '@astrojs/vercel/serverless';
 export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
+    ssr: {
+      noExternal: ['@astrojs/vercel'],
+    },
   },
   integrations: [react()],
   output: 'server',
