@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
 }
 
@@ -34,89 +34,118 @@ enum PullRequestStatus {
 }
 
 model User {
-  id            String         @id @default(uuid())
-  email         String         @unique 
-  password      String
-  name          String?
-  githubId      String?        @unique
-  githubToken   String?
-  subscription  Subscription?
-  repositories  Repository[]
-  onboarded     Boolean        @default(false)
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  id           String        @id @default(uuid())
+  email        String        @unique
+  password     String
+  name         String?
+  githubId     String?       @unique
+  githubToken  String?
+  subscription Subscription?
+  repositories Repository[]
+  onboarded    Boolean       @default(false)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 model Subscription {
-  id            String            @id @default(uuid())
-  userId        String            @unique
-  user          User              @relation(fields: [userId], references: [id], onDelete: Cascade)
-  plan          SubscriptionPlan  @default(FREE)
-  status        SubscriptionStatus @default(ACTIVE)
-  startDate     DateTime          @default(now())
-  endDate       DateTime?
-  createdAt     DateTime          @default(now())
-  updatedAt     DateTime          @updatedAt
+  id        String             @id @default(uuid())
+  userId    String             @unique
+  user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan      SubscriptionPlan   @default(FREE)
+  status    SubscriptionStatus @default(ACTIVE)
+  startDate DateTime           @default(now())
+  endDate   DateTime?
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
 }
 
 model Repository {
-  id            String         @id @default(uuid())
-  name          String
-  url           String
-  githubId      String?        @unique
-  ownerId       String
-  owner         User           @relation(fields: [ownerId], references: [id], onDelete: Cascade)
-  botConfig     BotConfig?
-  pullRequests  PullRequest[]
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
+  id       String  @id @default(uuid())
+  name     String
+  url      String
+  language String?
+  hasWiki  Boolean @default(false)
+  githubId String? @unique
+
+  botConfigId String?
+  botConfig   BotConfig?
+
+  ownerId String
+  owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+
+  pullRequests PullRequest[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model BotConfig {
-  id                String         @id @default(uuid())
-  repositoryId      String         @unique
-  repository        Repository     @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
-  grumpinessLevel   BotLevel       @default(MODERATE)
-  technicalityLevel BotLevel       @default(MODERATE)
-  detailLevel       BotLevel       @default(MODERATE)
-  language          String         @default("en")
-  autoApprove       Boolean        @default(false)
+  id                String            @id @default(uuid())
+  repositoryId      String            @unique
+  repository        Repository        @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
+  grumpinessLevel   BotLevel          @default(MODERATE)
+  technicalityLevel BotLevel          @default(MODERATE)
+  detailLevel       BotLevel          @default(MODERATE)
+  language          String            @default("en")
+  autoApprove       Boolean           @default(false)
   reviewFocusAreas  ReviewFocusArea[]
-  createdAt         DateTime       @default(now())
-  updatedAt         DateTime       @updatedAt
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
 }
 
 model ReviewFocusArea {
-  id          String       @id @default(uuid())
-  name        String       // e.g., "Code Style", "Best Practices", "Documentation"
+  id          String    @id @default(uuid())
+  name        String // e.g., "Code Style", "Best Practices", "Documentation"
   botConfigId String
-  botConfig   BotConfig    @relation(fields: [botConfigId], references: [id], onDelete: Cascade)
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  botConfig   BotConfig @relation(fields: [botConfigId], references: [id], onDelete: Cascade)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@unique([name, botConfigId])
 }
 
 model PullRequest {
-  id            String            @id @default(uuid())
-  title         String
-  description   String?
-  githubId      String?           @unique
-  repositoryId  String
-  repository    Repository        @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
-  status        PullRequestStatus @default(PENDING)
-  comments      Comment[]
-  createdAt     DateTime          @default(now())
-  updatedAt     DateTime          @updatedAt
+  id                String            @id @default(uuid())
+  title             String?
+  body              String?
+  url               String?
+  htmlUrl           String?
+  diffUrl           String?
+  patchUrl          String?
+  issueUrl          String?
+  commitsUrl        String?
+  reviewCommentsUrl String?
+  commentsUrl       String?
+  statusesUrl       String?
+  isMerged          Boolean           @default(false)
+  isMergeable       Boolean           @default(false)
+  isRebaseable      Boolean           @default(false)
+  number            Int?
+  state             String?
+  commits           Int?
+  additions         Int?
+  deletions         Int?
+  changedFiles      Int?
+  isDraft           Boolean           @default(false)
+  githubId          String?           @unique
+  repositoryId      String
+  repository        Repository        @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
+  status            PullRequestStatus @default(PENDING)
+
+  comments Comment[]
+
+  mergedAt  DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model Comment {
-  id              String         @id @default(uuid())
-  content         String
-  filePath        String?
-  lineNumber      Int?
-  pullRequestId   String
-  pullRequest     PullRequest    @relation(fields: [pullRequestId], references: [id], onDelete: Cascade)
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
+  id            String      @id @default(uuid())
+  content       String
+  filePath      String?
+  lineNumber    Int?
+  pullRequestId String
+  pullRequest   PullRequest @relation(fields: [pullRequestId], references: [id], onDelete: Cascade)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 }
