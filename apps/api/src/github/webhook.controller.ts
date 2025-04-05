@@ -17,7 +17,7 @@ export class GithubWebhookController {
   async webhook(@Body() body: GithubWebhookDto) {
     this.logger.debug(`Webhook received: ${JSON.stringify(body)}`);
 
-    const repositoryExists = await this.repositoryService.getRepositoryByGithubId(body.repository.id);
+    const repositoryExists = await this.repositoryService.getRepositoryByGithubId(body.repository.id.toString());
 
     if (!repositoryExists) {
       this.logger.debug(`Repository ${body.repository.id} not found, creating`);
