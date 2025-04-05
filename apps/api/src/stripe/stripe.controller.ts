@@ -51,7 +51,7 @@ export class StripeController {
     try {
       stripeEvent = this.stripeService.verifyWebhookSignature(sig, event, webhookSecret);
     } catch (err) {
-      console.log('Webhook signature verification failed');
+      console.error('Webhook signature verification failed', err);
       return;
     }
 
