@@ -8,8 +8,9 @@ import { ConfigModule } from '@nestjs/config';
 import { SupabaseModule } from './supabase/supabase.module';
 import { AuthModule } from './auth/auth.module';
 import { GithubModule } from './github/github.module';
+import { RepositoryModule } from './repository/repository.module';
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, StripeModule, SupabaseModule, AuthModule, GithubModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, StripeModule, SupabaseModule, AuthModule, GithubModule, RepositoryModule],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
