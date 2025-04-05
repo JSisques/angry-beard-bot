@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { headers } from 'next/headers';
 import crypto from 'crypto';
+import { post } from '@/lib/api';
 
 /**
  * Type definition for GitHub webhook events that will be handled
@@ -153,7 +154,7 @@ export async function POST(request: Request) {
 
     // Process the event
     const webhookPayload = JSON.parse(payload) as WebhookPayload;
-    await handleGitHubEvent(event, webhookPayload);
+    await post('/api/v1/webhook/github', webhookPayload);
 
     return NextResponse.json({ status: 'ok' });
   } catch (error) {
