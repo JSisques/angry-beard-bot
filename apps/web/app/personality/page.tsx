@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -13,7 +12,6 @@ import { Switch } from '@/components/ui/switch';
 
 export default function PersonalityPage() {
   const { botConfig, updateBotConfig } = useAppStore();
-  const [showPreview, setShowPreview] = useState(false);
 
   const getGrumpinessLabel = (value: number) => {
     switch (value) {
@@ -61,8 +59,6 @@ export default function PersonalityPage() {
 
   const getPreviewComment = () => {
     const grumpiness = getGrumpinessLabel(botConfig.grumpinessLevel);
-    const technical = getTechnicalLabel(botConfig.technicalLevel);
-    const detail = getDetailLabel(botConfig.detailLevel);
 
     if (grumpiness === 'Mild') {
       return "I've reviewed your code and have some suggestions for improvement. Consider using more modern patterns and adding some documentation.";
