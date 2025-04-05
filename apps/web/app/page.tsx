@@ -9,7 +9,7 @@ import { Slider } from '@/components/ui/slider';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { AlertCircle, Github, Settings, Zap, GitPullRequest, MessageSquare, CheckCircle, Clock, Star, TrendingUp } from 'lucide-react';
+import { AlertCircle, Github, Settings, Zap, Star, TrendingUp } from 'lucide-react';
 import { useAppStore } from '@/lib/store';
 import { v4 as uuidv4 } from 'uuid';
 
