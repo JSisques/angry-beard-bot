@@ -37,10 +37,10 @@ export class RepositoryMapper {
       id: githubRepository.id,
       name: githubRepository.name,
       url: githubRepository.html_url,
-      language: githubRepository.language,
+      language: githubRepository.language?.toLowerCase(),
       githubId: githubRepository.id.toString(),
       botConfigId: null,
-      ownerId: githubRepository.owner.id,
+      ownerId: githubRepository.owner.id.toString(),
     };
   }
 }
