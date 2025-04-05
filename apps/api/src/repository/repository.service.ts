@@ -26,7 +26,7 @@ export class RepositoryService {
     });
   }
 
-  async createRepository(repository: RepositoryDto) {
+  async createRepository(repository: Omit<RepositoryDto, 'id' | 'createdAt' | 'updatedAt'>) {
     return await this.prisma.repository.create({
       data: repository,
     });
