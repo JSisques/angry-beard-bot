@@ -1,5 +1,5 @@
 {
-  "name": "saas-boilerplate",
+  "name": "angry-beard-bot",
   "private": true,
   "scripts": {
     "build": "turbo run build",
