@@ -38,7 +38,7 @@ export class RepositoryMapper {
       name: githubRepository.name,
       url: githubRepository.html_url,
       language: githubRepository.language,
-      githubId: githubRepository.id,
+      githubId: githubRepository.id.toString(),
       botConfigId: null,
       ownerId: githubRepository.owner.id,
     };
