@@ -1,6 +1,6 @@
 import { Controller, Post, Body, Logger } from '@nestjs/common';
 
-@Controller('webhook/github')
+@Controller('github/webhook')
 export class GithubWebhookController {
   private readonly logger;
   constructor() {

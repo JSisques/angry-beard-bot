@@ -154,7 +154,7 @@ export async function POST(request: Request) {
 
     // Process the event
     const webhookPayload = JSON.parse(payload) as WebhookPayload;
-    await post('/api/v1/webhook/github', webhookPayload);
+    await post('/api/v1/github/webhook', webhookPayload);
 
     return NextResponse.json({ status: 'ok' });
   } catch (error) {
