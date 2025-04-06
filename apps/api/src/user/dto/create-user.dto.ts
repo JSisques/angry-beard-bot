@@ -10,6 +10,9 @@ export class CreateUserDto {
   @IsString()
   githubId: string;
 
+  @IsString()
+  providerId: string;
+
   @IsBoolean()
   @IsOptional()
   onboarded?: boolean;

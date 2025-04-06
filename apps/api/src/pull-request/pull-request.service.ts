@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { PullRequestDto } from './dto/pull-request.dto';
-
+import { CreatePullRequestDto } from './dto/create-pull-request.dto';
 @Injectable()
 export class PullRequestService {
   private readonly logger;
@@ -16,10 +16,24 @@ export class PullRequestService {
     });
   }
 
-  async createPullRequest(pullRequestDto: PullRequestDto) {
+  async getPullRequestByGithubId(githubId: string) {
+    this.logger.debug(`Getting pull request by github id: ${githubId}`);
+    return this.prisma.pullRequest.findUnique({
+      where: { githubId },
+    });
+  }
+
+  async createPullRequest(pullRequestDto: CreatePullRequestDto, repositoryId: string) {
     this.logger.debug(`Creating pull request: ${pullRequestDto}`);
     return this.prisma.pullRequest.create({
-      data: pullRequestDto,
+      data: {
+        ...pullRequestDto,
+        repository: {
+          connect: {
+            id: repositoryId,
+          },
+        },
+      },
     });
   }
 

@@ -87,6 +87,7 @@ export class AuthController {
           email: githubUser.email,
           name: githubUser.user_metadata.name,
           githubId: githubUser.id,
+          providerId: githubUser.user_metadata.provider_id,
         });
       }
       return { user };

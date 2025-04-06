@@ -6,5 +6,4 @@ export interface RepositoryDto {
   hasWiki?: boolean;
   githubId?: string;
   botConfigId?: string;
-  ownerId: string;
 }

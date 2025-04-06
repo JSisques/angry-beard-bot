@@ -38,6 +38,7 @@ model User {
   email        String        @unique
   name         String?
   githubId     String?       @unique
+  providerId   String?       @unique
   subscription Subscription?
   repositories Repository[]
   onboarded    Boolean       @default(false)

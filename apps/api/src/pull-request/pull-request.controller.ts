@@ -18,7 +18,7 @@ export class PullRequestController {
   @Post()
   async createPullRequest(@Body() pullRequestDto: PullRequestDto) {
     this.logger.debug(`Creating pull request: ${pullRequestDto}`);
-    return this.pullRequestService.createPullRequest(pullRequestDto);
+    return this.pullRequestService.createPullRequest(pullRequestDto, pullRequestDto.repositoryId);
   }
 
   @Put(':id')

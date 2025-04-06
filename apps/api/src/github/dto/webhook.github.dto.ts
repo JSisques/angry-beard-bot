@@ -143,9 +143,14 @@ export interface GithubPullRequest {
   labels: any[];
   milestone: any | null;
   draft: boolean;
+  commits_url: string;
+  review_comments_url: string;
+  review_comment_url: string;
+  comments_url: string;
+  statuses_url: string;
   head: GithubPullRequestRef;
   base: GithubPullRequestRef;
-  _links?: {
+  _links: {
     self: { href: string };
     html: { href: string };
     issue: { href: string };
@@ -155,20 +160,21 @@ export interface GithubPullRequest {
     commits: { href: string };
     statuses: { href: string };
   };
-  author_association?: string;
-  auto_merge?: any | null;
-  active_lock_reason?: any | null;
-  merged?: boolean;
-  mergeable?: boolean | null;
-  rebaseable?: boolean | null;
-  mergeable_state?: string;
-  merged_by?: any | null;
-  comments?: number;
-  review_comments?: number;
-  commits?: number;
-  additions?: number;
-  deletions?: number;
-  changed_files?: number;
+  author_association: string;
+  auto_merge: any | null;
+  active_lock_reason: any | null;
+  merged: boolean;
+  mergeable: boolean | null;
+  rebaseable: boolean | null;
+  mergeable_state: string;
+  merged_by: any | null;
+  comments: number;
+  review_comments: number;
+  maintainer_can_modify?: boolean;
+  commits: number;
+  additions: number;
+  deletions: number;
+  changed_files: number;
 }
 
 export interface GithubReview {

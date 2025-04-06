@@ -24,7 +24,7 @@ export interface PullRequestDto {
   changedFiles?: number;
   isDraft?: boolean;
   githubId?: string;
-  repositoryId: string;
+  repositoryId?: string;
   status?: PullRequestStatus;
   mergedAt?: Date;
   createdAt?: Date;

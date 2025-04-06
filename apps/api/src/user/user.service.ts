@@ -11,14 +11,29 @@ export class UserService {
   }
 
   async getUserById(id: string) {
+    this.logger.debug(`Getting user by id: ${id}`);
     return this.prismaService.user.findUnique({ where: { id } });
   }
 
   async getUserByEmail(email: string) {
+    this.logger.debug(`Getting user by email: ${email}`);
     return this.prismaService.user.findUnique({ where: { email } });
   }
 
+  async getUserByGithubId(githubId: string) {
+    this.logger.debug(`Getting user by github id: ${githubId}`);
+    return this.prismaService.user.findUnique({ where: { githubId } });
+  }
+
+  async getUserByProviderId(providerId: string) {
+    this.logger.debug(`Getting user by provider id: ${providerId}`);
+    const user = await this.prismaService.user.findUnique({ where: { providerId } });
+    this.logger.debug(`User found: ${JSON.stringify(user)}`);
+    return user;
+  }
+
   async createUser(user: CreateUserDto) {
+    this.logger.debug(`Creating user: ${user}`);
     return this.prismaService.user.create({
       data: {
         ...user,
@@ -37,10 +52,12 @@ export class UserService {
   }
 
   async updateUser(id: string, user: User) {
+    this.logger.debug(`Updating user: ${user}`);
     return this.prismaService.user.update({ where: { id }, data: user });
   }
 
   async deleteUser(id: string) {
+    this.logger.debug(`Deleting user: ${id}`);
     return this.prismaService.user.delete({ where: { id } });
   }
 }
