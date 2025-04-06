@@ -112,31 +112,36 @@ The bot features an intuitive configuration system:
 
 ## Pricing Plans
 
-### Starter (Free)
+### Apprentice (Free)
 
-- Perfect for small teams
-- Up to 5 repositories
-- Basic code reviews
-- Standard response time
+- Perfect for small teams and individual developers
+- Up to 100 PRs per month
+- Full bot customization
 - Community support
+- All core features included
 
-### Pro ($20/month)
+### Beard Master ($15/month or $144/year - 20% discount)
 
 - For growing teams
-- Unlimited repositories
-- Advanced code reviews
-- Priority response time
-- Custom review criteria
+- Up to 500 PRs per month
 - Email support
+- Advanced statistics
+- Everything included in the Apprentice plan
+- Priority response time
 
-### Enterprise (Custom)
+### Business ($49/month or $470/year - 20% discount)
 
 - For large organizations
-- Everything in Pro
-- Custom integrations
+- Unlimited PRs
+- Everything included in the Beard Master plan
 - Dedicated support
-- SLA guarantees
-- Custom training
+- API integration (coming soon)
+- Advanced analysis with performance reports and dashboards (coming soon)
+
+### Additional PRs
+
+- Purchase extra PR batches
+- $5 for each additional 500 PRs
 
 All plans include a 14-day free trial with no credit card required.
 

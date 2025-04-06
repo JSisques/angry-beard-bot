@@ -26,7 +26,9 @@
     "prisma:reset": "prisma migrate reset --schema=src/prisma/schema.prisma",
     "prisma:studio": "prisma studio --schema=src/prisma/schema.prisma",
     "prisma:push": "prisma db push --schema=src/prisma/schema.prisma",
-    "prisma:format": "prisma format --schema=src/prisma/schema.prisma"
+    "prisma:format": "prisma format --schema=src/prisma/schema.prisma",
+    "postgres:local:mac": "docker run --name postgres-local -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=postgres -p 5432:5432 -d postgres:latest",
+    "postgres:local:windows": "docker run --name postgres-local -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=postgres -p 5432:5432 -d postgres:latest"
   },
   "dependencies": {
     "@apollo/server": "^4.11.3",
