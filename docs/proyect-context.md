@@ -120,7 +120,7 @@ The bot features an intuitive configuration system:
 - Community support
 - All core features included
 
-### Beard Master ($15/month or $144/year - 20% discount)
+### Beard Master ($20/month or $192/year - 20% discount)
 
 - For growing teams
 - Up to 500 PRs per month
@@ -132,7 +132,7 @@ The bot features an intuitive configuration system:
 ### Business ($49/month or $470/year - 20% discount)
 
 - For large organizations
-- Unlimited PRs
+- Up to 2000 PRs per month
 - Everything included in the Beard Master plan
 - Dedicated support
 - API integration (coming soon)
@@ -142,6 +142,7 @@ The bot features an intuitive configuration system:
 
 - Purchase extra PR batches
 - $5 for each additional 500 PRs
+- For more than 2000 PRs, please contact sales
 
 All plans include a 14-day free trial with no credit card required.
 
