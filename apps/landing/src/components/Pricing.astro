@@ -1,7 +1,7 @@
 ---
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
-import { Check } from "lucide-react";
+import { Check, Plus } from "lucide-react";
 ---
 
 <section id="pricing" class="py-16 md:py-24">
@@ -11,12 +11,23 @@ import { Check } from "lucide-react";
       <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
         Get started with Angry Beard Bot today. No hidden fees, cancel anytime.
       </p>
+      
+      <!-- Billing Toggle -->
+      <div class="flex items-center justify-center mt-8 space-x-4">
+        <span class="text-sm font-medium">Monthly</span>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="billing-toggle" class="sr-only peer" />
+          <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+        </label>
+        <span class="text-sm font-medium">Annual <span class="text-primary">(Save 20%)</span></span>
+      </div>
     </div>
+    
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
       <Card className="group hover:shadow-lg transition-all duration-300 flex flex-col h-full">
         <CardHeader>
-          <CardTitle className="text-2xl">Starter</CardTitle>
-          <CardDescription>Perfect for small teams</CardDescription>
+          <CardTitle className="text-2xl">Apprentice</CardTitle>
+          <CardDescription>Perfect for small teams and individual developers</CardDescription>
           <div class="mt-4">
             <span class="text-4xl font-bold">$0</span>
             <span class="text-muted-foreground">/month</span>
@@ -25,19 +36,19 @@ import { Check } from "lucide-react";
         <CardContent className="flex-grow">
           <ul class="space-y-3">
             <li class="flex items-center">
-              <Check className="w-5 h-5 text-primary mr-2" />
-              <span>Up to 5 repositories</span>
+              <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
+              <span>Up to 100 PR reviews per month</span>
             </li>
             <li class="flex items-center">
-              <Check className="w-5 h-5 text-primary mr-2" />
-              <span>Basic code reviews</span>
+              <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
+              <span>Full bot customization</span>
             </li>
             <li class="flex items-center">
-              <Check className="w-5 h-5 text-primary mr-2" />
-              <span>Standard response time</span>
+              <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
+              <span>All core features included</span>
             </li>
             <li class="flex items-center">
-              <Check className="w-5 h-5 text-primary mr-2" />
+              <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
               <span>Community support</span>
             </li>
           </ul>
@@ -53,34 +64,43 @@ import { Check } from "lucide-react";
           Most Popular
         </div>
         <CardHeader>
-          <CardTitle className="text-2xl">Pro</CardTitle>
+          <CardTitle className="text-2xl">Beard Master</CardTitle>
           <CardDescription>For growing teams</CardDescription>
           <div class="mt-4">
-            <span class="text-4xl font-bold">$20</span>
-            <span class="text-muted-foreground">/month</span>
+            <div class="monthly-price">
+              <span class="text-4xl font-bold">$15</span>
+              <span class="text-muted-foreground">/month</span>
+            </div>
+            <div class="annual-price hidden">
+              <span class="text-4xl font-bold">$12</span>
+              <span class="text-muted-foreground">/month</span>
+              <div class="text-sm text-muted-foreground mt-1">
+                <span class="line-through">$180</span> <span class="text-primary">$144/year</span>
+              </div>
+            </div>
           </div>
         </CardHeader>
         <CardContent className="flex-grow">
           <ul class="space-y-3">
             <li class="flex items-center">
-              <Check className="w-5 h-5 text-primary mr-2" />
-              <span>Unlimited repositories</span>
+              <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
+              <span>Up to 500 PR reviews per month</span>
             </li>
             <li class="flex items-center">
-              <Check className="w-5 h-5 text-primary mr-2" />
-              <span>Advanced code reviews</span>
-            </li>
-            <li class="flex items-center">
-              <Check className="w-5 h-5 text-primary mr-2" />
-              <span>Priority response time</span>
-            </li>
-            <li class="flex items-center">
-              <Check className="w-5 h-5 text-primary mr-2" />
-              <span>Custom review criteria</span>
-            </li>
-            <li class="flex items-center">
-              <Check className="w-5 h-5 text-primary mr-2" />
+              <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
               <span>Email support</span>
+            </li>
+            <li class="flex items-center">
+              <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
+              <span>Advanced statistics</span>
+            </li>
+            <li class="flex items-center">
+              <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
+              <span>Everything in Apprentice plan</span>
+            </li>
+            <li class="flex items-center">
+              <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
+              <span>Priority response time</span>
             </li>
           </ul>
         </CardContent>
@@ -92,47 +112,113 @@ import { Check } from "lucide-react";
       </Card>
       <Card className="group hover:shadow-lg transition-all duration-300 flex flex-col h-full">
         <CardHeader>
-          <CardTitle className="text-2xl">Enterprise</CardTitle>
+          <CardTitle className="text-2xl">Business</CardTitle>
           <CardDescription>For large organizations</CardDescription>
           <div class="mt-4">
-            <span class="text-4xl font-bold">Custom</span>
+            <div class="monthly-price">
+              <span class="text-4xl font-bold">$49</span>
+              <span class="text-muted-foreground">/month</span>
+            </div>
+            <div class="annual-price hidden">
+              <span class="text-4xl font-bold">$39</span>
+              <span class="text-muted-foreground">/month</span>
+              <div class="text-sm text-muted-foreground mt-1">
+                <span class="line-through">$588</span> <span class="text-primary">$470/year</span>
+              </div>
+            </div>
           </div>
         </CardHeader>
         <CardContent className="flex-grow">
           <ul class="space-y-3">
             <li class="flex items-center">
-              <Check className="w-5 h-5 text-primary mr-2" />
-              <span>Everything in Pro</span>
+              <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
+              <span>Unlimited PR reviews</span>
             </li>
             <li class="flex items-center">
-              <Check className="w-5 h-5 text-primary mr-2" />
-              <span>Custom integrations</span>
+              <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
+              <span>Everything in Beard Master plan</span>
             </li>
             <li class="flex items-center">
-              <Check className="w-5 h-5 text-primary mr-2" />
+              <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
               <span>Dedicated support</span>
             </li>
             <li class="flex items-center">
-              <Check className="w-5 h-5 text-primary mr-2" />
-              <span>SLA guarantees</span>
+              <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
+              <span>API integration (coming soon)</span>
             </li>
             <li class="flex items-center">
-              <Check className="w-5 h-5 text-primary mr-2" />
-              <span>Custom training</span>
+              <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
+              <span>Advanced analytics & dashboards (coming soon)</span>
             </li>
           </ul>
         </CardContent>
         <CardFooter className="mt-auto">
           <a href="#waitlist" class="w-full">
-            <Button className="w-full" variant="outline">Contact Sales</Button>
+            <Button className="w-full" variant="outline">Get Started</Button>
           </a>
         </CardFooter>
       </Card>
     </div>
-    <div class="text-center mt-12">
+    
+    <div class="text-center mt-8">
       <p class="text-sm text-muted-foreground">
         All plans include a 14-day free trial. No credit card required.
       </p>
     </div>
+    
+    <!-- Additional PRs section -->
+    <div class="mt-12 max-w-3xl mx-auto">
+      <div class="text-center mb-4">
+        <h3 class="text-xl font-semibold">Need more PR reviews?</h3>
+        <p class="text-muted-foreground mt-1">Add extra PR review batches to any plan</p>
+      </div>
+      
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="bg-card border rounded-lg p-4 text-center hover:shadow-md transition-shadow">
+          <div class="text-2xl font-bold text-primary mb-1">$5</div>
+          <div class="text-sm text-muted-foreground">500 additional PR reviews</div>
+        </div>
+        <div class="bg-card border rounded-lg p-4 text-center hover:shadow-md transition-shadow">
+          <div class="text-2xl font-bold text-primary mb-1">$10</div>
+          <div class="text-sm text-muted-foreground">1,000 additional PR reviews</div>
+        </div>
+        <div class="bg-card border rounded-lg p-4 text-center hover:shadow-md transition-shadow">
+          <div class="text-2xl font-bold text-primary mb-1">$20</div>
+          <div class="text-sm text-muted-foreground">2,500 additional PR reviews</div>
+        </div>
+      </div>
+      
+      <div class="text-center mt-4">
+        <a href="#waitlist" class="inline-flex items-center text-primary hover:underline text-sm">
+          Contact us for custom volumes
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </a>
+      </div>
+    </div>
   </div>
-</section> 
+</section>
+
+<script>
+  // Toggle between monthly and annual pricing
+  document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.getElementById('billing-toggle');
+    const monthlyPrices = document.querySelectorAll('.monthly-price');
+    const annualPrices = document.querySelectorAll('.annual-price');
+    
+    if (toggle) {
+      toggle.addEventListener('change', () => {
+        if (toggle instanceof HTMLInputElement && toggle.checked) {
+          // Show annual prices
+          monthlyPrices.forEach(el => el.classList.add('hidden'));
+          annualPrices.forEach(el => el.classList.remove('hidden'));
+        } else {
+          // Show monthly prices
+          monthlyPrices.forEach(el => el.classList.remove('hidden'));
+          annualPrices.forEach(el => el.classList.add('hidden'));
+        }
+      });
+    }
+  });
+</script> 
