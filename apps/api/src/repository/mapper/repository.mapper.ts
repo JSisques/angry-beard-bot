@@ -9,32 +9,8 @@ export class RepositoryMapper {
   constructor() {
     this.logger = new Logger(RepositoryMapper.name);
   }
-
-  /**
-     * 
-     * @param githubRepository interface GithubRepository {
-  id: string;
-  name: string;
-  full_name: string;
-  private: boolean;
-  owner: GithubUser;
-  html_url: string;
-  description: string | null;
-  fork: boolean;
-  created_at: string;
-  updated_at: string;
-  pushed_at: string;
-  homepage: string;
-  size: number;
-  language: string;
-  default_branch: string;
-}
-     * @returns 
-     */
-
   async fromGitHubRepositoryToRepositoryDto(githubRepository: GithubRepository): Promise<RepositoryDto> {
     return {
-      id: githubRepository.id,
       name: githubRepository.name,
       url: githubRepository.html_url,
       language: githubRepository.language?.toLowerCase(),

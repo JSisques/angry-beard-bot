@@ -15,14 +15,31 @@ export class GithubWebhookController {
 
   @Post()
   async webhook(@Body() body: GithubWebhookDto) {
-    this.logger.debug(`Webhook received: ${JSON.stringify(body)}`);
+    this.logger.debug(`Webhook received with action: ${body.action}`);
 
-    const repositoryExists = await this.repositoryService.getRepositoryByGithubId(body.repository.id.toString());
-
-    if (!repositoryExists) {
-      this.logger.debug(`Repository ${body.repository.id} not found, creating`);
-      const repositoryDto = await this.repositoryMapper.fromGitHubRepositoryToRepositoryDto(body.repository);
-      const repository = await this.repositoryService.createRepository(repositoryDto);
+    switch (body.action) {
+      case 'opened':
+        this.logger.debug(`Repository opened: ${body.repository.id}`);
+        break;
+      case 'closed':
+        this.logger.debug(`Repository closed: ${body.repository.id}`);
+        break;
+      case 'edited':
+        this.logger.debug(`Repository edited: ${body.repository.id}`);
+        break;
+      case 'submitted':
+        this.logger.debug(`Review submitted: ${body.repository.id}`);
+        break;
+      case 'synchronize':
+        this.logger.debug(`Pull request synchronized: ${body.pull_request.id}`);
+        break;
+      default:
+        this.logger.debug(`Unknown action: ${body.action}`);
+        break;
     }
+
+    return {
+      message: 'Webhook received',
+    };
   }
 }

@@ -36,10 +36,8 @@ enum PullRequestStatus {
 model User {
   id           String        @id @default(uuid())
   email        String        @unique
-  password     String
   name         String?
   githubId     String?       @unique
-  githubToken  String?
   subscription Subscription?
   repositories Repository[]
   onboarded    Boolean       @default(false)

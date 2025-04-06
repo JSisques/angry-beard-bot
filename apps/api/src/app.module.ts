@@ -9,8 +9,22 @@ import { SupabaseModule } from './supabase/supabase.module';
 import { AuthModule } from './auth/auth.module';
 import { GithubModule } from './github/github.module';
 import { RepositoryModule } from './repository/repository.module';
+import { PullRequestModule } from './pull-request/pull-request.module';
+import { UserModule } from './user/user.module';
+import { SubscriptionModule } from './subscription/subscription.module';
 @Module({
-  imports: [ConfigModule.forRoot({ isGlobal: true }), PrismaModule, StripeModule, SupabaseModule, AuthModule, GithubModule, RepositoryModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    PrismaModule,
+    StripeModule,
+    SupabaseModule,
+    AuthModule,
+    GithubModule,
+    RepositoryModule,
+    PullRequestModule,
+    UserModule,
+    SubscriptionModule,
+  ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })

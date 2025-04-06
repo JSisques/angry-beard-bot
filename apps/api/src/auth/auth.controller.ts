@@ -1,13 +1,17 @@
 import { Controller, Post, Body, Get, Logger } from '@nestjs/common';
 import { SupabaseService } from '../supabase/supabase.service';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
-
+import { GitHubUser } from './interface/github-user.interface';
+import { UserService } from 'src/user/user.service';
 @ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
   private readonly logger;
 
-  constructor(private readonly supabaseService: SupabaseService) {
+  constructor(
+    private readonly supabaseService: SupabaseService,
+    private readonly userService: UserService,
+  ) {
     this.logger = new Logger(AuthController.name);
   }
 
@@ -59,5 +63,36 @@ export class AuthController {
     this.logger.log('Getting current session');
     const session = await this.supabaseService.getSession();
     return { session };
+  }
+
+  @Post('github')
+  @ApiOperation({ summary: 'Register or update user with GitHub data' })
+  @ApiBody({ type: GitHubUser })
+  @ApiResponse({ status: 201, description: 'User successfully registered/updated' })
+  @ApiResponse({ status: 400, description: 'Invalid input' })
+  async handleGithubAuth(@Body() githubUser: GitHubUser) {
+    this.logger.log(`Processing GitHub authentication for user: ${githubUser.email}`);
+
+    try {
+      if (!githubUser.email) {
+        throw new Error('Email is required');
+      }
+
+      const existingUser = await this.userService.getUserByEmail(githubUser.email);
+
+      let user = existingUser;
+
+      if (!existingUser) {
+        user = await this.userService.createUser({
+          email: githubUser.email,
+          name: githubUser.user_metadata.name,
+          githubId: githubUser.id,
+        });
+      }
+      return { user };
+    } catch (error) {
+      this.logger.error(`Error processing GitHub authentication: ${error.message}`);
+      throw error;
+    }
   }
 }

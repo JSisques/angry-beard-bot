@@ -146,6 +146,7 @@ export async function POST(request: Request) {
 
     // Get request body
     const payload = await request.text();
+    console.log('payload', payload);
 
     // Verify webhook signature
     if (!verifyWebhookSignature(payload, signature, webhookSecret)) {
