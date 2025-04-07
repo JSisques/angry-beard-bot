@@ -1,111 +1,69 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { GithubWebhookDto } from './dto/webhook.github.dto';
+import { GithubWebhookDto } from './webhook/dto/webhook.github.dto';
 import { RepositoryService } from 'src/repository/repository.service';
 import { PullRequestService } from 'src/pull-request/pull-request.service';
 import { UserService } from 'src/user/user.service';
 import { RepositoryDto } from 'src/repository/dto/repository.dto';
 import { PullRequestMapper } from 'src/pull-request/mapper/pull-request.mapper';
+import { ReviewService } from 'src/review/review.service';
+import { WorkflowService } from 'src/workflow/workflow.service';
+import { Octokit } from '@octokit/rest';
+import { ConfigService } from '@nestjs/config';
+import { createAppAuth } from '@octokit/auth-app';
+
 @Injectable()
 export class GithubService {
   private readonly logger;
-  constructor(
-    private readonly repositoryService: RepositoryService,
-    private readonly pullRequestService: PullRequestService,
-    private readonly pullRequestMapper: PullRequestMapper,
-    private readonly userService: UserService,
-  ) {
+  private readonly octokit: Octokit;
+  private readonly appId: string;
+  private readonly privateKey: string;
+  private readonly clientId: string;
+  private readonly clientSecret: string;
+
+  constructor(private readonly configService: ConfigService) {
     this.logger = new Logger(GithubService.name);
+    this.appId = this.configService.get<string>('GITHUB_APP_ID');
+    this.privateKey = this.configService.get<string>('GITHUB_PRIVATE_KEY');
+    this.clientId = this.configService.get<string>('GITHUB_CLIENT_ID');
+    this.clientSecret = this.configService.get<string>('GITHUB_CLIENT_SECRET');
+
+    this.octokit = new Octokit({
+      authStrategy: createAppAuth,
+      auth: {
+        appId: this.appId,
+        privateKey: this.privateKey,
+        clientId: this.clientId,
+        clientSecret: this.clientSecret,
+      },
+    });
   }
 
-  /**
-   * Handles a webhook event when a pull request is opened
-   * @param webhookDto - The webhook payload containing repository and pull request data
-   * @returns {Promise<void>}
-   */
-  async handlePullRequestOpened(webhookDto: GithubWebhookDto) {
-    this.logger.debug(`Webhook received: ${JSON.stringify(webhookDto)}`);
+  async getInstallation(installationId: number) {
     try {
-      const { user, repository, pullRequest } = await this.processGitHubWebhook(webhookDto);
+      const response = await this.octokit.auth({
+        type: 'installation',
+        installationId,
+      });
+
+      console.log(response);
+      // const token = response.token;
+
+      // const installationOctokit = new Octokit({
+      //   auth: token,
+      // });
+
+      // const installation = await installationOctokit.rest.apps.getInstallation({
+      //   installation_id: installationId,
+      // });
+
+      // return installation;
     } catch (error) {
-      this.logger.error(`Error handling pull request opened: ${error}`);
+      this.logger.error(`Error getting installation: ${error.message}`);
+      throw error;
     }
   }
 
-  /**
-   * Handles a webhook event when a pull request is closed
-   * @param webhookDto - The webhook payload containing repository and pull request data
-   * @returns {Promise<void>}
-   */
-  async handlePullRequestClosed(webhookDto: GithubWebhookDto) {
-    this.logger.debug(`Webhook received: ${JSON.stringify(webhookDto)}`);
-    try {
-      const { user, repository, pullRequest } = await this.processGitHubWebhook(webhookDto);
-    } catch (error) {
-      this.logger.error(`Error handling pull request closed: ${error}`);
-    }
-  }
-
-  /**
-   * Handles a webhook event when a pull request is synchronized (updated)
-   * @param webhookDto - The webhook payload containing repository and pull request data
-   * @returns {Promise<void>}
-   */
-  async handlePullRequestSynchronized(webhookDto: GithubWebhookDto) {
-    this.logger.debug(`Webhook received: ${JSON.stringify(webhookDto)}`);
-
-    try {
-      const { user, repository, pullRequest } = await this.processGitHubWebhook(webhookDto);
-    } catch (error) {
-      this.logger.error(`Error handling pull request synchronized: ${error}`);
-    }
-  }
-
-  /**
-   * Processes a GitHub webhook event for pull requests
-   * @param webhookDto - The webhook payload containing repository and pull request data
-   * @returns {Promise<{user, repository, pullRequest}>} Returns the processed user, repository and pull request
-   * @description
-   * This method handles the processing of GitHub webhook events by:
-   * 1. Extracting repository and pull request data from the webhook
-   * 2. Finding or creating the associated user based on repository owner
-   * 3. Finding or creating the repository record
-   * 4. Finding or creating the pull request record
-   * @private
-   */
-  private async processGitHubWebhook(webhookDto: GithubWebhookDto) {
-    const { repository, pull_request } = webhookDto;
-
-    const user = await this.userService.getUserByProviderId(repository.owner.id.toString());
-
-    if (!user) {
-      this.logger.error(`User not found for provider id: ${repository.owner.id}`);
-      return null;
-    }
-
-    let existingRepository = await this.repositoryService.getRepositoryByGithubId(repository.id.toString());
-
-    if (!existingRepository) {
-      const repositoryDto: RepositoryDto = {
-        name: repository.name,
-        url: repository.url,
-        language: repository.language,
-        hasWiki: repository.has_wiki,
-        githubId: repository.id.toString(),
-      };
-      existingRepository = await this.repositoryService.createRepository(repositoryDto, user.id);
-    }
-
-    let existingPullRequest = await this.pullRequestService.getPullRequestByGithubId(pull_request.id.toString());
-
-    if (!existingPullRequest) {
-      const pullRequestDto = await this.pullRequestMapper.fromGithubWebhookDto(webhookDto);
-      existingPullRequest = await this.pullRequestService.createPullRequest(pullRequestDto, existingRepository.id);
-    }
-
-    return {
-      user,
-      repository: existingRepository,
-      pullRequest: existingPullRequest,
-    };
+  async getPullRequestChanges() {
+    this.logger.debug('Getting pull request changes');
   }
 }

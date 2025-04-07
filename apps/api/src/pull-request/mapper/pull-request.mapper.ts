@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { CreatePullRequestDto } from '../dto/create-pull-request.dto';
-import { GithubWebhookDto } from 'src/github/dto/webhook.github.dto';
+import { GithubWebhookDto } from 'src/github/webhook/dto/webhook.github.dto';
 @Injectable()
 export class PullRequestMapper {
   private readonly logger;

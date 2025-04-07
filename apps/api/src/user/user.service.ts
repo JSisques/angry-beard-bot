@@ -33,7 +33,7 @@ export class UserService {
   }
 
   async createUser(user: CreateUserDto) {
-    this.logger.debug(`Creating user: ${user}`);
+    this.logger.debug(`Creating user: ${JSON.stringify(user)}`);
     return this.prismaService.user.create({
       data: {
         ...user,
@@ -52,7 +52,7 @@ export class UserService {
   }
 
   async updateUser(id: string, user: User) {
-    this.logger.debug(`Updating user: ${user}`);
+    this.logger.debug(`Updating user: ${JSON.stringify(user)}`);
     return this.prismaService.user.update({ where: { id }, data: user });
   }
 
