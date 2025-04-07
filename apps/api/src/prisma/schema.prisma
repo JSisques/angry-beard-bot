@@ -52,6 +52,7 @@ model Subscription {
   user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   plan      SubscriptionPlan   @default(FREE)
   status    SubscriptionStatus @default(ACTIVE)
+  maxReviews Int               @default(100)
   startDate DateTime           @default(now())
   endDate   DateTime?
   createdAt DateTime           @default(now())
