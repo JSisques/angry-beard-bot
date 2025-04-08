@@ -7,14 +7,13 @@ import { StripeModule } from './stripe/stripe.module';
 import { ConfigModule } from '@nestjs/config';
 import { SupabaseModule } from './supabase/supabase.module';
 import { AuthModule } from './auth/auth.module';
-import { GithubModule } from './github/github.module';
 import { RepositoryModule } from './repository/repository.module';
 import { PullRequestModule } from './pull-request/pull-request.module';
 import { UserModule } from './user/user.module';
 import { SubscriptionModule } from './subscription/subscription.module';
 import { ReviewModule } from './review/review.module';
 import { WorkflowModule } from './workflow/workflow.module';
-import { GithubWebhookModule } from './github/webhook/github-webhook.module';
+import { GithubModule } from './github/github.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -22,14 +21,13 @@ import { GithubWebhookModule } from './github/webhook/github-webhook.module';
     StripeModule,
     SupabaseModule,
     AuthModule,
-    // GithubModule,
+    GithubModule,
     RepositoryModule,
     PullRequestModule,
     UserModule,
     SubscriptionModule,
     ReviewModule,
     WorkflowModule,
-    //GithubWebhookModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
