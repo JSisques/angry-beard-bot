@@ -9,6 +9,7 @@ import { WorkflowService } from 'src/workflow/workflow.service';
 import { RepositoryDto } from 'src/repository/dto/repository.dto';
 import { GithubApiService } from './github-api.service';
 import { PullRequestFileDto } from './dto/github-pull-request-file.dto';
+
 @Injectable()
 export class GithubService {
   private readonly logger;
@@ -147,9 +148,11 @@ export class GithubService {
         webhookDto.pull_request.number,
       );
 
-      await this.workflowService.triggerWorkflow({ pullRequest, pullRequestFiles });
+      const workflowResponse = await this.workflowService.triggerWorkflow({ pullRequest, pullRequestFiles, repository });
+      this.logger.debug(`Workflow response: ${JSON.stringify(workflowResponse)}`);
+
       const { review } = await this.postProcessGitHubWebhook(user.id, pullRequest.id);
-      return { user, repository, pullRequest, review };
+      return { user, repository, pullRequest, review, workflowResponse };
     } catch (error) {
       this.logger.error(`Error processing GitHub webhook: ${error}`);
       throw error;

@@ -25,6 +25,9 @@ export class RepositoryService {
       where: {
         githubId: githubId,
       },
+      include: {
+        botConfig: true,
+      },
     });
   }
 
@@ -61,7 +64,13 @@ export class RepositoryService {
     this.logger.debug(`Updating repository: ${repository}`);
     return await this.prisma.repository.update({
       where: { id: repository.id },
-      data: repository,
+      data: {
+        name: repository.name,
+        url: repository.url,
+        language: repository.language,
+        hasWiki: repository.hasWiki,
+        githubId: repository.githubId,
+      },
     });
   }
 

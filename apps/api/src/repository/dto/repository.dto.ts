@@ -1,3 +1,5 @@
+import { BotConfigDto } from 'src/bot-config/dto/bot-config.dto';
+
 export interface RepositoryDto {
   id?: string;
   name: string;
@@ -5,5 +7,5 @@ export interface RepositoryDto {
   language?: string;
   hasWiki?: boolean;
   githubId?: string;
-  botConfigId?: string;
+  botConfig?: BotConfigDto;
 }

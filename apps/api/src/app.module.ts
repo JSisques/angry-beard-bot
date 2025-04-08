@@ -14,6 +14,7 @@ import { SubscriptionModule } from './subscription/subscription.module';
 import { ReviewModule } from './review/review.module';
 import { WorkflowModule } from './workflow/workflow.module';
 import { GithubModule } from './github/github.module';
+import { BotConfigModule } from './bot-config/bot-config.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -28,6 +29,7 @@ import { GithubModule } from './github/github.module';
     SubscriptionModule,
     ReviewModule,
     WorkflowModule,
+    BotConfigModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
