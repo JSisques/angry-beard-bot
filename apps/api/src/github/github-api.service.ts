@@ -100,15 +100,12 @@ export class GithubApiService {
       };
 
     const lines = patch.split('\n');
-
-    // Buscar la línea que contiene la información de las líneas afectadas.
     const headerLine = lines.find(line => line.startsWith('@@'));
 
     if (!headerLine) {
       throw new Error('No se encontró un encabezado de cambio en el patch');
     }
 
-    // Extraer las líneas de inicio y fin del header.
     const match = headerLine.match(/@@ -(\d+),\d+ \+(\d+),(\d+) @@/);
 
     if (!match) {
