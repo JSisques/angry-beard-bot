@@ -15,10 +15,7 @@ export class WorkflowService {
 
   async triggerWorkflow(triggerWorkflowDto: TriggerWorkflowDto) {
     this.logger.debug(`Triggering workflow: ${JSON.stringify(triggerWorkflowDto)}`);
-    const { pullRequest } = triggerWorkflowDto;
-    const response = await axios.post(this.workflowUrl, {
-      pullRequest,
-    });
+    const response = await axios.post(this.workflowUrl, triggerWorkflowDto);
     return response.data;
   }
 }

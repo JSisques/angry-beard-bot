@@ -8,7 +8,7 @@ import { UserService } from 'src/user/user.service';
 import { WorkflowService } from 'src/workflow/workflow.service';
 import { RepositoryDto } from 'src/repository/dto/repository.dto';
 import { GithubApiService } from './github-api.service';
-
+import { PullRequestFileDto } from './dto/github-pull-request-file.dto';
 @Injectable()
 export class GithubService {
   private readonly logger;
@@ -138,8 +138,16 @@ export class GithubService {
     this.logger.debug(`Processing GitHub webhook: ${JSON.stringify(webhookDto)}`);
     try {
       const { user, repository, pullRequest, installation } = await this.preProcessGitHubWebhook(webhookDto);
-      await this.githubApiService.getInstallation(installation.id);
-      await this.workflowService.triggerWorkflow({ pullRequest });
+
+      const installationToken = await this.githubApiService.getInstallationToken(installation.id);
+      const pullRequestFiles: PullRequestFileDto[] = await this.githubApiService.getPullRequestFiles(
+        installationToken,
+        webhookDto.repository.owner.login,
+        webhookDto.repository.name,
+        webhookDto.pull_request.number,
+      );
+
+      await this.workflowService.triggerWorkflow({ pullRequest, pullRequestFiles });
       const { review } = await this.postProcessGitHubWebhook(user.id, pullRequest.id);
       return { user, repository, pullRequest, review };
     } catch (error) {
