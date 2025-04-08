@@ -7,6 +7,7 @@ import { ReviewService } from 'src/review/review.service';
 import { UserService } from 'src/user/user.service';
 import { WorkflowService } from 'src/workflow/workflow.service';
 import { RepositoryDto } from 'src/repository/dto/repository.dto';
+import { GithubApiService } from './github-api.service';
 
 @Injectable()
 export class GithubService {
@@ -19,6 +20,7 @@ export class GithubService {
     private readonly reviewService: ReviewService,
     private readonly userService: UserService,
     private readonly workflowService: WorkflowService,
+    private readonly githubApiService: GithubApiService,
   ) {
     this.logger = new Logger(GithubService.name);
   }
@@ -136,7 +138,7 @@ export class GithubService {
     this.logger.debug(`Processing GitHub webhook: ${JSON.stringify(webhookDto)}`);
     try {
       const { user, repository, pullRequest, installation } = await this.preProcessGitHubWebhook(webhookDto);
-      await this.getInstallation(installation.id);
+      await this.githubApiService.getInstallation(installation.id);
       await this.workflowService.triggerWorkflow({ pullRequest });
       const { review } = await this.postProcessGitHubWebhook(user.id, pullRequest.id);
       return { user, repository, pullRequest, review };
@@ -144,10 +146,5 @@ export class GithubService {
       this.logger.error(`Error processing GitHub webhook: ${error}`);
       throw error;
     }
-  }
-
-  async getInstallation(installationId: number) {
-    //const installation = await this.githubService.getInstallation(installationId);
-    return 1;
   }
 }
