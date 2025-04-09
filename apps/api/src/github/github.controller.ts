@@ -1,6 +1,9 @@
 import { Controller, Logger, Post, Body } from '@nestjs/common';
 import { GithubWebhookDto } from './dto/webhook.github.dto';
 import { GithubService } from './github.service';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+
+@ApiTags('GitHub')
 @Controller('github')
 export class GithubController {
   private readonly logger;
@@ -9,6 +12,22 @@ export class GithubController {
     this.logger = new Logger(GithubController.name);
   }
 
+  @ApiOperation({
+    summary: 'Handle GitHub webhook events',
+    description: 'Processes incoming GitHub webhook events for pull request and repository actions',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Webhook processed successfully',
+    schema: {
+      properties: {
+        message: {
+          type: 'string',
+          example: 'Webhook received',
+        },
+      },
+    },
+  })
   @Post('/webhook')
   async webhook(@Body() body: GithubWebhookDto) {
     this.logger.debug(`Webhook received with action: ${body.action}`);
@@ -31,7 +50,6 @@ export class GithubController {
       case 'synchronize':
         this.logger.debug(`Pull request synchronized: ${body.pull_request.id}`);
         this.githubService.handlePullRequestSynchronized(body);
-
         break;
       default:
         this.logger.debug(`Unknown action: ${body.action}`);
