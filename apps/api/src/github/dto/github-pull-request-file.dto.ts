@@ -1,4 +1,6 @@
 export interface PullRequestFileDto {
+  pullRequestNumber: number;
+  pullRequestUrl: string;
   sha: string;
   filename: string;
   status: string;

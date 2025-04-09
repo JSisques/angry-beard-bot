@@ -9,7 +9,10 @@ import { WorkflowService } from 'src/workflow/workflow.service';
 import { RepositoryDto } from 'src/repository/dto/repository.dto';
 import { GithubApiService } from './github-api.service';
 import { PullRequestFileDto } from './dto/github-pull-request-file.dto';
-
+import { WorkflowMetadata } from 'src/workflow/interface/workflow-metadata.interface';
+import { TriggerWorkflowDto } from 'src/workflow/dto/trigger-workflow.dto';
+import { GithubMapper } from './mapper/github.mapper';
+import { BotConfigService } from 'src/bot-config/bot-config.service';
 @Injectable()
 export class GithubService {
   private readonly logger;
@@ -22,6 +25,8 @@ export class GithubService {
     private readonly userService: UserService,
     private readonly workflowService: WorkflowService,
     private readonly githubApiService: GithubApiService,
+    private readonly githubMapper: GithubMapper,
+    private readonly botConfigService: BotConfigService,
   ) {
     this.logger = new Logger(GithubService.name);
   }
@@ -116,15 +121,23 @@ export class GithubService {
       repository: existingRepository,
       pullRequest: existingPullRequest,
       installation: webhookDto.installation,
+      botConfig: existingRepository.botConfig,
     };
   }
 
-  private async postProcessGitHubWebhook(userId: string, pullRequestId: string) {
-    const existingReview = await this.reviewService.createReview({
-      userId,
-      pullRequestId,
-    });
-    return { review: existingReview };
+  private async postProcessGitHubWebhook(userId: string, pullRequestId: string, webhookResponse: { output: string }[]) {
+    this.logger.debug(`Webhook response: ${JSON.stringify(webhookResponse)}`);
+
+    const reviews = await Promise.all(
+      webhookResponse.map(response =>
+        this.reviewService.createReview({
+          userId,
+          pullRequestId,
+          comment: response.output,
+        }),
+      ),
+    );
+    return { reviews };
   }
 
   /**
@@ -138,9 +151,10 @@ export class GithubService {
   async processGitHubWebhook(webhookDto: GithubWebhookDto) {
     this.logger.debug(`Processing GitHub webhook: ${JSON.stringify(webhookDto)}`);
     try {
-      const { user, repository, pullRequest, installation } = await this.preProcessGitHubWebhook(webhookDto);
+      const { user, repository, pullRequest, installation, botConfig } = await this.preProcessGitHubWebhook(webhookDto);
 
       const installationToken = await this.githubApiService.getInstallationToken(installation.id);
+
       const pullRequestFiles: PullRequestFileDto[] = await this.githubApiService.getPullRequestFiles(
         installationToken,
         webhookDto.repository.owner.login,
@@ -148,11 +162,14 @@ export class GithubService {
         webhookDto.pull_request.number,
       );
 
-      const workflowResponse = await this.workflowService.triggerWorkflow({ pullRequest, pullRequestFiles, repository });
+      const payload = this.githubMapper.toPullRequestWorkflowPayload(pullRequestFiles, pullRequest, botConfig);
+      this.logger.debug(`Payload: ${JSON.stringify(payload)}`);
+
+      const workflowResponse = await this.workflowService.triggerWorkflow(payload);
       this.logger.debug(`Workflow response: ${JSON.stringify(workflowResponse)}`);
 
-      const { review } = await this.postProcessGitHubWebhook(user.id, pullRequest.id);
-      return { user, repository, pullRequest, review, workflowResponse };
+      const { reviews } = await this.postProcessGitHubWebhook(user.id, pullRequest.id, workflowResponse);
+      return { user, repository, pullRequest, reviews, workflowResponse };
     } catch (error) {
       this.logger.error(`Error processing GitHub webhook: ${error}`);
       throw error;

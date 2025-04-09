@@ -9,11 +9,13 @@ import { UserModule } from 'src/user/user.module';
 import { ReviewModule } from 'src/review/review.module';
 import { WorkflowModule } from 'src/workflow/workflow.module';
 import { PullRequestMapper } from 'src/pull-request/mapper/pull-request.mapper';
-
+import { GithubMapper } from './mapper/github.mapper';
+import { BotConfigService } from 'src/bot-config/bot-config.service';
+import { BotConfigModule } from 'src/bot-config/bot-config.module';
 @Module({
-  imports: [ConfigModule, RepositoryModule, PullRequestModule, UserModule, ReviewModule, WorkflowModule],
+  imports: [ConfigModule, RepositoryModule, PullRequestModule, UserModule, ReviewModule, WorkflowModule, BotConfigModule],
   controllers: [GithubController],
-  providers: [GithubService, GithubApiService, PullRequestMapper],
+  providers: [GithubService, GithubApiService, PullRequestMapper, GithubMapper],
   exports: [GithubService, GithubApiService],
 })
 export class GithubModule {}
