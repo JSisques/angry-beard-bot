@@ -140,12 +140,14 @@ export class GithubService {
 
       const installationToken = await this.githubApiService.getInstallationToken(installation.id);
 
-      const pullRequestFiles: PullRequestFileDto[] = await this.githubApiService.getPullRequestFiles(
+      const pullRequestFiles: PullRequestFileDto[] = await this.githubApiService.getFilesFromLastCommitOfPullRequest(
         installationToken,
         webhookDto.repository.owner.login,
         webhookDto.repository.name,
         webhookDto.pull_request.number,
       );
+
+      this.logger.debug(`Pull request files: ${JSON.stringify(pullRequestFiles)}`);
 
       const payload = this.githubMapper.toPullRequestWorkflowPayload(user.id, pullRequestFiles, pullRequest, botConfig);
       this.logger.debug(`Payload: ${JSON.stringify(payload)}`);

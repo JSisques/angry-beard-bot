@@ -87,6 +87,58 @@ export class GithubApiService {
   }
 
   /**
+   * Retrieves the files changed in the last commit of a pull request
+   * @param token - GitHub access token
+   * @param owner - Repository owner
+   * @param repo - Repository name
+   * @param prNumber - Pull request number
+   * @returns Promise resolving to an array of modified files with their details
+   * @throws Error if unable to fetch commits or commit details
+   */
+  async getFilesFromLastCommitOfPullRequest(token: string, owner: string, repo: string, prNumber: number): Promise<PullRequestFileDto[]> {
+    this.logger.debug(`Getting files from last commit of pull request ${prNumber} for owner: ${owner}, repo: ${repo}`);
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/vnd.github.v3+json',
+    };
+
+    const pullRequestCommits = await axios.get(`https://api.github.com/repos/${owner}/${repo}/pulls/${prNumber}/commits`, {
+      headers,
+    });
+
+    if (pullRequestCommits.status !== 200) {
+      throw new Error('Error getting pull request commits');
+    }
+
+    const commits = pullRequestCommits.data;
+    this.logger.debug(`Pull request commits: ${JSON.stringify(commits)}`);
+
+    const lastCommitSha = commits[commits.length - 1]?.sha;
+    this.logger.debug(`Last commit SHA: ${lastCommitSha}`);
+
+    if (!lastCommitSha) throw new Error('No se encontró el último commit de la PR');
+
+    const commitDetails = await axios.get(`https://api.github.com/repos/${owner}/${repo}/commits/${lastCommitSha}`, { headers });
+
+    if (commitDetails.status !== 200) {
+      throw new Error('Error getting commit details');
+    }
+
+    const files = commitDetails.data.files;
+    this.logger.debug(`Commit details files: ${JSON.stringify(files)}`);
+
+    const normalizedFiles = await Promise.all(
+      files.map(async (file: PullRequestFileDto) => {
+        const normalizedPatch = await this.normalizeDiffPatch(file.patch);
+        return { ...file, normalizedPatch };
+      }),
+    );
+
+    return normalizedFiles;
+  }
+
+  /**
    * Normalizes a git diff patch into a structured format
    * @param patch - The raw git diff patch string
    * @returns Promise resolving to an array of normalized patch lines with line numbers and content
