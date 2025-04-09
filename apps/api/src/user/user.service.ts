@@ -27,7 +27,10 @@ export class UserService {
 
   async getUserByProviderId(providerId: string) {
     this.logger.debug(`Getting user by provider id: ${providerId}`);
-    const user = await this.prismaService.user.findUnique({ where: { providerId } });
+    const user = await this.prismaService.user.findUnique({
+      where: { providerId },
+      include: { subscription: true, _count: { select: { reviews: true } } },
+    });
     this.logger.debug(`User found: ${JSON.stringify(user)}`);
     return user;
   }

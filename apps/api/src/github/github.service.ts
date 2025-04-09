@@ -138,6 +138,11 @@ export class GithubService {
     try {
       const { user, repository, pullRequest, installation, botConfig } = await this.preProcessGitHubWebhook(webhookDto);
 
+      if (user._count.reviews >= user.subscription.maxReviews) {
+        this.logger.debug(`User has reached the maximum number of reviews, skipping workflow`);
+        return { user, repository, pullRequest, workflowResponse: null };
+      }
+
       const installationToken = await this.githubApiService.getInstallationToken(installation.id);
 
       const pullRequestFiles: PullRequestFileDto[] = await this.githubApiService.getFilesFromLastCommitOfPullRequest(
