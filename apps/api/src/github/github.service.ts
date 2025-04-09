@@ -153,6 +153,11 @@ export class GithubService {
       const payload = this.githubMapper.toPullRequestWorkflowPayload(user.id, pullRequestFiles, pullRequest, botConfig);
       this.logger.debug(`Payload: ${JSON.stringify(payload)}`);
 
+      if (payload.workflowData.pullRequestFiles.length === 0) {
+        this.logger.debug(`No files to process, skipping workflow`);
+        return { user, repository, pullRequest, workflowResponse: null };
+      }
+
       const workflowResponse = await this.workflowService.triggerWorkflow(payload);
       this.logger.debug(`Workflow response: ${JSON.stringify(workflowResponse)}`);
 
