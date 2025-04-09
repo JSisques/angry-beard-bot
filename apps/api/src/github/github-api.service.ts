@@ -95,7 +95,13 @@ export class GithubApiService {
    * @returns Promise resolving to an array of modified files with their details
    * @throws Error if unable to fetch commits or commit details
    */
-  async getFilesFromLastCommitOfPullRequest(token: string, owner: string, repo: string, prNumber: number): Promise<PullRequestFileDto[]> {
+  async getFilesFromLastCommitOfPullRequest(
+    token: string,
+    owner: string,
+    repo: string,
+    prNumber: number,
+    ignoredExtensions: string[],
+  ): Promise<PullRequestFileDto[]> {
     this.logger.debug(`Getting files from last commit of pull request ${prNumber} for owner: ${owner}, repo: ${repo}`);
 
     const headers = {
@@ -128,8 +134,10 @@ export class GithubApiService {
     const files = commitDetails.data.files;
     this.logger.debug(`Commit details files: ${JSON.stringify(files)}`);
 
+    const filteredFiles = files.filter(file => !ignoredExtensions.includes(file.filename.split('.').pop()));
+    this.logger.debug(`Filtered files: ${JSON.stringify(filteredFiles)}`);
     const normalizedFiles = await Promise.all(
-      files.map(async (file: PullRequestFileDto) => {
+      filteredFiles.map(async (file: PullRequestFileDto) => {
         const normalizedPatch = await this.normalizeDiffPatch(file.patch);
         return { ...file, normalizedPatch };
       }),

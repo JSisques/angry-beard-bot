@@ -145,6 +145,7 @@ export class GithubService {
         webhookDto.repository.owner.login,
         webhookDto.repository.name,
         webhookDto.pull_request.number,
+        botConfig.ignoredExtensions,
       );
 
       this.logger.debug(`Pull request files: ${JSON.stringify(pullRequestFiles)}`);
