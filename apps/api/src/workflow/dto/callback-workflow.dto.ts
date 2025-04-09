@@ -1,4 +1,4 @@
-import { IsUUID, IsString } from 'class-validator';
+import { IsUUID, IsString, IsOptional } from 'class-validator';
 
 export class WorkflowCallbackDto {
   @IsUUID()
@@ -8,5 +8,14 @@ export class WorkflowCallbackDto {
   pullRequestId: string;
 
   @IsString()
-  output: string;
+  @IsOptional()
+  output?: string;
+
+  @IsString()
+  @IsOptional()
+  filename?: string;
+
+  @IsString()
+  @IsOptional()
+  patch?: string;
 }
