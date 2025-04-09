@@ -11,15 +11,12 @@ import { supabase } from '@/lib/supabase/client';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
 const formSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
 });
 
 export function AuthForm({ className, ...props }: React.ComponentProps<'div'>) {
-  const router = useRouter();
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -27,14 +24,14 @@ export function AuthForm({ className, ...props }: React.ComponentProps<'div'>) {
       password: '',
     },
   });
-  const handleMailLogin = async () => {
-    await supabase.auth.signInWithOtp({
-      email: 'm@example.com',
-    });
-  };
+  // const handleMailLogin = async () => {
+  //   await supabase.auth.signInWithOtp({
+  //     email: 'm@example.com',
+  //   });
+  // };
 
   const handleGithubLogin = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    await supabase.auth.signInWithOAuth({
       provider: 'github',
       options: {
         redirectTo: `${window.location.origin}/api/github/auth/callback`,
