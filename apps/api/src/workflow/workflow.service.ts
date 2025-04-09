@@ -30,6 +30,8 @@ export class WorkflowService {
       userId: body.userId,
       pullRequestId: body.pullRequestId,
       comment: body.output,
+      filename: body.filename,
+      patch: body.patch,
     });
     return { review };
   }

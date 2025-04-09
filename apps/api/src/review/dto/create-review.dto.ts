@@ -12,4 +12,12 @@ export class CreateReviewDto {
   @IsString()
   @IsOptional()
   comment?: string;
+
+  @IsString()
+  @IsOptional()
+  filename?: string;
+
+  @IsString()
+  @IsOptional()
+  patch?: string;
 }
