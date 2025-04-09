@@ -20,7 +20,12 @@ export class GithubMapper {
     };
   }
 
-  toPullRequestWorkflowPayload(files: PullRequestFileDto[], pullRequest: PullRequestDto, botConfig: BotConfigDto): TriggerWorkflowDto {
+  toPullRequestWorkflowPayload(
+    userId: string,
+    files: PullRequestFileDto[],
+    pullRequest: PullRequestDto,
+    botConfig: BotConfigDto,
+  ): TriggerWorkflowDto {
     files.map(file => {
       file.pullRequestNumber = pullRequest.number;
       file.pullRequestUrl = pullRequest.url;
@@ -29,6 +34,8 @@ export class GithubMapper {
     return {
       workflowMetadata: this.toWorkflowMetadata(),
       workflowData: {
+        userId,
+        pullRequestId: pullRequest.id,
         pullRequestFiles: files,
         botConfig,
       },

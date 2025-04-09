@@ -125,21 +125,6 @@ export class GithubService {
     };
   }
 
-  private async postProcessGitHubWebhook(userId: string, pullRequestId: string, webhookResponse: { output: string }[]) {
-    this.logger.debug(`Webhook response: ${JSON.stringify(webhookResponse)}`);
-
-    const reviews = await Promise.all(
-      webhookResponse.map(response =>
-        this.reviewService.createReview({
-          userId,
-          pullRequestId,
-          comment: response.output,
-        }),
-      ),
-    );
-    return { reviews };
-  }
-
   /**
    * Processes a GitHub webhook event by:
    * 1. Pre-processing the webhook data to get or create necessary records
@@ -162,14 +147,13 @@ export class GithubService {
         webhookDto.pull_request.number,
       );
 
-      const payload = this.githubMapper.toPullRequestWorkflowPayload(pullRequestFiles, pullRequest, botConfig);
+      const payload = this.githubMapper.toPullRequestWorkflowPayload(user.id, pullRequestFiles, pullRequest, botConfig);
       this.logger.debug(`Payload: ${JSON.stringify(payload)}`);
 
       const workflowResponse = await this.workflowService.triggerWorkflow(payload);
       this.logger.debug(`Workflow response: ${JSON.stringify(workflowResponse)}`);
 
-      const { reviews } = await this.postProcessGitHubWebhook(user.id, pullRequest.id, workflowResponse);
-      return { user, repository, pullRequest, reviews, workflowResponse };
+      return { user, repository, pullRequest, workflowResponse };
     } catch (error) {
       this.logger.error(`Error processing GitHub webhook: ${error}`);
       throw error;
