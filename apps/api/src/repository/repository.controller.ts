@@ -20,7 +20,7 @@ export class RepositoryController {
     description: 'Repository created successfully',
   })
   @Post()
-  async createRepository(@Body() repositoryDto: RepositoryDto, @Body() userId: string) {
+  async createRepository(@Body() repositoryDto: RepositoryDto, userId: string) {
     return this.repositoryService.createRepository(repositoryDto, userId);
   }
 }
