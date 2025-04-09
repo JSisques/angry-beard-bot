@@ -136,6 +136,7 @@ export class GithubApiService {
 
     const filteredFiles = files.filter(file => !ignoredExtensions.includes(file.filename.split('.').pop()));
     this.logger.debug(`Filtered files: ${JSON.stringify(filteredFiles)}`);
+
     const normalizedFiles = await Promise.all(
       filteredFiles.map(async (file: PullRequestFileDto) => {
         const normalizedPatch = await this.normalizeDiffPatch(file.patch);
