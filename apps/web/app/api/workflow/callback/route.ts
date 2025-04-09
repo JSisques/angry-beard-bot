@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     const payload = await request.text();
     const body = JSON.parse(payload);
 
-    console.log(body);
+    console.log('body', body);
 
     await post('/workflow/callback', body);
 
