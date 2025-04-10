@@ -112,37 +112,41 @@ The bot features an intuitive configuration system:
 
 ## Pricing Plans
 
-### Apprentice (Free)
+### Free Plan – For side-projects or trying out the bot
 
-- Perfect for small teams and individual developers
-- Up to 100 PRs per month
-- Full bot customization
-- Community support
-- All core features included
+- Price: €0 / month
+- Credits included: 20 / month
+- Features:
+  - PR reviews with GPT-4o mini
+  - Title and description improvements
+  - Basic best practices comments
+  - Configurable bot personality
+  - Limit: 20 normal reviews (or equivalent)
+  - No credit accumulation
+  - Option to upgrade anytime
 
-### Beard Master ($20/month or $192/year - 20% discount)
+### Pro Plan – For startups, freelancers and active teams
 
-- For growing teams
-- Up to 500 PRs per month
-- Email support
-- Advanced statistics
-- Everything included in the Apprentice plan
-- Priority response time
+- Price: €20 / month (€192 / year with 20% discount)
+- Credits included: 500 / month
+- Features:
+  - Automatic review after each commit and PR
+  - Detailed code comments
+  - Smart description editing
+  - Customizable bot personality
+  - Extra credits: €0.10 per credit
 
-### Business ($49/month or $470/year - 20% discount)
+### Business Plan – For companies with high PR volume
 
-- For large organizations
-- Up to 2000 PRs per month
-- Everything included in the Beard Master plan
-- Dedicated support
-- API integration (coming soon)
-- Advanced analysis with performance reports and dashboards (coming soon)
-
-### Additional PRs
-
-- Purchase extra PR batches
-- $5 for each additional 500 PRs
-- For more than 2000 PRs, please contact sales
+- Price: €49 / month (€470 / year with 20% discount)
+- Credits included: 2000 / month
+- Features:
+  - Everything in Pro plan
+  - Advanced review with powerful models (3 credits per review)
+  - Metrics dashboard and downloadable reports
+  - High priority in review queue
+  - External integrations (Slack, CI tools) (coming soon)
+  - Extra credits: €0.08 per credit
 
 All plans include a 14-day free trial with no credit card required.
 
