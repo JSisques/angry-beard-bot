@@ -114,7 +114,8 @@ export class GithubApiService {
       Accept: 'application/vnd.github.v3+json',
     };
 
-    const pullRequestCommits = await axios.get(`https://api.github.com/repos/${owner}/${repo}/pulls/${prNumber}/commits`, {
+    const since = new Date(new Date().setMinutes(new Date().getMinutes() - 5)).toISOString();
+    const pullRequestCommits = await axios.get(`https://api.github.com/repos/${owner}/${repo}/pulls/${prNumber}/commits?since=${since}`, {
       headers,
     });
 
@@ -125,7 +126,10 @@ export class GithubApiService {
     const commits: GithubCommit[] = pullRequestCommits.data;
     this.logger.debug(`Pull request commits: ${JSON.stringify(commits)}`);
 
-    const lastCommitSha = commits[0]?.sha;
+    const orderedCommits = commits.sort((a, b) => new Date(a.commit.committer.date).getTime() - new Date(b.commit.committer.date).getTime());
+    this.logger.debug(`Ordered commits: ${JSON.stringify(orderedCommits)}`);
+
+    const lastCommitSha = orderedCommits.pop()?.sha;
     this.logger.debug(`Last commit SHA: ${lastCommitSha}`);
 
     return;
