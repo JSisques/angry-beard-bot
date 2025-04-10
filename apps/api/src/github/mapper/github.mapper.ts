@@ -6,6 +6,7 @@ import { WorkflowMetadata } from 'src/workflow/interface/workflow-metadata.inter
 import { PullRequestFileDto } from '../dto/github-pull-request-file.dto';
 import { PullRequestDto } from 'src/pull-request/dto/pull-request.dto';
 import { BotConfigDto } from 'src/bot-config/dto/bot-config.dto';
+import { WorkflowSource } from 'src/workflow/enum/workflow-source.enum';
 @Injectable()
 export class GithubMapper {
   private readonly logger;
@@ -14,9 +15,12 @@ export class GithubMapper {
     this.logger = new Logger(GithubMapper.name);
   }
 
-  private toWorkflowMetadata(): WorkflowMetadata {
+  private toWorkflowMetadata(installationId: number): WorkflowMetadata {
+    this.logger.debug('Mapping workflow metadata');
     return {
       requestId: uuidv4(),
+      source: WorkflowSource.GITHUB,
+      installationId: installationId,
     };
   }
 
@@ -25,14 +29,16 @@ export class GithubMapper {
     files: PullRequestFileDto[],
     pullRequest: PullRequestDto,
     botConfig: BotConfigDto,
+    installationId: number,
   ): TriggerWorkflowDto {
+    this.logger.debug('Mapping pull request workflow payload');
     files.map(file => {
       file.pullRequestNumber = pullRequest.number;
       file.pullRequestUrl = pullRequest.url;
     });
 
     return {
-      workflowMetadata: this.toWorkflowMetadata(),
+      workflowMetadata: this.toWorkflowMetadata(installationId),
       workflowData: {
         userId,
         pullRequestId: pullRequest.id,

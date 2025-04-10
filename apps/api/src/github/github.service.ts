@@ -147,7 +147,7 @@ export class GithubService {
       );
       this.logger.debug(`Pull request files: ${JSON.stringify(pullRequestFiles)}`);
 
-      const payload = this.githubMapper.toPullRequestWorkflowPayload(user.id, pullRequestFiles, pullRequest, botConfig);
+      const payload = this.githubMapper.toPullRequestWorkflowPayload(user.id, pullRequestFiles, pullRequest, botConfig, installation.id);
       this.logger.debug(`Payload: ${JSON.stringify(payload)}`);
 
       if (payload.workflowData.pullRequestFiles.length === 0) {

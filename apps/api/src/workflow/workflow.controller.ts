@@ -1,4 +1,4 @@
-import { Controller, Logger, Post, Body } from '@nestjs/common';
+import { Controller, Logger, Post, Body, BadRequestException } from '@nestjs/common';
 import { WorkflowService } from './workflow.service';
 import { WorkflowCallbackDto } from './dto/callback-workflow.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -41,6 +41,11 @@ export class WorkflowController {
   @Post('/review/callback')
   async callback(@Body() body: WorkflowCallbackDto) {
     this.logger.debug(`Workflow callback received: ${JSON.stringify(body)}`);
-    return this.workflowService.handleWorkflowCallback(body);
+    try {
+      return this.workflowService.handleWorkflowCallback(body);
+    } catch (error) {
+      this.logger.error(`Error handling workflow callback: ${error}`);
+      throw new BadRequestException('Error handling workflow callback');
+    }
   }
 }

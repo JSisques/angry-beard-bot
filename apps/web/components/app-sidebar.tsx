@@ -13,6 +13,8 @@ import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import iconWhite from '@/public/icon_white.svg';
 import iconBlack from '@/public/icon_black.svg';
+import { useDictionary } from '@/hooks/use-dictionary';
+import { useParams } from 'next/navigation';
 
 const data = {
   user: {
@@ -64,6 +66,8 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { theme } = useTheme();
+  const { lang } = useParams();
+  const { dictionary } = useDictionary(lang as string);
 
   return (
     <Sidebar variant="inset" {...props}>
@@ -74,8 +78,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               <NextLink href="/" className="flex items-center gap-2">
                 <Image src={theme === 'dark' ? iconWhite : iconBlack} alt="Angry Beard Bot" width={32} height={32} priority />
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Angry Beard Bot</span>
-                  <span className="truncate text-xs">Code Review Expert</span>
+                  <span className="truncate font-medium">{dictionary?.common?.appName}</span>
+                  <span className="truncate text-xs">{dictionary?.common?.appDescription}</span>
                 </div>
               </NextLink>
             </SidebarMenuButton>

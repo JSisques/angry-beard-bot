@@ -6,7 +6,8 @@ import { WorkflowCallbackDto } from './dto/callback-workflow.dto';
 import { ReviewService } from 'src/review/review.service';
 import { SubscriptionDto } from 'src/subscription/dto/subscription.dto';
 import { SubscriptionService } from 'src/subscription/subscription.service';
-
+import { WorkflowSource } from './enum/workflow-source.enum';
+import { GithubApiService } from 'src/github/github-api.service';
 @Injectable()
 export class WorkflowService {
   private readonly logger;
@@ -16,6 +17,7 @@ export class WorkflowService {
     private readonly configService: ConfigService,
     private readonly reviewService: ReviewService,
     private readonly subscriptionService: SubscriptionService,
+    private readonly githubApiService: GithubApiService,
   ) {
     this.logger = new Logger(WorkflowService.name);
     this.workflowUrl = this.configService.get('WORKFLOW_URL');
@@ -66,6 +68,11 @@ export class WorkflowService {
   async handleWorkflowCallback(body: WorkflowCallbackDto) {
     this.logger.debug(`Handling workflow callback: ${JSON.stringify(body)}`);
 
+    if (body.source === WorkflowSource.GITHUB) {
+      this.logger.debug('Handling Github workflow callback');
+      await this.githubApiService.postCommentReview(body);
+    }
+
     const review = await this.reviewService.createReview({
       userId: body.userId,
       pullRequestId: body.pullRequestId,
@@ -73,6 +80,7 @@ export class WorkflowService {
       filename: body.filename,
       patch: body.patch,
     });
+
     return { review };
   }
 }

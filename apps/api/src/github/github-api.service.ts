@@ -3,11 +3,13 @@ import { ConfigService } from '@nestjs/config';
 import * as jwt from 'jsonwebtoken';
 import axios from 'axios';
 import { PullRequestFileDto, NormalizedPatchDto } from './dto/github-pull-request-file.dto';
+import { WorkflowCallbackDto } from 'src/workflow/dto/callback-workflow.dto';
 @Injectable()
 export class GithubApiService {
   private readonly logger;
   private readonly appId: string;
   private readonly privateKey: string;
+  private token: string;
 
   constructor(private readonly configService: ConfigService) {
     this.logger = new Logger(GithubApiService.name);
@@ -55,6 +57,8 @@ export class GithubApiService {
         },
       },
     );
+
+    this.token = response.data.token;
 
     return response.data.token;
   }
@@ -184,5 +188,30 @@ export class GithubApiService {
       endLine,
       content: content.join('\n'),
     };
+  }
+
+  async postCommentReview(body: WorkflowCallbackDto) {
+    this.logger.debug(`Posting comment review for pull request ${body.pullRequestId}`);
+
+    const token = await this.getInstallationToken(body.installationId);
+
+    this.logger.debug(`Pull request url: ${body.pullRequestUrl}`);
+    const response = await axios.post(
+      `${body.pullRequestUrl}/comments`,
+      {
+        body: body.output,
+        commit_id: body.commitSha,
+        path: body.filename,
+        position: body.startLine,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/vnd.github.v3+json',
+        },
+      },
+    );
+    this.logger.debug(`Comment review posted for pull request ${body.pullRequestId}`);
+    return response.data;
   }
 }
