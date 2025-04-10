@@ -138,9 +138,7 @@ export class GithubService {
 
       const installationToken = await this.githubApiService.getInstallationToken(installation.id);
 
-      const commitSha = webhookDto.pull_request.head.sha;
-
-      const pullRequestFiles: PullRequestFileDto[] = await this.githubApiService.getFilesFromLastCommitOfPullRequest(
+      const { pullRequestFiles, commitSha } = await this.githubApiService.getFilesFromLastCommitOfPullRequest(
         installationToken,
         webhookDto.repository.owner.login,
         webhookDto.repository.name,

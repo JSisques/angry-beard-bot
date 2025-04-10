@@ -107,7 +107,7 @@ export class GithubApiService {
     repo: string,
     prNumber: number,
     ignoredExtensions: string[],
-  ): Promise<PullRequestFileDto[]> {
+  ): Promise<{ pullRequestFiles: PullRequestFileDto[]; commitSha: string }> {
     this.logger.debug(`Getting files from last commit of pull request ${prNumber} for owner: ${owner}, repo: ${repo}`);
 
     const headers = {
@@ -115,12 +115,10 @@ export class GithubApiService {
       Accept: 'application/vnd.github.v3+json',
     };
 
-    // Get the last page of commits using the Link header
     const lastPageUrl = await this.getLastPageUrl(`https://api.github.com/repos/${owner}/${repo}/pulls/${prNumber}/commits`, headers);
 
     this.logger.debug(`Last page URL: ${lastPageUrl}`);
 
-    // Get commits from the last page
     const pullRequestCommits = await axios.get(lastPageUrl, { headers });
 
     if (pullRequestCommits.status !== 200) {
@@ -130,12 +128,9 @@ export class GithubApiService {
     const commits: GithubCommit[] = pullRequestCommits.data;
     this.logger.debug(`Pull request commits from last page: ${JSON.stringify(commits)}`);
 
-    // Get the last commit from the last page
     const lastCommit = commits[commits.length - 1];
     const lastCommitSha = lastCommit?.sha;
     this.logger.debug(`Last commit SHA: ${lastCommitSha}`);
-
-    return;
 
     if (!lastCommitSha) throw new Error('No se encontró el último commit de la PR');
 
@@ -158,7 +153,7 @@ export class GithubApiService {
       }),
     );
 
-    return normalizedFiles;
+    return { pullRequestFiles: normalizedFiles, commitSha: lastCommitSha };
   }
 
   /**

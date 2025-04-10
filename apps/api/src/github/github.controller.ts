@@ -45,11 +45,14 @@ export class GithubController {
         this.logger.debug(`Repository edited: ${body.repository.id}`);
         break;
       case 'submitted':
-        this.logger.debug(`Review submitted: ${body.repository.id}`);
+        this.logger.debug(`Review submitted for pull request: ${body.pull_request.id}`);
         break;
       case 'synchronize':
         this.logger.debug(`Pull request synchronized: ${body.pull_request.id}`);
         this.githubService.handlePullRequestSynchronized(body);
+        break;
+      case 'created':
+        this.logger.debug(`Review created for repository: ${body.repository.id}`);
         break;
       default:
         this.logger.debug(`Unknown action: ${body.action}`);
