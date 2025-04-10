@@ -18,7 +18,7 @@
 
     <div class="max-w-4xl mx-auto space-y-8">
       <!-- Step 1 -->
-      <div class="group transform transition-all duration-500 hover:scale-105">
+      <div class="group transform transition-all duration-500 hover:scale-105 opacity-0" data-card="1">
         <div class="bg-background/50 backdrop-blur-sm rounded-2xl p-8 border border-primary/10 shadow-lg">
           <div class="flex flex-col md:flex-row items-center gap-8">
             <div class="w-16 h-16 bg-background rounded-2xl border-2 border-primary p-3 shrink-0">
@@ -39,7 +39,7 @@
       </div>
 
       <!-- Step 2 -->
-      <div class="group transform transition-all duration-500 hover:scale-105">
+      <div class="group transform transition-all duration-500 hover:scale-105 opacity-0" data-card="2">
         <div class="bg-background/50 backdrop-blur-sm rounded-2xl p-8 border border-primary/10 shadow-lg">
           <div class="flex flex-col md:flex-row items-center gap-8">
             <div class="w-16 h-16 bg-background rounded-2xl border-2 border-primary p-3 shrink-0">
@@ -60,7 +60,7 @@
       </div>
 
       <!-- Step 3 -->
-      <div class="group transform transition-all duration-500 hover:scale-105">
+      <div class="group transform transition-all duration-500 hover:scale-105 opacity-0" data-card="3">
         <div class="bg-background/50 backdrop-blur-sm rounded-2xl p-8 border border-primary/10 shadow-lg">
           <div class="flex flex-col md:flex-row items-center gap-8">
             <div class="w-16 h-16 bg-background rounded-2xl border-2 border-primary p-3 shrink-0">
@@ -84,34 +84,41 @@
   </div>
 </section>
 
-<style>
-  @keyframes slideInLeft {
-    from {
-      opacity: 0;
-      transform: translateX(-100px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
+<script>
+  // Load anime.js from CDN
+  const script = document.createElement('script');
+  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js';
+  script.onload = () => {
+    const cards = document.querySelectorAll<HTMLElement>('[data-card]');
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.2
+    };
 
-  @keyframes slideInRight {
-    from {
-      opacity: 0;
-      transform: translateX(100px);
-    }
-    to {
-      opacity: 1;
-      transform: translateX(0);
-    }
-  }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const card = entry.target as HTMLElement;
+          const cardNumber = parseInt(card.dataset.card || '0');
+          
+          (window as any).anime({
+            targets: card,
+            opacity: [0, 1],
+            translateX: cardNumber % 2 === 0 ? [100, 0] : [-100, 0],
+            duration: 800,
+            easing: 'easeOutCubic',
+            complete: () => {
+              observer.unobserve(card);
+            }
+          });
+        }
+      });
+    }, observerOptions);
 
-  #how-it-works > div > div > div:nth-child(odd) {
-    animation: slideInLeft 0.8s ease-out forwards;
-  }
-
-  #how-it-works > div > div > div:nth-child(even) {
-    animation: slideInRight 0.8s ease-out forwards;
-  }
-</style> 
+    cards.forEach(card => {
+      observer.observe(card);
+    });
+  };
+  document.head.appendChild(script);
+</script> 
