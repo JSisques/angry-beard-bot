@@ -1,7 +1,17 @@
 {
   "common": {
     "appName": "Angry Beard Bot",
-    "appDescription": "AI-powered code review bot with personality"
+    "appDescription": "AI-powered code review bot with personality",
+    "loading": "Loading...",
+    "loadingDescription": "Loading the application...",
+    "accept": "Accept",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "close": "Close",
+    "logout": "Logout",
+    "login": "Login"
   },
   "sidebar": {
     "home": "Home",
