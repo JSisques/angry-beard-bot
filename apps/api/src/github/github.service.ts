@@ -138,13 +138,13 @@ export class GithubService {
     try {
       const { user, repository, pullRequest, installation, botConfig } = await this.preProcessGitHubWebhook(webhookDto);
 
-      const maxReviews = user.subscription.maxReviews;
-      this.logger.debug(`User max reviews: ${maxReviews}`);
-      const currentReviews = user._count.reviews;
-      this.logger.debug(`User current reviews: ${currentReviews}`);
+      const maxCredits = user.subscription.credits;
+      this.logger.debug(`User max credits: ${maxCredits}`);
+      const currentCredits = user._count.reviews;
+      this.logger.debug(`User current credits: ${currentCredits}`);
 
-      if (currentReviews >= maxReviews) {
-        this.logger.debug(`User has reached the maximum number of reviews, skipping workflow`);
+      if (currentCredits >= maxCredits) {
+        this.logger.debug(`User has reached the maximum number of credits, skipping workflow`);
         return { user, repository, pullRequest, workflowResponse: null };
       }
 
