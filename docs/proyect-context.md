@@ -120,6 +120,7 @@ The bot features an intuitive configuration system:
   - Title and description improvements
   - Basic best practices comments
   - Automatic review after each commit and PR
+  - Unlimited public and private repositories
   - Limit: 20 normal reviews (or equivalent)
   - No credit accumulation
   - Option to upgrade anytime
