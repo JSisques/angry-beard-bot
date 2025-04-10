@@ -132,8 +132,6 @@ export class GithubApiService {
     const lastCommitSha = orderedCommits.pop()?.sha;
     this.logger.debug(`Last commit SHA: ${lastCommitSha}`);
 
-    return;
-
     if (!lastCommitSha) throw new Error('No se encontró el último commit de la PR');
 
     const commitDetails = await axios.get(`https://api.github.com/repos/${owner}/${repo}/commits/${lastCommitSha}`, { headers });
