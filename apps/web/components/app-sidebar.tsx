@@ -11,6 +11,8 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, Sid
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
+import iconWhite from '@/public/icon_white.svg';
+import iconBlack from '@/public/icon_black.svg';
 
 const data = {
   user: {
@@ -70,7 +72,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <NextLink href="/" className="flex items-center gap-2">
-                <Image src={theme === 'dark' ? '/icon_white.svg' : '/icon_black.svg'} alt="Angry Beard Bot" width={32} height={32} priority />
+                <Image src={theme === 'dark' ? iconWhite : iconBlack} alt="Angry Beard Bot" width={32} height={32} priority />
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">Angry Beard Bot</span>
                   <span className="truncate text-xs">Code Review Expert</span>

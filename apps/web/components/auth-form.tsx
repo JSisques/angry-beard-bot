@@ -11,6 +11,8 @@ import { supabase } from '@/lib/supabase/client';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import logo from '@/public/logo.svg';
+
 const formSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
@@ -105,7 +107,7 @@ export function AuthForm({ className, ...props }: React.ComponentProps<'div'>) {
           </form>
           <div className="bg-muted relative hidden md:block">
             <Image
-              src="/logo.svg"
+              src={logo}
               alt="Image"
               className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
               width={500}
