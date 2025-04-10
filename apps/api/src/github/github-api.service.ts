@@ -194,23 +194,33 @@ export class GithubApiService {
     this.logger.debug(`Posting comment review for pull request ${body.pullRequestId}`);
 
     const token = await this.getInstallationToken(body.installationId);
+    this.logger.debug(`Token: ${token}`);
 
-    this.logger.debug(`Pull request url: ${body.pullRequestUrl}`);
-    const response = await axios.post(
-      `${body.pullRequestUrl}/comments`,
-      {
-        body: body.output,
-        commit_id: body.commitSha,
-        path: body.filename,
-        position: body.startLine,
+    const urlParts = body.pullRequestUrl.split('/');
+    const owner = urlParts[urlParts.length - 4];
+    const repo = urlParts[urlParts.length - 3];
+    const prNumber = urlParts[urlParts.length - 1];
+
+    this.logger.debug(`Extracted owner: ${owner}, repo: ${repo}, prNumber: ${prNumber}`);
+
+    const apiUrl = `https://api.github.com/repos/${owner}/${repo}/pulls/${prNumber}/comments`;
+    this.logger.debug(`Using API URL: ${apiUrl}`);
+
+    const payload = {
+      body: body.output.toString().trim(),
+      commit_id: body.commitSha.toString().trim(),
+      path: body.filename.toString().trim(),
+      position: body.startLine,
+    };
+
+    this.logger.debug(`Payload: ${JSON.stringify(payload)}`);
+
+    const response = await axios.post(apiUrl, payload, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: 'application/vnd.github.v3+json',
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/vnd.github.v3+json',
-        },
-      },
-    );
+    });
     this.logger.debug(`Comment review posted for pull request ${body.pullRequestId}`);
     return response.data;
   }
