@@ -125,10 +125,7 @@ export class GithubApiService {
     const commits: GithubCommit[] = pullRequestCommits.data;
     this.logger.debug(`Pull request commits: ${JSON.stringify(commits)}`);
 
-    const orderedCommits = commits.sort((a, b) => new Date(a.commit.committer.date).getTime() - new Date(b.commit.committer.date).getTime());
-    this.logger.debug(`Ordered commits: ${JSON.stringify(orderedCommits)}`);
-
-    const lastCommitSha = orderedCommits.pop()?.sha;
+    const lastCommitSha = commits[0]?.sha;
     this.logger.debug(`Last commit SHA: ${lastCommitSha}`);
 
     return;
