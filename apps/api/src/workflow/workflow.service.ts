@@ -70,7 +70,7 @@ export class WorkflowService {
 
     if (body.source === WorkflowSource.GITHUB) {
       this.logger.debug('Handling Github workflow callback');
-      await this.githubApiService.postCommentReview(body);
+      // await this.githubApiService.postCommentReview(body);
     }
 
     const review = await this.reviewService.createReview({

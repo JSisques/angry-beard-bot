@@ -160,6 +160,7 @@ export class GithubService {
 
       if (!canProceed) {
         this.logger.debug(`User has reached the maximum number of credits, skipping workflow`);
+        // TODO: Post a comment to the user to upgrade their subscription (just one time)
         return { user, repository, pullRequest, workflowResponse: null };
       }
 
