@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import { Bot, Code2, FileCode2, GitPullRequest, HelpCircle, Link, Settings2, User } from 'lucide-react';
+import NextLink from 'next/link';
 
 import { NavMain } from '@/components/nav-main';
 import { NavSecondary } from '@/components/nav-secondary';
@@ -9,6 +10,7 @@ import { NavUser } from '@/components/nav-user';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
+import { useEffect, useState } from 'react';
 
 const data = {
   user: {
@@ -59,21 +61,7 @@ const data = {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { theme, resolvedTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
-
-  // Evitar problemas de hidratación esperando a que el componente se monte
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // No renderizar nada hasta que el componente esté montado
-  if (!mounted) {
-    return null;
-  }
-
-  // Usar resolvedTheme en lugar de theme para obtener el tema actual
-  const currentTheme = resolvedTheme || theme;
+  const { theme } = useTheme();
 
   return (
     <Sidebar variant="inset" {...props}>
@@ -81,21 +69,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
-              <Link href="/">
-                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <Image
-                    src={currentTheme === 'dark' ? '/icon_white.svg' : '/icon_black.svg'}
-                    alt="Angry Beard Bot"
-                    width={32}
-                    height={32}
-                    priority
-                  />
-                </div>
+              <NextLink href="/" className="flex items-center gap-2">
+                <Image src={theme === 'dark' ? '/icon_white.svg' : '/icon_black.svg'} alt="Angry Beard Bot" width={32} height={32} priority />
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">Angry Beard Bot</span>
                   <span className="truncate text-xs">Code Review Expert</span>
                 </div>
-              </Link>
+              </NextLink>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
