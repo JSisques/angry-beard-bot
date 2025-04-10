@@ -112,43 +112,57 @@ The bot features an intuitive configuration system:
 
 ## Pricing Plans
 
-### Free Plan – For side-projects or trying out the bot
+### The Apprentice – For side-projects or trying out the bot
 
-- Price: €0 / month
-- Credits included: 20 / month
-- Features:
-  - PR reviews with GPT-4o mini
+- **Price:** €0 / month
+- **Credits included:** 20 / month
+- **Features:**
   - Title and description improvements
   - Basic best practices comments
-  - Configurable bot personality
+  - Automatic review after each commit and PR
   - Limit: 20 normal reviews (or equivalent)
   - No credit accumulation
   - Option to upgrade anytime
 
-### Pro Plan – For startups, freelancers and active teams
+---
 
-- Price: €20 / month (€192 / year with 20% discount)
-- Credits included: 500 / month
-- Features:
-  - Automatic review after each commit and PR
+### The Grumpy Dev – For startups, freelancers and active teams
+
+- **Price:** €20 / month (€192 / year with 20% discount)
+- **Credits included:** 500 / month
+- **Features:**
+  - Everything in Free plan
   - Detailed code comments
-  - Smart description editing
   - Customizable bot personality
+  - Customizable bot configuration
   - Extra credits: €0.10 per credit
 
-### Business Plan – For companies with high PR volume
+---
 
-- Price: €49 / month (€470 / year with 20% discount)
-- Credits included: 2000 / month
-- Features:
+### The Bearded Overlord – For companies with high PR volume
+
+- **Price:** €49 / month (€470 / year with 20% discount)
+- **Credits included:** 2000 / month
+- **Features:**
   - Everything in Pro plan
   - Advanced review with powerful models (3 credits per review)
   - Metrics dashboard and downloadable reports
   - High priority in review queue
-  - External integrations (Slack, CI tools) (coming soon)
+  - External integrations (Slack, CI tools) _(coming soon)_
   - Extra credits: €0.08 per credit
 
-All plans include a 14-day free trial with no credit card required.
+---
+
+### 💡 How credits work
+
+- **1 credit = review of 1 file** using the standard model (GPT-4o mini).
+- **Advanced reviews** (using more powerful models like GPT-4o full) consume **3 credits per file**.
+- If a PR contains multiple files, each will be reviewed separately and consume credits individually.
+- You can mix standard and advanced reviews within the same PR.
+
+---
+
+All plans include a **14-day free trial** with no credit card required.
 
 ## Implementation Details
 
