@@ -1,0 +1,11 @@
+{
+  "common": {
+    "appName": "Angry Beard Bot",
+    "appDescription": "AI-powered code review bot with personality"
+  },
+  "sidebar": {
+    "home": "Home",
+    "settings": "Settings",
+    "logout": "Logout"
+  }
+}

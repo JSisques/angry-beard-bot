@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -12,6 +11,9 @@ import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, Github, Settings, Zap, Star, TrendingUp } from 'lucide-react';
 import { useAppStore } from '@/lib/store';
 import { v4 as uuidv4 } from 'uuid';
+import { useDictionary } from '@/hooks/use-dictionary';
+import { useParams } from 'next/navigation';
+import Loading from '@/app/loading';
 
 // Mock data for statistics
 const mockStats = {
@@ -28,6 +30,8 @@ const mockStats = {
 };
 
 export default function Home() {
+  const { lang } = useParams();
+  const { dictionary } = useDictionary(lang as string);
   const [newRepoInput, setNewRepoInput] = useState('');
   const { repositories, botConfig, addRepository, removeRepository, updateBotConfig } = useAppStore();
 
@@ -72,11 +76,13 @@ export default function Home() {
     alert('Configuration saved successfully!');
   };
 
+  if (!dictionary) return <Loading />;
+
   return (
     <div className="min-h-screen w-full bg-background p-6">
       <header className="mb-8">
-        <h1 className="text-3xl font-bold">Angry Beard Bot</h1>
-        <p className="text-muted-foreground">Your grumpy code reviewer dashboard</p>
+        <h1 className="text-3xl font-bold">{dictionary.common.appName}</h1>
+        <p className="text-muted-foreground">{dictionary.common.appDescription}</p>
       </header>
 
       {/* Main Content */}
