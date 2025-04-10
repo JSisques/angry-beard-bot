@@ -146,8 +146,8 @@ The bot features an intuitive configuration system:
 - **Credits included:** 2000 / month
 - **Features:**
   - Everything in Pro plan
-  - Advanced review with powerful models (3 credits per review)
-  - Metrics dashboard and downloadable reports
+  - Advanced review with powerful models (3 credits per review) _(coming soon)_
+  - Metrics dashboard and downloadable reports _(coming soon)_
   - High priority in review queue
   - External integrations (Slack, CI tools) _(coming soon)_
   - Extra credits: €0.08 per credit
