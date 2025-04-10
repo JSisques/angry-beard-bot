@@ -254,7 +254,7 @@ export class GithubApiService {
       body: body.output.toString().trim(),
       commit_id: body.commitSha.toString().trim(),
       path: body.filename.toString().trim(),
-      position: body.startLine,
+      line: body.startLine,
     };
 
     this.logger.debug(`Payload: ${JSON.stringify(payload)}`);
