@@ -136,6 +136,15 @@ export class GithubService {
     try {
       const { user, repository, pullRequest, installation, botConfig } = await this.preProcessGitHubWebhook(webhookDto);
 
+      const canProceed = await this.workflowService.canProceed(user.subscription, user._count.reviews);
+      this.logger.debug(`Can proceed: ${canProceed}`);
+
+      if (!canProceed) {
+        this.logger.debug(`User has reached the maximum number of credits, skipping workflow`);
+        // TODO: Post a comment to the user to upgrade their subscription (just one time)
+        return { user, repository, pullRequest, workflowResponse: null };
+      }
+
       const installationToken = await this.githubApiService.getInstallationToken(installation.id);
 
       const { pullRequestFiles, commitSha } = await this.githubApiService.getFilesFromLastCommitOfPullRequest(
@@ -152,15 +161,6 @@ export class GithubService {
 
       if (payload.workflowData.pullRequestFiles.length === 0) {
         this.logger.debug(`No files to process, skipping workflow`);
-        return { user, repository, pullRequest, workflowResponse: null };
-      }
-
-      const canProceed = await this.workflowService.canProceed(user.subscription, user._count.reviews);
-      this.logger.debug(`Can proceed: ${canProceed}`);
-
-      if (!canProceed) {
-        this.logger.debug(`User has reached the maximum number of credits, skipping workflow`);
-        // TODO: Post a comment to the user to upgrade their subscription (just one time)
         return { user, repository, pullRequest, workflowResponse: null };
       }
 
