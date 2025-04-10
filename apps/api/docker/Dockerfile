@@ -1,34 +1,34 @@
-# Etapa 1: Build
+# Stage 1: Build
 FROM node:18-alpine AS builder
 
-# Crear directorio de trabajo
+# Create working directory
 WORKDIR /app
 
-# Copiar archivos de dependencias
+# Copy dependency files
 COPY ../../yarn.lock ../../package.json ./
 
-# Instalar dependencias
+# Install dependencies
 RUN yarn install
 
-# Copiar el resto del proyecto
+# Copy rest of project
 COPY ../../ .
 
-# Compilar la aplicación
+# Build application
 RUN yarn build
 
-# Etapa 2: Producción
+# Stage 2: Production
 FROM node:18-alpine
 
 WORKDIR /app
 
-# Copiar solo lo necesario desde la etapa de build
+# Copy only necessary files from build stage
 COPY --from=builder /app/package.json ./
 COPY --from=builder /app/yarn.lock ./
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist ./dist
 
-# Puerto por defecto de Nest
+# Default Nest port
 EXPOSE 3000
 
-# Comando para iniciar la app
+# Command to start app
 CMD ["node", "dist/main"]
