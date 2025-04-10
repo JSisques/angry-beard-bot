@@ -4,6 +4,7 @@ import * as jwt from 'jsonwebtoken';
 import axios from 'axios';
 import { PullRequestFileDto, NormalizedPatchDto } from './dto/github-pull-request-file.dto';
 import { WorkflowCallbackDto } from 'src/workflow/dto/callback-workflow.dto';
+import { GithubCommit } from './dto/github-commit.dto';
 @Injectable()
 export class GithubApiService {
   private readonly logger;
@@ -121,10 +122,13 @@ export class GithubApiService {
       throw new Error('Error getting pull request commits');
     }
 
-    const commits = pullRequestCommits.data;
+    const commits: GithubCommit[] = pullRequestCommits.data;
     this.logger.debug(`Pull request commits: ${JSON.stringify(commits)}`);
 
-    const lastCommitSha = commits[commits.length - 1]?.sha;
+    const orderedCommits = commits.sort((a, b) => new Date(a.commit.committer.date).getTime() - new Date(b.commit.committer.date).getTime());
+    this.logger.debug(`Ordered commits: ${JSON.stringify(orderedCommits)}`);
+
+    const lastCommitSha = orderedCommits.pop()?.sha;
     this.logger.debug(`Last commit SHA: ${lastCommitSha}`);
 
     if (!lastCommitSha) throw new Error('No se encontró el último commit de la PR');
