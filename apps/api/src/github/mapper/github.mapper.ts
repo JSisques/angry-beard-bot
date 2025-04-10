@@ -15,12 +15,13 @@ export class GithubMapper {
     this.logger = new Logger(GithubMapper.name);
   }
 
-  private toWorkflowMetadata(installationId: number): WorkflowMetadata {
+  private toWorkflowMetadata(installationId: number, commitSha: string): WorkflowMetadata {
     this.logger.debug('Mapping workflow metadata');
     return {
       requestId: uuidv4(),
       source: WorkflowSource.GITHUB,
       installationId: installationId,
+      commitSha: commitSha,
     };
   }
 
@@ -30,6 +31,7 @@ export class GithubMapper {
     pullRequest: PullRequestDto,
     botConfig: BotConfigDto,
     installationId: number,
+    commitSha: string,
   ): TriggerWorkflowDto {
     this.logger.debug('Mapping pull request workflow payload');
     files.map(file => {
@@ -38,7 +40,7 @@ export class GithubMapper {
     });
 
     return {
-      workflowMetadata: this.toWorkflowMetadata(installationId),
+      workflowMetadata: this.toWorkflowMetadata(installationId, commitSha),
       workflowData: {
         userId,
         pullRequestId: pullRequest.id,

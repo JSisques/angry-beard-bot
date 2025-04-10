@@ -4,4 +4,5 @@ export interface WorkflowMetadata {
   requestId: string;
   source: WorkflowSource;
   installationId: number;
+  commitSha: string;
 }
