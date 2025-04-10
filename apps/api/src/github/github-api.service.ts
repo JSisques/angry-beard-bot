@@ -97,6 +97,7 @@ export class GithubApiService {
    * @param owner - Repository owner
    * @param repo - Repository name
    * @param prNumber - Pull request number
+   * @param ignoredExtensions - Array of file extensions to ignore
    * @returns Promise resolving to an array of modified files with their details
    * @throws Error if unable to fetch commits or commit details
    */
@@ -114,23 +115,27 @@ export class GithubApiService {
       Accept: 'application/vnd.github.v3+json',
     };
 
-    const since = new Date(new Date().setMinutes(new Date().getMinutes() - 5)).toISOString();
-    const pullRequestCommits = await axios.get(`https://api.github.com/repos/${owner}/${repo}/pulls/${prNumber}/commits?since=${since}`, {
-      headers,
-    });
+    // Get the last page of commits using the Link header
+    const lastPageUrl = await this.getLastPageUrl(`https://api.github.com/repos/${owner}/${repo}/pulls/${prNumber}/commits`, headers);
+
+    this.logger.debug(`Last page URL: ${lastPageUrl}`);
+
+    // Get commits from the last page
+    const pullRequestCommits = await axios.get(lastPageUrl, { headers });
 
     if (pullRequestCommits.status !== 200) {
       throw new Error('Error getting pull request commits');
     }
 
     const commits: GithubCommit[] = pullRequestCommits.data;
-    this.logger.debug(`Pull request commits: ${JSON.stringify(commits)}`);
+    this.logger.debug(`Pull request commits from last page: ${JSON.stringify(commits)}`);
 
-    const orderedCommits = commits.sort((a, b) => new Date(a.commit.committer.date).getTime() - new Date(b.commit.committer.date).getTime());
-    this.logger.debug(`Ordered commits: ${JSON.stringify(orderedCommits)}`);
-
-    const lastCommitSha = orderedCommits.pop()?.sha;
+    // Get the last commit from the last page
+    const lastCommit = commits[commits.length - 1];
+    const lastCommitSha = lastCommit?.sha;
     this.logger.debug(`Last commit SHA: ${lastCommitSha}`);
+
+    return;
 
     if (!lastCommitSha) throw new Error('No se encontró el último commit de la PR');
 
@@ -154,6 +159,45 @@ export class GithubApiService {
     );
 
     return normalizedFiles;
+  }
+
+  /**
+   * Gets the URL of the last page from the Link header
+   * @param url - The initial API URL
+   * @param headers - Request headers
+   * @returns Promise resolving to the URL of the last page
+   * @private
+   */
+  private async getLastPageUrl(url: string, headers: Record<string, string>): Promise<string> {
+    try {
+      const response = await axios.get(url, { headers });
+
+      // Check if there's a Link header
+      const linkHeader = response.headers.link;
+
+      if (!linkHeader) {
+        // If no Link header, this is the only page
+        return url;
+      }
+
+      // Parse the Link header to find the "last" page URL
+      const links = linkHeader.split(',');
+      for (const link of links) {
+        const [urlPart, relPart] = link.split(';');
+        if (relPart.includes('rel="last"')) {
+          // Extract the URL from the Link header format
+          const lastPageUrl = urlPart.trim().replace(/[<>]/g, '');
+          return lastPageUrl;
+        }
+      }
+
+      // If no "last" link is found, return the original URL
+      return url;
+    } catch (error) {
+      this.logger.error(`Error getting last page URL: ${error.message}`);
+      // Return the original URL in case of error
+      return url;
+    }
   }
 
   /**
