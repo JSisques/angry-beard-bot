@@ -1,11 +1,11 @@
 {
   "common": {
     "appName": "Angry Beard Bot",
-    "appDescription": "AI-powered code review bot with personality"
+    "appDescription": "Bot de revisión de código con personalidad"
   },
   "sidebar": {
-    "home": "Home",
-    "settings": "Settings",
-    "logout": "Logout"
+    "home": "Inicio",
+    "settings": "Configuración",
+    "logout": "Cerrar sesión"
   }
 }
