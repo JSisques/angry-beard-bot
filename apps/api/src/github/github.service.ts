@@ -21,12 +21,10 @@ export class GithubService {
     private readonly repositoryService: RepositoryService,
     private readonly pullRequestService: PullRequestService,
     private readonly pullRequestMapper: PullRequestMapper,
-    private readonly reviewService: ReviewService,
     private readonly userService: UserService,
     private readonly workflowService: WorkflowService,
     private readonly githubApiService: GithubApiService,
     private readonly githubMapper: GithubMapper,
-    private readonly botConfigService: BotConfigService,
   ) {
     this.logger = new Logger(GithubService.name);
   }
