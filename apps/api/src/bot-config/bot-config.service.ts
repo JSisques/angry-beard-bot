@@ -10,9 +10,9 @@ export class BotConfigService {
     this.logger = new Logger(BotConfigService.name);
   }
 
-  async getBotConfigByRepositoryId(repositoryId: string): Promise<BotConfigDto> {
-    this.logger.debug(`Getting bot config for repositoryId: ${repositoryId}`);
-    const botConfig = await this.prisma.botConfig.findUnique({ where: { repositoryId } });
+  async getBotConfigByUserId(userId: string): Promise<BotConfigDto> {
+    this.logger.debug(`Getting bot config for userId: ${userId}`);
+    const botConfig = await this.prisma.botConfig.findUnique({ where: { userId } });
     this.logger.debug(`Bot config: ${JSON.stringify(botConfig)}`);
     return botConfig;
   }
