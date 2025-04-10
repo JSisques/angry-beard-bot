@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsNumber } from 'class-validator';
 
 export class CreateReviewDto {
   @IsString()
@@ -20,4 +20,8 @@ export class CreateReviewDto {
   @IsString()
   @IsOptional()
   patch?: string;
+
+  @IsNumber()
+  @IsOptional()
+  creditsUsed?: number;
 }
