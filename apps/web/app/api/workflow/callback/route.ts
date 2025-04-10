@@ -14,7 +14,7 @@ export async function POST(request: Request) {
 
     console.log('body', body);
 
-    await post('/workflow/callback', body);
+    await post('/workflow/review/callback', body);
 
     return NextResponse.json({ status: 'ok' }, { status: 200 });
   } catch (error) {

@@ -38,7 +38,7 @@ export class WorkflowController {
     },
   })
   @ApiResponse({ status: 400, description: 'Bad request' })
-  @Post('/callback')
+  @Post('/review/callback')
   async callback(@Body() body: WorkflowCallbackDto) {
     this.logger.debug(`Workflow callback received: ${JSON.stringify(body)}`);
     return this.workflowService.handleWorkflowCallback(body);

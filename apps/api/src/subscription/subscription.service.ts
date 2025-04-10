@@ -149,4 +149,14 @@ export class SubscriptionService {
       data: { status: SubscriptionStatus.CANCELED },
     });
   }
+
+  /**
+   * Checks if a subscription is active
+   * @param status - The status of the subscription
+   * @returns {Promise<boolean>} True if the subscription is active, false otherwise
+   */
+  async isSubscriptionActive(status: SubscriptionStatus) {
+    this.logger.log(`Checking subscription status: ${status}`);
+    return status === SubscriptionStatus.ACTIVE;
+  }
 }
