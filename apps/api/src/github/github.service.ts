@@ -119,7 +119,7 @@ export class GithubService {
       repository: existingRepository,
       pullRequest: existingPullRequest,
       installation: webhookDto.installation,
-      botConfig: existingRepository.botConfig,
+      botConfig: user.botConfig,
     };
   }
 

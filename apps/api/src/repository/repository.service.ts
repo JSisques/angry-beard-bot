@@ -25,9 +25,6 @@ export class RepositoryService {
       where: {
         githubId: githubId,
       },
-      include: {
-        botConfig: true,
-      },
     });
   }
 
@@ -45,17 +42,9 @@ export class RepositoryService {
             id: userId,
           },
         },
-        botConfig: {
-          create: {
-            grumpinessLevel: BotLevel.MODERATE,
-            technicalityLevel: BotLevel.MODERATE,
-            detailLevel: BotLevel.MODERATE,
-          },
-        },
       },
       include: {
         owner: true,
-        botConfig: true,
       },
     });
   }

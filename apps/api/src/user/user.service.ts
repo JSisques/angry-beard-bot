@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { BotLevel, User } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 @Injectable()
@@ -29,7 +29,7 @@ export class UserService {
     this.logger.debug(`Getting user by provider id: ${providerId}`);
     const user = await this.prismaService.user.findUnique({
       where: { providerId },
-      include: { subscription: true, _count: { select: { reviews: true } } },
+      include: { subscription: true, botConfig: true, _count: { select: { reviews: true } } },
     });
     this.logger.debug(`User found: ${JSON.stringify(user)}`);
     return user;
@@ -45,6 +45,13 @@ export class UserService {
             plan: 'FREE',
             status: 'ACTIVE',
             startDate: new Date(),
+          },
+        },
+        botConfig: {
+          create: {
+            grumpinessLevel: BotLevel.MODERATE,
+            technicalityLevel: BotLevel.MODERATE,
+            detailLevel: BotLevel.MODERATE,
           },
         },
       },
