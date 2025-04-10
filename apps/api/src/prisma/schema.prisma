@@ -161,6 +161,7 @@ model Review {
   comment       String?
   filename      String?
   patch         String?
+  creditsUsed   Int         @default(1)
   pullRequestId String
   pullRequest   PullRequest @relation(fields: [pullRequestId], references: [id], onDelete: Cascade)
   createdAt     DateTime    @default(now())
