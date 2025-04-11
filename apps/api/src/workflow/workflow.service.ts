@@ -69,37 +69,36 @@ export class WorkflowService {
   async handleWorkflowCallback(body: WorkflowCallbackDto) {
     this.logger.debug(`Handling workflow callback: ${JSON.stringify(body)}`);
 
-    const reviews = await Promise.all(
-      body.output
-        .filter(output => output.line >= 0)
-        .map(async output => {
-          let githubComment: GithubCommentOutputDto | null = null;
+    const reviews = [];
 
-          if (body.source === WorkflowSource.GITHUB) {
-            this.logger.debug('Handling Github workflow callback');
+    for (const output of body.output.filter(output => output.line >= 0)) {
+      let githubComment: GithubCommentOutputDto | null = null;
 
-            const githubCommentPayload: GithubCommentDto = {
-              body: output.comment,
-              commit_id: body.commitSha,
-              path: body.filename,
-              line: output.line + body.startLine,
-            };
-            this.logger.debug(`Github comment payload: ${JSON.stringify(githubCommentPayload)}`);
+      if (body.source === WorkflowSource.GITHUB) {
+        this.logger.debug('Handling Github workflow callback');
 
-            githubComment = await this.githubApiService.postCommentReview(body.pullRequestUrl, githubCommentPayload, body.installationId);
-          }
+        const githubCommentPayload: GithubCommentDto = {
+          body: output.comment,
+          commit_id: body.commitSha,
+          path: body.filename,
+          line: output.line + body.startLine,
+        };
+        this.logger.debug(`Github comment payload: ${JSON.stringify(githubCommentPayload)}`);
 
-          const review = await this.reviewService.createReview({
-            userId: body.userId,
-            pullRequestId: body.pullRequestId,
-            comment: output.comment,
-            filename: body.filename,
-            patch: body.patch,
-            githubCommentId: githubComment?.id,
-          });
-          return review;
-        }),
-    );
+        githubComment = await this.githubApiService.postCommentReview(body.pullRequestUrl, githubCommentPayload, body.installationId);
+      }
+
+      const review = await this.reviewService.createReview({
+        userId: body.userId,
+        pullRequestId: body.pullRequestId,
+        comment: output.comment,
+        filename: body.filename,
+        patch: body.patch,
+        githubCommentId: githubComment?.id,
+      });
+
+      reviews.push(review);
+    }
 
     return { reviews };
   }
