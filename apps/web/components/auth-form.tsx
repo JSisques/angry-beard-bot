@@ -11,15 +11,14 @@ import { supabase } from '@/lib/supabase/client';
 import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
+import logo from '@/public/logo.svg';
+
 const formSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
 });
 
 export function AuthForm({ className, ...props }: React.ComponentProps<'div'>) {
-  const router = useRouter();
-
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -27,14 +26,14 @@ export function AuthForm({ className, ...props }: React.ComponentProps<'div'>) {
       password: '',
     },
   });
-  const handleMailLogin = async () => {
-    await supabase.auth.signInWithOtp({
-      email: 'm@example.com',
-    });
-  };
+  // const handleMailLogin = async () => {
+  //   await supabase.auth.signInWithOtp({
+  //     email: 'm@example.com',
+  //   });
+  // };
 
   const handleGithubLogin = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
+    await supabase.auth.signInWithOAuth({
       provider: 'github',
       options: {
         redirectTo: `${window.location.origin}/api/github/auth/callback`,
@@ -108,7 +107,7 @@ export function AuthForm({ className, ...props }: React.ComponentProps<'div'>) {
           </form>
           <div className="bg-muted relative hidden md:block">
             <Image
-              src="/logo.svg"
+              src={logo}
               alt="Image"
               className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
               width={500}

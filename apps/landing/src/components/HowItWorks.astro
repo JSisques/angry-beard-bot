@@ -16,22 +16,18 @@
       </p>
     </div>
 
-    <div class="relative max-w-4xl mx-auto">
-      <!-- Timeline line (hidden on mobile) -->
-      <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-primary/20 via-primary to-primary/20 hidden md:block" />
-
+    <div class="max-w-4xl mx-auto space-y-8">
       <!-- Step 1 -->
-      <div class="relative group mb-16 md:mb-32">
-        <div class="flex flex-col md:flex-row items-center">
-          <!-- Left content -->
-          <div class="w-full md:w-1/2 md:pr-16 text-center md:text-right group-hover:md:-translate-x-3 transition-transform duration-300">
-            <div class="space-y-4">
-              <div class="w-12 h-12 bg-background rounded-2xl border-2 border-primary p-2 mx-auto md:ml-auto group-hover:scale-110 transition-transform duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <h3 class="text-2xl font-bold">Install the Bot</h3>
+      <div class="group transform transition-all duration-500 hover:scale-105 opacity-0" data-card="1">
+        <div class="bg-background/50 backdrop-blur-sm rounded-2xl p-8 border border-primary/10 shadow-lg">
+          <div class="flex flex-col md:flex-row items-center gap-8">
+            <div class="w-16 h-16 bg-background rounded-2xl border-2 border-primary p-3 shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-2xl font-bold mb-4">Install the Bot</h3>
               <ul class="space-y-2 text-muted-foreground">
                 <li class="group-hover:text-primary transition-colors">One-click GitHub integration</li>
                 <li class="group-hover:text-primary transition-colors">Configure review preferences</li>
@@ -39,25 +35,20 @@
               </ul>
             </div>
           </div>
-          <!-- Timeline dot (hidden on mobile) -->
-          <div class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-primary rounded-full border-4 border-background group-hover:scale-150 transition-transform duration-300 hidden md:block" />
         </div>
       </div>
 
       <!-- Step 2 -->
-      <div class="relative group mb-16 md:mb-32">
-        <div class="flex flex-col md:flex-row items-center">
-          <!-- Timeline dot (hidden on mobile) -->
-          <div class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-primary rounded-full border-4 border-background group-hover:scale-150 transition-transform duration-300 hidden md:block" />
-          <!-- Right content -->
-          <div class="w-full md:w-1/2 md:ml-auto md:pl-16 text-center md:text-left group-hover:md:translate-x-3 transition-transform duration-300">
-            <div class="space-y-4">
-              <div class="w-12 h-12 bg-background rounded-2xl border-2 border-primary p-2 mx-auto md:mx-0 group-hover:scale-110 transition-transform duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-                </svg>
-              </div>
-              <h3 class="text-2xl font-bold">Create a PR</h3>
+      <div class="group transform transition-all duration-500 hover:scale-105 opacity-0" data-card="2">
+        <div class="bg-background/50 backdrop-blur-sm rounded-2xl p-8 border border-primary/10 shadow-lg">
+          <div class="flex flex-col md:flex-row items-center gap-8">
+            <div class="w-16 h-16 bg-background rounded-2xl border-2 border-primary p-3 shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-2xl font-bold mb-4">Create a PR</h3>
               <ul class="space-y-2 text-muted-foreground">
                 <li class="group-hover:text-primary transition-colors">Submit your code changes</li>
                 <li class="group-hover:text-primary transition-colors">Bot automatically detects PR</li>
@@ -69,18 +60,17 @@
       </div>
 
       <!-- Step 3 -->
-      <div class="relative group">
-        <div class="flex flex-col md:flex-row items-center">
-          <!-- Left content -->
-          <div class="w-full md:w-1/2 md:pr-16 text-center md:text-right group-hover:md:-translate-x-3 transition-transform duration-300">
-            <div class="space-y-4">
-              <div class="w-12 h-12 bg-background rounded-2xl border-2 border-primary p-2 mx-auto md:ml-auto group-hover:scale-110 transition-transform duration-300">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-                  <polyline points="22 4 12 14.01 9 11.01" />
-                </svg>
-              </div>
-              <h3 class="text-2xl font-bold">Get Feedback</h3>
+      <div class="group transform transition-all duration-500 hover:scale-105 opacity-0" data-card="3">
+        <div class="bg-background/50 backdrop-blur-sm rounded-2xl p-8 border border-primary/10 shadow-lg">
+          <div class="flex flex-col md:flex-row items-center gap-8">
+            <div class="w-16 h-16 bg-background rounded-2xl border-2 border-primary p-3 shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
+            </div>
+            <div class="flex-1">
+              <h3 class="text-2xl font-bold mb-4">Get Feedback</h3>
               <ul class="space-y-2 text-muted-foreground">
                 <li class="group-hover:text-primary transition-colors">Receive detailed code review</li>
                 <li class="group-hover:text-primary transition-colors">Get actionable improvements</li>
@@ -88,10 +78,47 @@
               </ul>
             </div>
           </div>
-          <!-- Timeline dot (hidden on mobile) -->
-          <div class="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-primary rounded-full border-4 border-background group-hover:scale-150 transition-transform duration-300 hidden md:block" />
         </div>
       </div>
     </div>
   </div>
-</section> 
+</section>
+
+<script>
+  // Load anime.js from CDN
+  const script = document.createElement('script');
+  script.src = 'https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js';
+  script.onload = () => {
+    const cards = document.querySelectorAll<HTMLElement>('[data-card]');
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.2
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const card = entry.target as HTMLElement;
+          const cardNumber = parseInt(card.dataset.card || '0');
+          
+          (window as any).anime({
+            targets: card,
+            opacity: [0, 1],
+            translateX: cardNumber % 2 === 0 ? [100, 0] : [-100, 0],
+            duration: 800,
+            easing: 'easeOutCubic',
+            complete: () => {
+              observer.unobserve(card);
+            }
+          });
+        }
+      });
+    }, observerOptions);
+
+    cards.forEach(card => {
+      observer.observe(card);
+    });
+  };
+  document.head.appendChild(script);
+</script> 

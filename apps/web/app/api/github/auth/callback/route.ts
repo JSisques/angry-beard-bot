@@ -18,7 +18,7 @@ export async function GET(request: Request) {
       console.error('Error exchanging code for session:', error);
     }
 
-    console.log('data', data.user);
+    console.debug('data', data.user);
 
     await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/github`, data.user);
 

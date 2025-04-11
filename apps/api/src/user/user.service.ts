@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { User } from '@prisma/client';
+import { BotLevel, User } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
 @Injectable()
@@ -27,13 +27,16 @@ export class UserService {
 
   async getUserByProviderId(providerId: string) {
     this.logger.debug(`Getting user by provider id: ${providerId}`);
-    const user = await this.prismaService.user.findUnique({ where: { providerId } });
+    const user = await this.prismaService.user.findUnique({
+      where: { providerId },
+      include: { subscription: true, botConfig: true, _count: { select: { reviews: true } } },
+    });
     this.logger.debug(`User found: ${JSON.stringify(user)}`);
     return user;
   }
 
   async createUser(user: CreateUserDto) {
-    this.logger.debug(`Creating user: ${user}`);
+    this.logger.debug(`Creating user: ${JSON.stringify(user)}`);
     return this.prismaService.user.create({
       data: {
         ...user,
@@ -44,6 +47,13 @@ export class UserService {
             startDate: new Date(),
           },
         },
+        botConfig: {
+          create: {
+            grumpinessLevel: BotLevel.MODERATE,
+            technicalityLevel: BotLevel.MODERATE,
+            detailLevel: BotLevel.MODERATE,
+          },
+        },
       },
       include: {
         subscription: true,
@@ -52,7 +62,7 @@ export class UserService {
   }
 
   async updateUser(id: string, user: User) {
-    this.logger.debug(`Updating user: ${user}`);
+    this.logger.debug(`Updating user: ${JSON.stringify(user)}`);
     return this.prismaService.user.update({ where: { id }, data: user });
   }
 

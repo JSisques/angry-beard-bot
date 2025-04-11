@@ -1,17 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import {
-  Bot,
-  Code2,
-  FileCode2,
-  GitPullRequest,
-  HelpCircle,
-  Settings2,
-  User,
-  Menu,
-  X,
-} from 'lucide-react';
+import { Bot, Code2, FileCode2, GitPullRequest, HelpCircle, Settings2, User, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
@@ -75,12 +65,12 @@ export function MobileNav() {
     <div className="fixed left-0 right-0 top-0 z-50 flex flex-col bg-background lg:hidden">
       {/* Header */}
       <div className="flex w-full items-center justify-between border-b px-4 py-3">
-        <div className="flex items-center gap-2">
-          <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
+        <Link href="/" className="flex items-center gap-2">
+          <div className="text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
             <Image src={theme === 'dark' ? '/icon_white.svg' : '/icon_black.svg'} alt="Angry Beard Bot" width={32} height={32} />
           </div>
           <div className="font-medium">Angry Beard Bot</div>
-        </div>
+        </Link>
 
         <Button variant="ghost" size="icon" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}

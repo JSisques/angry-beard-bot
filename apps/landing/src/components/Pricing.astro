@@ -26,30 +26,46 @@ import { Check, Plus } from "lucide-react";
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
       <Card className="group hover:shadow-lg transition-all duration-300 flex flex-col h-full">
         <CardHeader>
-          <CardTitle className="text-2xl">Apprentice</CardTitle>
-          <CardDescription>Perfect for small teams and individual developers</CardDescription>
-          <div class="mt-4">
-            <span class="text-4xl font-bold">$0</span>
-            <span class="text-muted-foreground">/month</span>
+          <CardTitle className="text-2xl">The Apprentice</CardTitle>
+          <CardDescription>Perfect for side-projects or trying out the bot</CardDescription>
+          <div class="mt-4 min-h-[88px]">
+            <div class="monthly-price">
+              <span class="text-4xl font-bold">€0</span>
+              <span class="text-muted-foreground">/month</span>
+            </div>
+            <div class="annual-price hidden">
+              <span class="text-4xl font-bold">€0</span>
+              <span class="text-muted-foreground">/month</span>
+              <div class="text-sm text-muted-foreground mt-1">
+                <span class="line-through">€0</span> <span class="text-primary">€0/year</span>
+              </div>
+            </div>
+            <div class="mt-2 text-sm text-muted-foreground">
+              <span class="font-medium">20 credits</span> included per month
+            </div>
           </div>
         </CardHeader>
         <CardContent className="flex-grow">
           <ul class="space-y-3">
             <li class="flex items-center">
               <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
-              <span>Up to 100 PR reviews per month</span>
+              <span>Title and description improvements</span>
             </li>
             <li class="flex items-center">
               <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
-              <span>Full bot customization</span>
+              <span>Basic best practices comments</span>
             </li>
             <li class="flex items-center">
               <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
-              <span>All core features included</span>
+              <span>Automatic review after each commit and PR</span>
             </li>
             <li class="flex items-center">
               <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
-              <span>Community support</span>
+              <span>Unlimited public and private repositories</span>
+            </li>
+            <li class="flex items-center">
+              <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
+              <span>Upgrade anytime</span>
             </li>
           </ul>
         </CardContent>
@@ -64,19 +80,22 @@ import { Check, Plus } from "lucide-react";
           Most Popular
         </div>
         <CardHeader>
-          <CardTitle className="text-2xl">Beard Master</CardTitle>
-          <CardDescription>For growing teams</CardDescription>
-          <div class="mt-4">
+          <CardTitle className="text-2xl">The Grumpy Dev</CardTitle>
+          <CardDescription>For startups, freelancers and active teams</CardDescription>
+          <div class="mt-4 min-h-[88px]">
             <div class="monthly-price">
-              <span class="text-4xl font-bold">$20</span>
+              <span class="text-4xl font-bold">€20</span>
               <span class="text-muted-foreground">/month</span>
             </div>
             <div class="annual-price hidden">
-              <span class="text-4xl font-bold">$16</span>
+              <span class="text-4xl font-bold">€16</span>
               <span class="text-muted-foreground">/month</span>
               <div class="text-sm text-muted-foreground mt-1">
-                <span class="line-through">$240</span> <span class="text-primary">$192/year</span>
+                <span class="line-through">€240</span> <span class="text-primary">€192/year</span>
               </div>
+            </div>
+            <div class="mt-2 text-sm text-muted-foreground">
+              <span class="font-medium">500 credits</span> included per month
             </div>
           </div>
         </CardHeader>
@@ -84,23 +103,23 @@ import { Check, Plus } from "lucide-react";
           <ul class="space-y-3">
             <li class="flex items-center">
               <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
-              <span>Up to 500 PR reviews per month</span>
+              <span>Everything in Free plan</span>
             </li>
             <li class="flex items-center">
               <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
-              <span>Email support</span>
+              <span>Detailed code comments</span>
             </li>
             <li class="flex items-center">
               <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
-              <span>Advanced statistics</span>
+              <span>Customizable bot personality</span>
             </li>
             <li class="flex items-center">
               <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
-              <span>Everything in Apprentice plan</span>
+              <span>Customizable bot configuration</span>
             </li>
             <li class="flex items-center">
               <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
-              <span>Priority response time</span>
+              <span>Extra credits: €0.10 per credit</span>
             </li>
           </ul>
         </CardContent>
@@ -112,19 +131,22 @@ import { Check, Plus } from "lucide-react";
       </Card>
       <Card className="group hover:shadow-lg transition-all duration-300 flex flex-col h-full">
         <CardHeader>
-          <CardTitle className="text-2xl">Business</CardTitle>
-          <CardDescription>For large organizations</CardDescription>
-          <div class="mt-4">
+          <CardTitle className="text-2xl">The Bearded Overlord</CardTitle>
+          <CardDescription>For organizations with advanced code review requirements</CardDescription>
+          <div class="mt-4 min-h-[88px]">
             <div class="monthly-price">
-              <span class="text-4xl font-bold">$49</span>
+              <span class="text-4xl font-bold">€49</span>
               <span class="text-muted-foreground">/month</span>
             </div>
             <div class="annual-price hidden">
-              <span class="text-4xl font-bold">$39</span>
+              <span class="text-4xl font-bold">€39</span>
               <span class="text-muted-foreground">/month</span>
               <div class="text-sm text-muted-foreground mt-1">
-                <span class="line-through">$588</span> <span class="text-primary">$470/year</span>
+                <span class="line-through">€588</span> <span class="text-primary">€470/year</span>
               </div>
+            </div>
+            <div class="mt-2 text-sm text-muted-foreground">
+              <span class="font-medium">2000 credits</span> included per month
             </div>
           </div>
         </CardHeader>
@@ -132,23 +154,27 @@ import { Check, Plus } from "lucide-react";
           <ul class="space-y-3">
             <li class="flex items-center">
               <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
-              <span>Up to 2000 PR reviews per month</span>
+              <span>Everything in Pro plan</span>
             </li>
             <li class="flex items-center">
               <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
-              <span>Everything in Beard Master plan</span>
+              <span>Advanced review with powerful models (3 credits per review) <span class="text-xs text-muted-foreground">(coming soon)</span></span>
             </li>
             <li class="flex items-center">
               <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
-              <span>Dedicated support</span>
+              <span>Metrics dashboard and downloadable reports <span class="text-xs text-muted-foreground">(coming soon)</span></span>
             </li>
             <li class="flex items-center">
               <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
-              <span>API integration (coming soon)</span>
+              <span>High priority in review queue</span>
             </li>
             <li class="flex items-center">
               <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
-              <span>Advanced analytics & dashboards (coming soon)</span>
+              <span>External integrations (Slack, CI tools) <span class="text-xs text-muted-foreground">(coming soon)</span></span>
+            </li>
+            <li class="flex items-center">
+              <Check className="w-5 h-5 text-primary mr-2 flex-shrink-0" />
+              <span>Extra credits: €0.08 per credit</span>
             </li>
           </ul>
         </CardContent>
@@ -162,40 +188,8 @@ import { Check, Plus } from "lucide-react";
     
     <div class="text-center mt-8">
       <p class="text-sm text-muted-foreground">
-        All plans include a 14-day free trial. No credit card required.
+        All plans include a <strong>14-day free trial</strong> with no credit card required.
       </p>
-    </div>
-    
-    <!-- Additional PRs section -->
-    <div class="mt-12 max-w-3xl mx-auto">
-      <div class="text-center mb-4">
-        <h3 class="text-xl font-semibold">Need more PR reviews?</h3>
-        <p class="text-muted-foreground mt-1">Add extra PR review batches to any plan</p>
-      </div>
-      
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div class="bg-card border rounded-lg p-4 text-center hover:shadow-md transition-shadow">
-          <div class="text-2xl font-bold text-primary mb-1">$5</div>
-          <div class="text-sm text-muted-foreground">500 additional PR reviews</div>
-        </div>
-        <div class="bg-card border rounded-lg p-4 text-center hover:shadow-md transition-shadow">
-          <div class="text-2xl font-bold text-primary mb-1">$10</div>
-          <div class="text-sm text-muted-foreground">1,000 additional PR reviews</div>
-        </div>
-        <div class="bg-card border rounded-lg p-4 text-center hover:shadow-md transition-shadow">
-          <div class="text-2xl font-bold text-primary mb-1">$20</div>
-          <div class="text-sm text-muted-foreground">2,500 additional PR reviews</div>
-        </div>
-      </div>
-      
-      <div class="text-center mt-4">
-        <a href="#waitlist" class="inline-flex items-center text-primary hover:underline text-sm">
-          Contact us for custom volumes or more than 2000 PR reviews
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
-          </svg>
-        </a>
-      </div>
     </div>
   </div>
 </section>
