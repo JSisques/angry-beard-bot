@@ -70,30 +70,32 @@ export class WorkflowService {
     this.logger.debug(`Handling workflow callback: ${JSON.stringify(body)}`);
 
     const reviews = await Promise.all(
-      body.output.map(async output => {
-        if (body.source === WorkflowSource.GITHUB) {
-          this.logger.debug('Handling Github workflow callback');
+      body.output
+        .filter(output => output.line >= 0)
+        .map(async output => {
+          if (body.source === WorkflowSource.GITHUB) {
+            this.logger.debug('Handling Github workflow callback');
 
-          const githubCommentPayload: GithubCommentDto = {
-            body: output.comment,
-            commit_id: body.commitSha,
-            path: body.filename,
-            line: output.line + body.startLine,
-          };
-          this.logger.debug(`Github comment payload: ${JSON.stringify(githubCommentPayload)}`);
+            const githubCommentPayload: GithubCommentDto = {
+              body: output.comment,
+              commit_id: body.commitSha,
+              path: body.filename,
+              line: output.line + body.startLine,
+            };
+            this.logger.debug(`Github comment payload: ${JSON.stringify(githubCommentPayload)}`);
 
-          await this.githubApiService.postCommentReview(body.pullRequestUrl, githubCommentPayload, body.installationId);
-        }
+            await this.githubApiService.postCommentReview(body.pullRequestUrl, githubCommentPayload, body.installationId);
+          }
 
-        const review = await this.reviewService.createReview({
-          userId: body.userId,
-          pullRequestId: body.pullRequestId,
-          comment: output.comment,
-          filename: body.filename,
-          patch: body.patch,
-        });
-        return review;
-      }),
+          const review = await this.reviewService.createReview({
+            userId: body.userId,
+            pullRequestId: body.pullRequestId,
+            comment: output.comment,
+            filename: body.filename,
+            patch: body.patch,
+          });
+          return review;
+        }),
     );
 
     return { reviews };
