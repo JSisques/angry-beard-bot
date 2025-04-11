@@ -8,7 +8,7 @@ import { SubscriptionDto } from 'src/subscription/dto/subscription.dto';
 import { SubscriptionService } from 'src/subscription/subscription.service';
 import { WorkflowSource } from './enum/workflow-source.enum';
 import { GithubApiService } from 'src/github/github-api.service';
-import { GithubCommentDto } from 'src/github/dto/github-comment.dto';
+import { GithubCommentDto, GithubCommentOutputDto } from 'src/github/dto/github-comment.dto';
 @Injectable()
 export class WorkflowService {
   private readonly logger;
@@ -73,6 +73,8 @@ export class WorkflowService {
       body.output
         .filter(output => output.line >= 0)
         .map(async output => {
+          let githubComment: GithubCommentOutputDto | null = null;
+
           if (body.source === WorkflowSource.GITHUB) {
             this.logger.debug('Handling Github workflow callback');
 
@@ -84,7 +86,7 @@ export class WorkflowService {
             };
             this.logger.debug(`Github comment payload: ${JSON.stringify(githubCommentPayload)}`);
 
-            await this.githubApiService.postCommentReview(body.pullRequestUrl, githubCommentPayload, body.installationId);
+            githubComment = await this.githubApiService.postCommentReview(body.pullRequestUrl, githubCommentPayload, body.installationId);
           }
 
           const review = await this.reviewService.createReview({
@@ -93,6 +95,7 @@ export class WorkflowService {
             comment: output.comment,
             filename: body.filename,
             patch: body.patch,
+            githubCommentId: githubComment?.id,
           });
           return review;
         }),

@@ -144,6 +144,7 @@ model Review {
   userId        String
   user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   comment       String?
+  githubCommentId Int?
   filename      String?
   patch         String?
   creditsUsed   Int         @default(1)

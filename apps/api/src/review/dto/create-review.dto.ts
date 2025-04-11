@@ -24,4 +24,8 @@ export class CreateReviewDto {
   @IsNumber()
   @IsOptional()
   creditsUsed?: number;
+
+  @IsNumber()
+  @IsOptional()
+  githubCommentId?: number;
 }
