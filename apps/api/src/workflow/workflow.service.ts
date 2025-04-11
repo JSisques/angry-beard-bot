@@ -8,6 +8,7 @@ import { SubscriptionDto } from 'src/subscription/dto/subscription.dto';
 import { SubscriptionService } from 'src/subscription/subscription.service';
 import { WorkflowSource } from './enum/workflow-source.enum';
 import { GithubApiService } from 'src/github/github-api.service';
+import { GithubCommentDto } from 'src/github/dto/github-comment.dto';
 @Injectable()
 export class WorkflowService {
   private readonly logger;
@@ -68,19 +69,33 @@ export class WorkflowService {
   async handleWorkflowCallback(body: WorkflowCallbackDto) {
     this.logger.debug(`Handling workflow callback: ${JSON.stringify(body)}`);
 
-    if (body.source === WorkflowSource.GITHUB) {
-      this.logger.debug('Handling Github workflow callback');
-      // await this.githubApiService.postCommentReview(body);
-    }
+    const reviews = await Promise.all(
+      body.output.map(async output => {
+        if (body.source === WorkflowSource.GITHUB) {
+          this.logger.debug('Handling Github workflow callback');
 
-    const review = await this.reviewService.createReview({
-      userId: body.userId,
-      pullRequestId: body.pullRequestId,
-      comment: body.output,
-      filename: body.filename,
-      patch: body.patch,
-    });
+          const githubCommentPayload: GithubCommentDto = {
+            body: output.comment,
+            commit_id: body.commitSha,
+            path: body.filename,
+            line: output.line + body.startLine,
+          };
+          this.logger.debug(`Github comment payload: ${JSON.stringify(githubCommentPayload)}`);
 
-    return { review };
+          await this.githubApiService.postCommentReview(body.pullRequestUrl, githubCommentPayload, body.installationId);
+        }
+
+        const review = await this.reviewService.createReview({
+          userId: body.userId,
+          pullRequestId: body.pullRequestId,
+          comment: output.comment,
+          filename: body.filename,
+          patch: body.patch,
+        });
+        return review;
+      }),
+    );
+
+    return { reviews };
   }
 }

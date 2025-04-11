@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import * as jwt from 'jsonwebtoken';
 import axios from 'axios';
 import { PullRequestFileDto, NormalizedPatchDto } from './dto/github-pull-request-file.dto';
-import { WorkflowCallbackDto } from 'src/workflow/dto/callback-workflow.dto';
+import { GithubCommentDto } from './dto/github-comment.dto';
 import { GithubCommit } from './dto/github-commit.dto';
 @Injectable()
 export class GithubApiService {
@@ -234,13 +234,13 @@ export class GithubApiService {
     };
   }
 
-  async postCommentReview(body: WorkflowCallbackDto) {
-    this.logger.debug(`Posting comment review for pull request ${body.pullRequestId}`);
+  async postCommentReview(url: string, body: GithubCommentDto, installationId: number) {
+    this.logger.debug(`Posting comment review for pull request ${url}`);
 
-    const token = await this.getInstallationToken(body.installationId);
+    const token = await this.getInstallationToken(installationId);
     this.logger.debug(`Token: ${token}`);
 
-    const urlParts = body.pullRequestUrl.split('/');
+    const urlParts = url.split('/');
     const owner = urlParts[urlParts.length - 4];
     const repo = urlParts[urlParts.length - 3];
     const prNumber = urlParts[urlParts.length - 1];
@@ -251,10 +251,10 @@ export class GithubApiService {
     this.logger.debug(`Using API URL: ${apiUrl}`);
 
     const payload = {
-      body: body.output.toString().trim(),
-      commit_id: body.commitSha.toString().trim(),
-      path: body.filename.toString().trim(),
-      line: body.startLine,
+      body: body.body.toString().trim(),
+      commit_id: body.commit_id.toString().trim(),
+      path: body.path.toString().trim(),
+      line: body.line,
     };
 
     this.logger.debug(`Payload: ${JSON.stringify(payload)}`);
@@ -265,7 +265,7 @@ export class GithubApiService {
         Accept: 'application/vnd.github.v3+json',
       },
     });
-    this.logger.debug(`Comment review posted for pull request ${body.pullRequestId}`);
+    this.logger.debug(`Comment review posted for pull request ${url}`);
     return response.data;
   }
 }
