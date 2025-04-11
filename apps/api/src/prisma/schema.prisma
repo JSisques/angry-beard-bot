@@ -33,6 +33,11 @@ enum PullRequestStatus {
   MERGED
 }
 
+enum ReviewSource {
+  GITHUB
+  GITLAB
+}
+
 model User {
   id           String        @id @default(uuid())
   email        String        @unique
@@ -144,6 +149,7 @@ model Review {
   userId        String
   user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   comment       String?
+  source        ReviewSource?
   githubCommentId Int?
   filename      String?
   patch         String?
