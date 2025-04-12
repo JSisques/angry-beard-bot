@@ -1,14 +1,8 @@
-'use client';
-import { useDictionary } from '@/hooks/use-dictionary';
-import { useParams } from 'next/navigation';
-import Loading from '@/app/loading';
-import { Dashboard } from '@/components/pages/dashboard/dashboard';
+import { getDictionary } from '@/lib/dictionary';
+import HomePage from '@/components/pages/HomePage/HomePage';
 
-export default function Home() {
-  const { lang } = useParams();
-  const { dictionary } = useDictionary(lang as string);
+export default async function Home({ params: { lang } }: { params: { lang: string } }) {
+  const dictionary = await getDictionary(lang);
 
-  if (!dictionary) return <Loading />;
-
-  return <Dashboard dictionary={dictionary} />;
+  return <HomePage dictionary={dictionary} />;
 }

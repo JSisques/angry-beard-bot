@@ -1,11 +1,8 @@
-import { AuthForm } from '@/components/auth-form';
+import { getDictionary } from '@/lib/dictionary';
+import AuthPage from '@/components/pages/AuthPage/AuthPage';
 
-export default function AuthPage() {
-  return (
-    <div className="bg-muted flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
-      <div className="w-full max-w-sm md:max-w-3xl">
-        <AuthForm />
-      </div>
-    </div>
-  );
+export default async function Auth({ params: { lang } }: { params: { lang: string } }) {
+  const dictionary = await getDictionary(lang);
+
+  return <AuthPage dictionary={dictionary} />;
 }

@@ -15,6 +15,7 @@
   },
   "sidebar": {
     "home": "Inicio",
+    "botSettings": "Configuración del bot",
     "settings": "Configuración",
     "logout": "Cerrar sesión"
   }

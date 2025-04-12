@@ -1,6 +1,6 @@
-import { Inter } from 'next/font/google';
-import './globals.css';
+import '../styles/globals.css';
 
+import { Inter } from 'next/font/google';
 import { Metadata } from 'next';
 import Loading from './loading';
 import { Suspense } from 'react';
