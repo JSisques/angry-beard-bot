@@ -3,44 +3,61 @@
 import React, { useState } from 'react';
 import { IgnoreFilesProps } from './IgnoreFiles.interface';
 import { Button } from '@/components/atoms/button';
-export const IgnoreFiles: React.FC<IgnoreFilesProps> = ({ dictionary, files, onChange, className, ...props }) => {
-  const [newFile, setNewFile] = useState('');
+import { X } from 'lucide-react';
+
+export const IgnoreFiles: React.FC<IgnoreFilesProps> = ({ dictionary, extensions, onChange, className, ...props }) => {
+  const [newExtension, setNewExtension] = useState('');
 
   const handleAdd = () => {
-    if (newFile && !files.includes(newFile)) {
-      onChange([...files, newFile]);
-      setNewFile('');
+    if (newExtension && !extensions.includes(newExtension)) {
+      onChange([...extensions, newExtension]);
+      setNewExtension('');
     }
   };
 
-  const handleRemove = (file: string) => {
-    onChange(files.filter(f => f !== file));
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleAdd();
+    }
+  };
+
+  const handleRemove = (extension: string) => {
+    onChange(extensions.filter(e => e !== extension));
   };
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex gap-2">
-        <input
-          type="text"
-          value={newFile}
-          onChange={e => setNewFile(e.target.value)}
-          placeholder={dictionary.molecules.ignoreFiles.placeholder}
-          className="flex-1 px-3 py-2 border rounded-md"
-          onKeyPress={e => e.key === 'Enter' && handleAdd()}
-        />
-        <Button onClick={handleAdd} className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90">
+    <div className="flex flex-col gap-2">
+      <div className="flex items-center gap-2">
+        <div className="flex flex-wrap gap-2 p-2 border rounded-md min-h-[42px] bg-white flex-1">
+          {extensions.map(extension => (
+            <div key={extension} className="flex items-center gap-1 px-2 py-1 text-sm bg-gray-100 rounded-md hover:bg-gray-200">
+              <span>{extension}</span>
+              <button
+                onClick={() => handleRemove(extension)}
+                className="p-0.5 hover:bg-gray-300 rounded-full"
+                aria-label={dictionary.molecules.ignoreFiles.remove}
+              >
+                <X size={14} />
+              </button>
+            </div>
+          ))}
+          <input
+            type="text"
+            value={newExtension}
+            onChange={e => setNewExtension(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder={extensions.length === 0 ? dictionary.molecules.ignoreFiles.placeholder : ''}
+            className="flex-1 min-w-[120px] outline-none"
+          />
+        </div>
+        <Button
+          onClick={handleAdd}
+          className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 whitespace-nowrap"
+          disabled={!newExtension}
+        >
           {dictionary.molecules.ignoreFiles.add}
         </Button>
-      </div>
-      <div className="flex flex-col gap-2">
-        {files.map(file => (
-          <div key={file} className="flex items-center justify-between p-2 bg-gray-50 rounded-md">
-            <span className="text-sm">{file}</span>
-            <Button onClick={() => handleRemove(file)} className="bg-red-500 text-white hover:bg-red-700">
-              {dictionary.molecules.ignoreFiles.remove}
-            </Button>
-          </div>
-        ))}
       </div>
     </div>
   );

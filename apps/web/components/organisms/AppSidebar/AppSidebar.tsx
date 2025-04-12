@@ -10,7 +10,7 @@ import { routes } from '@/constants/routes';
 import { cn } from '@/lib/utils';
 import { ChevronLeft, ChevronRight, Menu, User } from 'lucide-react';
 
-const AppSidebar = ({ dictionary }: AppSidebarProps) => {
+const AppSidebar = ({ dictionary, user }: AppSidebarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
@@ -80,12 +80,12 @@ const AppSidebar = ({ dictionary }: AppSidebarProps) => {
             )}
           >
             <div className="h-8 w-8 rounded-full bg-gray-200 flex items-center justify-center flex-shrink-0">
-              <User className="h-4 w-4 text-gray-500" />
+              <Image className="rounded-full" src={user?.user_metadata.avatar_url} alt="avatar" width={32} height={32} />
             </div>
             {!isCollapsed && (
               <div className="flex flex-col min-w-0">
-                <span className="text-sm font-medium truncate">John Doe</span>
-                <span className="text-xs text-gray-500 truncate">john@example.com</span>
+                <span className="text-sm font-medium truncate">{user?.user_metadata.full_name}</span>
+                <span className="text-xs text-gray-500 truncate">{user?.user_metadata.email}</span>
               </div>
             )}
           </Link>

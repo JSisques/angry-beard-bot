@@ -1,11 +1,11 @@
 // src/supabase/supabase.service.ts
 import { Injectable, Logger } from '@nestjs/common';
-import { createClient } from '@supabase/supabase-js';
+import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class SupabaseService {
-  private supabase;
+  private readonly supabase: SupabaseClient;
   private readonly logger;
   private bucketName;
 
@@ -22,6 +22,11 @@ export class SupabaseService {
     }
   }
 
+  // Expose the Supabase client for the auth guard
+  get client(): SupabaseClient {
+    return this.supabase;
+  }
+
   /**
    * Creates a new user account in Supabase
    * @param email - User's email address
@@ -33,7 +38,10 @@ export class SupabaseService {
     try {
       this.logger.log(`Creating new user with email: ${email}`);
       this.logger.debug('Attempting user signup');
-      const { user, error } = await this.supabase.auth.signUp({ email, password });
+      const {
+        data: { user },
+        error,
+      } = await this.supabase.auth.signUp({ email, password });
       if (error) throw error;
       return user;
     } catch (error) {
@@ -53,7 +61,10 @@ export class SupabaseService {
     try {
       this.logger.log(`Attempting login for user: ${email}`);
       this.logger.debug('Processing login request');
-      const { user, error } = await this.supabase.auth.signInWithPassword({
+      const {
+        data: { user },
+        error,
+      } = await this.supabase.auth.signInWithPassword({
         email,
         password,
       });
@@ -73,7 +84,9 @@ export class SupabaseService {
   async getSession() {
     try {
       this.logger.debug('Retrieving current session');
-      const session = this.supabase.auth.session();
+      const {
+        data: { session },
+      } = await this.supabase.auth.getSession();
       this.logger.log(session ? 'Session found' : 'No active session');
       return session;
     } catch (error) {

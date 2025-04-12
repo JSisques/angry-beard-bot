@@ -5,10 +5,10 @@ export interface BotConfigurationProps extends RootProps {
   grumpinessLevel: number;
   technicalityLevel: number;
   detailLevel: number;
-  ignoredFiles: string[];
+  ignoredExtensions: string[];
   onLanguageChange: (language: string) => void;
   onGrumpinessChange: (level: number) => void;
   onTechnicalityChange: (level: number) => void;
   onDetailChange: (level: number) => void;
-  onIgnoredFilesChange: (files: string[]) => void;
+  onIgnoredExtensionsChange: (extensions: string[]) => void;
 }

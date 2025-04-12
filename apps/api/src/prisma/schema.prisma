@@ -42,6 +42,7 @@ model User {
   id           String        @id @default(uuid())
   email        String        @unique
   name         String?
+  supabaseId   String?       @unique
   githubId     String?       @unique
   providerId   String?       @unique
   subscription Subscription?

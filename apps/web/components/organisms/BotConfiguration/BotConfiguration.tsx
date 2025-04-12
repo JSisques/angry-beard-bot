@@ -9,12 +9,12 @@ export const BotConfiguration: React.FC<BotConfigurationProps> = ({
   grumpinessLevel,
   technicalityLevel,
   detailLevel,
-  ignoredFiles,
+  ignoredExtensions,
   onLanguageChange,
   onGrumpinessChange,
   onTechnicalityChange,
   onDetailChange,
-  onIgnoredFilesChange,
+  onIgnoredExtensionsChange,
   dictionary,
 }) => {
   return (
@@ -65,7 +65,7 @@ export const BotConfiguration: React.FC<BotConfigurationProps> = ({
       <section className="flex flex-col gap-4">
         <h2 className="text-xl font-semibold">Ignored Files</h2>
         <p className="text-sm text-gray-500">Add file patterns that should be ignored during code review</p>
-        <IgnoreFiles files={ignoredFiles} onChange={onIgnoredFilesChange} dictionary={dictionary} />
+        <IgnoreFiles extensions={ignoredExtensions} onChange={onIgnoredExtensionsChange} dictionary={dictionary} />
       </section>
     </div>
   );

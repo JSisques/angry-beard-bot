@@ -15,6 +15,14 @@ export class UserService {
     return this.prismaService.user.findUnique({ where: { id } });
   }
 
+  async getUserBySupabaseId(supabaseId: string) {
+    this.logger.debug(`Getting user by supabase id: ${supabaseId}`);
+    return this.prismaService.user.findUnique({
+      where: { supabaseId },
+      include: { subscription: true, botConfig: true, _count: { select: { reviews: true } } },
+    });
+  }
+
   async getUserByEmail(email: string) {
     this.logger.debug(`Getting user by email: ${email}`);
     return this.prismaService.user.findUnique({ where: { email } });
@@ -57,6 +65,8 @@ export class UserService {
       },
       include: {
         subscription: true,
+        botConfig: true,
+        _count: { select: { reviews: true } },
       },
     });
   }

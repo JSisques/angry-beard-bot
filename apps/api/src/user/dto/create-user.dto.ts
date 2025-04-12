@@ -8,10 +8,15 @@ export class CreateUserDto {
   name: string;
 
   @IsString()
-  githubId: string;
+  @IsOptional()
+  githubId?: string;
 
   @IsString()
-  providerId: string;
+  @IsOptional()
+  providerId?: string;
+
+  @IsString()
+  supabaseId: string;
 
   @IsBoolean()
   @IsOptional()

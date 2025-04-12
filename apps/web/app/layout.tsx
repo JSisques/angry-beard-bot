@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google';
 import { Metadata } from 'next';
 import Loading from './loading';
 import { Suspense } from 'react';
-
+import { Providers } from './providers';
 export const metadata: Metadata = {
   title: 'Angry Beard Bot',
   description: 'AI-powered code review bot with personality',
@@ -17,7 +17,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <head></head>
       <body className={inter.className}>
-        <Suspense fallback={<Loading />}>{children}</Suspense>
+        <Providers>
+          <Suspense fallback={<Loading />}>{children}</Suspense>
+        </Providers>
       </body>
     </html>
   );

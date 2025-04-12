@@ -13,10 +13,15 @@ import { UsageStats } from '@/components/molecules/UsageStats/UsageStats';
 import { BotConfigDisplay } from '@/components/molecules/BotConfigDisplay/BotConfigDisplay';
 import { ConnectedRepos } from '@/components/molecules/ConnectedRepos/ConnectedRepos';
 import { RecentReviews } from '@/components/molecules/RecentReviews/RecentReviews';
+import { useSession } from '@/hooks/use-session';
+import Loading from '@/app/loading';
 
 const HomePage = ({ dictionary }: HomePageProps) => {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
+  const { user } = useSession();
+
+  if (!user) return <Loading />;
 
   // Mock data - Replace with actual data from your API
   const mockPullRequests = [
