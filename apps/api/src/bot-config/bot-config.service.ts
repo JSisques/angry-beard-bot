@@ -51,14 +51,15 @@ export class BotConfigService {
 
   /**
    * Updates an existing bot configuration
-   * @param userId - The ID of the user whose configuration to update
+   * @param id - The ID of the bot configuration to update
    * @param botConfig - The updated configuration data
    * @returns A promise that resolves to the updated bot configuration
-   * @throws {NotFoundException} If no configuration is found for the user
+   * @throws {NotFoundException} If no configuration is found with the given ID
    */
-  async updateBotConfig(userId: string, botConfig: UpdateBotConfigDto): Promise<BotConfigDto> {
-    this.logger.debug(`Updating bot config for userId: ${userId}`);
-    const updatedBotConfig = await this.prisma.botConfig.update({ where: { userId }, data: botConfig });
+  async updateBotConfig(id: string, botConfig: UpdateBotConfigDto): Promise<BotConfigDto> {
+    this.logger.debug(`Updating bot config for id: ${id}`);
+    this.logger.debug(`Bot config: ${JSON.stringify(botConfig)}`);
+    const updatedBotConfig = await this.prisma.botConfig.update({ where: { id }, data: botConfig });
     this.logger.debug(`Updated bot config: ${JSON.stringify(updatedBotConfig)}`);
     return updatedBotConfig;
   }

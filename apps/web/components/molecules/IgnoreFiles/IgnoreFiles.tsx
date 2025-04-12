@@ -51,13 +51,6 @@ export const IgnoreFiles: React.FC<IgnoreFilesProps> = ({ dictionary, extensions
             className="flex-1 min-w-[120px] outline-none"
           />
         </div>
-        <Button
-          onClick={handleAdd}
-          className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 whitespace-nowrap"
-          disabled={!newExtension}
-        >
-          {dictionary.molecules.ignoreFiles.add}
-        </Button>
       </div>
     </div>
   );

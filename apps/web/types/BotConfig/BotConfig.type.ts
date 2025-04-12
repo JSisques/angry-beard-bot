@@ -6,4 +6,5 @@ export type BotConfig = {
   technicalityLevel: number;
   detailLevel: number;
   ignoredExtensions: string[];
+  autoApprove?: boolean;
 };

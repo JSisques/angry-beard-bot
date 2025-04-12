@@ -13,13 +13,13 @@ export const useBotConfig = (userId: string) => {
   });
 };
 
-export const useUpdateBotConfig = () => {
+export const useUpdateBotConfig = (userId: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (config: Partial<BotConfig>) => updateBotConfig(config),
+    mutationFn: (config: Partial<BotConfig> & { id: string }) => updateBotConfig(config),
     onSuccess: (data, variables) => {
-      queryClient.invalidateQueries({ queryKey: ['botConfig', variables.userId] });
+      queryClient.invalidateQueries({ queryKey: ['botConfig', userId] });
     },
   });
 };
@@ -59,7 +59,7 @@ export const createBotConfig = async (config: Omit<BotConfig, 'id'>): Promise<Bo
   return post<BotConfig>(`/bot-config/${config.userId}`, config);
 };
 
-export const updateBotConfig = async (config: Partial<BotConfig>): Promise<BotConfig> => {
+export const updateBotConfig = async (config: Partial<BotConfig> & { id: string }): Promise<BotConfig> => {
   return put<BotConfig>(`/bot-config/${config.id}`, config);
 };
 

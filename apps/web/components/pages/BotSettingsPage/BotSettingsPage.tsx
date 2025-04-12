@@ -13,7 +13,7 @@ import { getBotConfigByUserId, useBotConfig, useUpdateBotConfig } from '@/servic
 const BotSettingsPage = ({ dictionary }: BotSettingsPageProps) => {
   const { user } = useSession();
   const { data: botConfig, isLoading } = useBotConfig(user?.id || '');
-  const { mutate: updateConfig, isPending } = useUpdateBotConfig();
+  const { mutate: updateConfig, isPending } = useUpdateBotConfig(user?.id || '');
 
   const [language, setLanguage] = useState(botConfig?.language || 'en');
   const [grumpinessLevel, setGrumpinessLevel] = useState(botConfig?.grumpinessLevel || 3);
@@ -23,15 +23,25 @@ const BotSettingsPage = ({ dictionary }: BotSettingsPageProps) => {
 
   if (!user) return <Loading />;
 
-  console.log('botConfig', JSON.stringify(botConfig, null, 2));
-
   const handleSave = () => {
-    // TODO: Implement save functionality
     console.log('Saving configuration...', {
+      id: botConfig?.id,
       language,
       grumpinessLevel,
       technicalityLevel,
       detailLevel,
+      ignoredExtensions,
+    });
+    if (!botConfig?.id) {
+      console.error('No bot config ID found');
+      return;
+    }
+    updateConfig({
+      id: botConfig.id,
+      language,
+      //   grumpinessLevel,
+      //   technicalityLevel,
+      //   detailLevel,
       ignoredExtensions,
     });
   };
