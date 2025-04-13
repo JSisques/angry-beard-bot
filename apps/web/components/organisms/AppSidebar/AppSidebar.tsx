@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { routes } from '@/constants/routes';
 import { cn } from '@/lib/utils';
-import { ChevronLeft, ChevronRight, Menu, User } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Menu } from 'lucide-react';
 
 const AppSidebar = ({ dictionary, user }: AppSidebarProps) => {
   const [isOpen, setIsOpen] = useState(false);

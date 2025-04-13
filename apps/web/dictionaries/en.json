@@ -32,11 +32,51 @@
     "logout": "Logout"
   },
 
+  "atoms": {
+    "privateRepo": "Private Repo",
+    "publicRepo": "Public Repo"
+  },
   "molecules": {
+    "connectedRepos": {
+      "title": "Connected Repos",
+      "description": "Connect a repository to start getting reviews",
+      "noRepos": "No repositories connected",
+      "noReposDescription": "Connect a repository to start getting reviews"
+    },
     "ignoreFiles": {
       "placeholder": "Add file extensions (e.g., log, txt, md)",
       "add": "Add",
       "remove": "Remove"
+    },
+    "pullRequestList": {
+      "title": "Pull Requests",
+      "noPullRequests": "No pull requests found"
+    },
+    "usageStats": {
+      "title": "Usage Stats",
+      "noStats": "No usage stats found"
+    }
+  },
+  "organisms": {
+    "pullRequestList": {
+      "title": "Pull Requests",
+      "noPullRequests": "No pull requests found"
+    }
+  },
+  "templates": {
+    "pullRequestList": {
+      "title": "Pull Requests",
+      "noPullRequests": "No pull requests found"
+    }
+  },
+  "pages": {
+    "botSettings": {
+      "title": "Bot Settings",
+      "description": "Configure the bot to your liking"
+    },
+    "pullRequestList": {
+      "title": "Pull Requests",
+      "noPullRequests": "No pull requests found"
     }
   }
 }

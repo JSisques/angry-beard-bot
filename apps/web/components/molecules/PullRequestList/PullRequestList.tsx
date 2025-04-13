@@ -1,14 +1,13 @@
 import React from 'react';
 import { Card } from '@/components/molecules/card';
-import { Button } from '@/components/atoms/button';
 import { PullRequestListProps } from './PullRequestList.interface';
 import { Pagination, PaginationItem, PaginationContent, PaginationPrevious, PaginationLink, PaginationNext } from '../pagination';
 
-export const PullRequestList: React.FC<PullRequestListProps> = ({ dictionary, pullRequests, currentPage, totalPages, onPageChange }) => {
+export const PullRequestList: React.FC<PullRequestListProps> = ({ dictionary, pullRequests, currentPage, onPageChange }) => {
   return (
     <Card className="p-6">
       <div className="space-y-4">
-        <h3 className="text-lg font-semibold">Your Pull Requests</h3>
+        <h3 className="text-lg font-semibold">{dictionary.molecules.pullRequestList.title}</h3>
         <div className="space-y-4">
           {pullRequests.map(pr => (
             <div key={pr.id} className="flex items-center justify-between p-4 border rounded-lg">

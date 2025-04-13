@@ -1,20 +1,19 @@
 import React from 'react';
 import { Card } from '@/components/atoms/card';
-import { Button } from '@/components/atoms/button';
 import { ConnectedReposProps } from './ConnectedRepos.interface';
 
 export const ConnectedRepos: React.FC<ConnectedReposProps> = ({ repositories, dictionary }) => {
   return (
     <Card className="p-6">
       <div className="flex flex-col justify-between items-start mb-4">
-        <h3 className="text-lg font-semibold">Connected Repositories</h3>
-        <p className="text-sm text-muted-foreground">Hay que cambiar el diccionario</p>
+        <h3 className="text-lg font-semibold">{dictionary.organisms.connectedRepos.title}</h3>
+        <p className="text-sm text-muted-foreground">{dictionary.organisms.connectedRepos.description}</p>
       </div>
 
       {repositories.length === 0 ? (
         <div className="text-center py-6 text-muted-foreground">
-          <p>No repositories connected yet</p>
-          <p className="text-sm mt-1">Connect a repository to start getting reviews</p>
+          <p>{dictionary.organisms.connectedRepos.noRepos}</p>
+          <p className="text-sm mt-1">{dictionary.organisms.connectedRepos.noReposDescription}</p>
         </div>
       ) : (
         <div className="space-y-3">

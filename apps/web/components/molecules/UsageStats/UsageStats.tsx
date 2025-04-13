@@ -5,7 +5,7 @@ import { UsageStatsProps } from './UsageStats.interface';
 export const UsageStats: React.FC<UsageStatsProps> = ({ stats, dictionary }) => {
   return (
     <Card className="p-6">
-      <h3 className="text-lg font-semibold mb-4">Usage Statistics</h3>
+      <h3 className="text-lg font-semibold mb-4">{dictionary.molecules.usageStats.title}</h3>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {stats.map((stat, index) => (
           <div key={index} className="p-4 border rounded-lg">

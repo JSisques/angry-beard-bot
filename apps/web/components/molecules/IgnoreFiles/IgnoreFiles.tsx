@@ -2,10 +2,9 @@
 
 import React, { useState } from 'react';
 import { IgnoreFilesProps } from './IgnoreFiles.interface';
-import { Button } from '@/components/atoms/button';
 import { X } from 'lucide-react';
 
-export const IgnoreFiles: React.FC<IgnoreFilesProps> = ({ dictionary, extensions, onChange, className, ...props }) => {
+export const IgnoreFiles: React.FC<IgnoreFilesProps> = ({ dictionary, extensions, onChange }) => {
   const [newExtension, setNewExtension] = useState('');
 
   const handleAdd = () => {
