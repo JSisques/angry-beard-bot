@@ -15,11 +15,16 @@ import { ConnectedRepos } from '@/components/molecules/ConnectedRepos/ConnectedR
 import { RecentReviews } from '@/components/molecules/RecentReviews/RecentReviews';
 import { useSession } from '@/hooks/use-session';
 import Loading from '@/app/loading';
+import { useReviews } from '@/components/molecules/RecentReviews/RecentReviews.service';
 
 const HomePage = ({ dictionary }: HomePageProps) => {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
   const { user } = useSession();
+
+  const { data: reviews, isLoading, error } = useReviews(user?.id || '');
+
+  console.log(JSON.stringify(reviews, null, 2));
 
   if (!user) return <Loading />;
 
@@ -135,7 +140,7 @@ const HomePage = ({ dictionary }: HomePageProps) => {
           totalPages={5}
           onPageChange={setCurrentPage}
         />
-        <RecentReviews reviews={mockReviews} />
+        <RecentReviews reviews={reviews} dictionary={dictionary} />
       </div>
     </RootTemplate>
   );
