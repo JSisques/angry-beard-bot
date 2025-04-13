@@ -29,11 +29,6 @@ const api = axios.create({
 api.interceptors.request.use(
   async config => {
     try {
-      // Skip authentication for /github/webhook endpoint
-      if (config.url?.includes('/github/webhook')) {
-        return config;
-      }
-
       const {
         data: { session },
       } = await supabase.auth.getSession();

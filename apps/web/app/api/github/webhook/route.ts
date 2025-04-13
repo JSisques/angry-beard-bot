@@ -83,7 +83,18 @@ export async function POST(request: Request) {
 
     // Process the event
     const webhookPayload = JSON.parse(payload) as WebhookPayload;
-    await post('/github/webhook', webhookPayload);
+    const apiToken = process.env.API_TOKEN;
+
+    if (!apiToken) {
+      console.error('API_TOKEN is not set');
+      return NextResponse.json({ error: 'Server configuration error' }, { status: 500 });
+    }
+
+    await post('/github/webhook', webhookPayload, {
+      headers: {
+        Authorization: `Bearer ${apiToken}`,
+      },
+    });
 
     return NextResponse.json({ status: 'ok' });
   } catch (error) {

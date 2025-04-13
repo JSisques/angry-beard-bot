@@ -7,8 +7,8 @@ export const get = async <T>(url: string, params?: Record<string, any>): Promise
 };
 
 // Generic POST request
-export const post = async <T>(url: string, data?: any): Promise<T> => {
-  const response = await api.post<T>(url, data);
+export const post = async <T>(url: string, data?: any, config?: any): Promise<T> => {
+  const response = await api.post<T>(url, data, config);
   return response.data;
 };
 
