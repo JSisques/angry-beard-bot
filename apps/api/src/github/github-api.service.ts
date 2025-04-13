@@ -31,7 +31,7 @@ export class GithubApiService {
     return jwt.sign(
       {
         iat: now,
-        exp: now + 600, // 10 minutos
+        exp: now + 600,
         iss: this.appId,
       },
       this.privateKey,
