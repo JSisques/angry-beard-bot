@@ -77,7 +77,9 @@ api.interceptors.response.use(
           if (refreshError) {
             // If refresh fails, sign out the user
             await supabase.auth.signOut();
-            window.location.href = '/auth';
+            if (typeof window !== 'undefined') {
+              window.location.href = '/auth';
+            }
           } else if (session) {
             // If refresh succeeds, retry the original request
             const originalRequest = error.config;
@@ -87,7 +89,9 @@ api.interceptors.response.use(
         } catch (refreshError) {
           console.error('Error refreshing session:', refreshError);
           await supabase.auth.signOut();
-          window.location.href = '/auth';
+          if (typeof window !== 'undefined') {
+            window.location.href = '/auth';
+          }
         }
       }
 
