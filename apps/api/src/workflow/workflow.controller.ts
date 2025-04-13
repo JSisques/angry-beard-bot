@@ -2,7 +2,9 @@ import { Controller, Logger, Post, Body, BadRequestException } from '@nestjs/com
 import { WorkflowService } from './workflow.service';
 import { WorkflowCallbackDto } from './dto/callback-workflow.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Public } from 'src/auth/decorators/public.decorator';
 
+@Public()
 @ApiTags('Workflow')
 @Controller('workflow')
 export class WorkflowController {
