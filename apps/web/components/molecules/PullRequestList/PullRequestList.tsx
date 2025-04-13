@@ -1,9 +1,20 @@
+'use client';
 import React from 'react';
 import { Card } from '@/components/molecules/card';
 import { PullRequestListProps } from './PullRequestList.interface';
 import { Pagination, PaginationItem, PaginationContent, PaginationPrevious, PaginationLink, PaginationNext } from '../pagination';
-
+import { ExternalLink } from 'lucide-react';
+import { usePullRequests } from './PullRequestList.service';
+import { useSession } from '@/hooks/use-session';
+import Loading from '@/app/loading';
 export const PullRequestList: React.FC<PullRequestListProps> = ({ dictionary, pullRequests, currentPage, onPageChange }) => {
+  const { user } = useSession();
+  const { data: pullRequestsData, isLoading, error } = usePullRequests(user?.id || '');
+
+  console.log(JSON.stringify(pullRequestsData, null, 2));
+
+  if (isLoading) return <Loading />;
+
   return (
     <Card className="p-6">
       <div className="space-y-4">
@@ -21,13 +32,21 @@ export const PullRequestList: React.FC<PullRequestListProps> = ({ dictionary, pu
                     pr.status === 'open'
                       ? 'bg-green-100 text-green-800'
                       : pr.status === 'merged'
-                        ? 'bg-blue-100 text-blue-800'
+                        ? 'bg-purple-100 text-purple-800'
                         : 'bg-gray-100 text-gray-800'
                   }`}
                 >
                   {pr.status}
                 </span>
-                <span className="text-sm text-muted-foreground">{new Date(pr.createdAt).toLocaleDateString()}</span>
+                <a
+                  href={`https://github.com/${pr.repository}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center p-2 rounded-full hover:bg-gray-100 transition-colors"
+                  title="Go to repository"
+                >
+                  <ExternalLink className="h-4 w-4 text-gray-500" />
+                </a>
               </div>
             </div>
           ))}

@@ -19,7 +19,7 @@ export class UserService {
     this.logger.debug(`Getting user by supabase id: ${supabaseId}`);
     return this.prismaService.user.findUnique({
       where: { supabaseId },
-      include: { subscription: true, botConfig: true, _count: { select: { reviews: true } } },
+      include: { subscription: true, repositories: true, botConfig: true, _count: { select: { reviews: true } } },
     });
   }
 
@@ -66,6 +66,7 @@ export class UserService {
       include: {
         subscription: true,
         botConfig: true,
+        repositories: true,
         _count: { select: { reviews: true } },
       },
     });

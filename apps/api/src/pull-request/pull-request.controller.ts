@@ -2,12 +2,15 @@ import { Controller, Get, Param, Post, Body, Put, Delete, Logger } from '@nestjs
 import { PullRequestService } from './pull-request.service';
 import { PullRequestDto } from './dto/pull-request.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-
+import { UserService } from 'src/user/user.service';
 @ApiTags('Pull Requests')
 @Controller('pull-request')
 export class PullRequestController {
   private readonly logger;
-  constructor(private readonly pullRequestService: PullRequestService) {
+  constructor(
+    private readonly pullRequestService: PullRequestService,
+    private readonly userService: UserService,
+  ) {
     this.logger = new Logger(PullRequestController.name);
   }
 
@@ -24,6 +27,22 @@ export class PullRequestController {
   async getPullRequestById(@Param('id') id: string) {
     this.logger.debug(`Getting pull request by id: ${id}`);
     return this.pullRequestService.getPullRequestById(id);
+  }
+
+  @ApiOperation({
+    summary: 'Get pull requests by user ID',
+    description: 'Retrieves all pull requests for a specific user',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Pull requests retrieved successfully',
+  })
+  @ApiResponse({ status: 404, description: 'No pull requests found' })
+  @Get('user/:supabaseId')
+  async getPullRequestsBySupabaseId(@Param('supabaseId') supabaseId: string) {
+    this.logger.debug(`Getting pull requests by user id: ${supabaseId}`);
+    const user = await this.userService.getUserBySupabaseId(supabaseId);
+    return this.pullRequestService.getPullRequestsByRepositories(user.repositories);
   }
 
   @ApiOperation({
