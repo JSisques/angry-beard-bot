@@ -32,7 +32,7 @@ export class PullRequestService {
   }
 
   async getPullRequestsByRepositories(repositories: Repository[]) {
-    this.logger.debug(`Getting pull requests by repository id: ${repositories}`);
+    this.logger.debug(`Getting pull requests by repositories: ${repositories.map(repository => repository.id)}`);
     return this.prisma.pullRequest.findMany({
       where: { repositoryId: { in: repositories.map(repository => repository.id) } },
     });

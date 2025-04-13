@@ -20,18 +20,18 @@ export const PullRequestList: React.FC<PullRequestListProps> = ({ dictionary, pu
       <div className="space-y-4">
         <h3 className="text-lg font-semibold">{dictionary.molecules.pullRequestList.title}</h3>
         <div className="space-y-4">
-          {pullRequests.map(pr => (
+          {pullRequestsData?.map(pr => (
             <div key={pr.id} className="flex items-center justify-between p-4 border rounded-lg">
               <div className="space-y-1">
                 <h4 className="font-medium">{pr.title}</h4>
-                <p className="text-sm text-muted-foreground">{pr.repository}</p>
+                <p className="text-sm text-muted-foreground">{pr.repositoryId}</p>
               </div>
               <div className="flex items-center space-x-4">
                 <span
                   className={`px-2 py-1 rounded-full text-xs ${
-                    pr.status === 'open'
+                    pr.status === 'PENDING'
                       ? 'bg-green-100 text-green-800'
-                      : pr.status === 'merged'
+                      : pr.status === 'MERGED'
                         ? 'bg-purple-100 text-purple-800'
                         : 'bg-gray-100 text-gray-800'
                   }`}
@@ -39,7 +39,7 @@ export const PullRequestList: React.FC<PullRequestListProps> = ({ dictionary, pu
                   {pr.status}
                 </span>
                 <a
-                  href={`https://github.com/${pr.repository}`}
+                  href={pr.url}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center p-2 rounded-full hover:bg-gray-100 transition-colors"
