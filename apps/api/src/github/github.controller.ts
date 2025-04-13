@@ -2,7 +2,9 @@ import { Controller, Logger, Post, Body } from '@nestjs/common';
 import { GithubWebhookDto } from './dto/webhook.github.dto';
 import { GithubService } from './github.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Public } from 'src/auth/decorators/public.decorator';
 
+@Public()
 @ApiTags('GitHub')
 @Controller('github')
 export class GithubController {

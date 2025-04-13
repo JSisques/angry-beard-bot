@@ -24,7 +24,6 @@ const api = axios.create({
  * Request interceptor to handle authentication
  * - Gets the current session from Supabase
  * - Adds the access token to request headers if available
- * - Skips authentication for /github/webhook endpoint
  */
 api.interceptors.request.use(
   async config => {
