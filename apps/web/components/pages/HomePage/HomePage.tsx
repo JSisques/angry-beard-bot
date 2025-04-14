@@ -69,12 +69,12 @@ const HomePage = ({ dictionary }: HomePageProps) => {
     <RootTemplate dictionary={dictionary}>
       <div className="flex justify-between items-center">
         <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold">Dashboard</h1>
-          <p className="text-sm text-muted-foreground">Welcome to the dashboard</p>
+          <h1 className="text-3xl font-bold">{dictionary.pages.home.title}</h1>
+          <p className="text-sm text-muted-foreground">{dictionary.pages.home.description}</p>
         </div>
 
         <Button onClick={() => router.push(routes.botSettings.path)} className="flex items-center space-x-2">
-          <span>Settings</span>
+          <span>{dictionary.pages.home.settings}</span>
         </Button>
       </div>
 

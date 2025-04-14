@@ -77,6 +77,11 @@
     "pullRequests": {
       "title": "Pull Requests",
       "description": "View all your pull requests"
+    },
+    "home": {
+      "title": "Home",
+      "description": "Welcome to the home page",
+      "settings": "Settings"
     }
   }
 }
