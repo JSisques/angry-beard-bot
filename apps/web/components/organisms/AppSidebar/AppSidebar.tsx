@@ -6,7 +6,7 @@ import logo from '@/public/logo.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { routes } from '@/constants/routes';
+import { routes } from '@/config/routes';
 import { cn } from '@/lib/utils';
 import { ChevronLeft, ChevronRight, Menu } from 'lucide-react';
 
@@ -39,19 +39,29 @@ const AppSidebar = ({ dictionary, user }: AppSidebarProps) => {
         )}
       >
         <div className="p-4 flex flex-col h-full">
-          <Link href="/">
-            <div className="flex items-center justify-between mb-8">
-              <div className={cn('flex items-center', isCollapsed ? 'justify-center w-full' : 'justify-start')}>
-                <Image src={logo} alt="logo" width={32} height={32} />
-              </div>
+          <Link
+            href="/"
+            className={cn(
+              'mt-auto border-gray-200 mb-8 border-b rounded-md',
+              'flex items-center gap-3 p-2 hover:bg-gray-100 transition-colors',
+              isCollapsed ? 'justify-center' : 'justify-start',
+            )}
+          >
+            <div className="h-8 w-8 flex items-center justify-center flex-shrink-0">
+              <Image src={logo} alt="logo" width={32} height={32} />
             </div>
+            {!isCollapsed && (
+              <div className="flex flex-col min-w-0">
+                <span className="text-sm font-medium truncate">{dictionary.common.appName}</span>
+              </div>
+            )}
           </Link>
 
           <nav className="space-y-2 flex-1">
             {Object.values(routes).map((route, index) => {
               const isActive = pathname === route.path;
               const Icon = route.icon;
-              const routeName = route.path || '';
+              const routeName = route.name || '';
 
               return (
                 <Link

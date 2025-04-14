@@ -7,7 +7,7 @@ import { CreditsDisplay } from '@/components/molecules/CreditsDisplay/CreditsDis
 import { PullRequestList } from '@/components/molecules/PullRequestList/PullRequestList';
 import { Button } from '@/components/atoms/button';
 import { useRouter } from 'next/navigation';
-import { routes } from '@/constants/routes';
+import { routes } from '@/config/routes';
 import { PlanDisplay } from '@/components/molecules/PlanDisplay/PlanDisplay';
 import { UsageStats } from '@/components/molecules/UsageStats/UsageStats';
 import { BotConfigDisplay } from '@/components/molecules/BotConfigDisplay/BotConfigDisplay';

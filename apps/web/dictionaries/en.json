@@ -29,6 +29,12 @@
     "home": "Home",
     "botSettings": "Bot Settings",
     "settings": "Settings",
+    "help": "Help",
+    "pullRequests": "Pull Requests",
+    "code": "Code",
+    "files": "Files",
+    "integrations": "Integrations",
+    "profile": "Profile",
     "logout": "Logout"
   },
 
