@@ -55,6 +55,12 @@
     "usageStats": {
       "title": "Usage Stats",
       "noStats": "No usage stats found"
+    },
+    "creditsDisplay": {
+      "title": "Credits Usage",
+      "remainingCredits": "remaining credits",
+      "usedCredits": "used credits",
+      "totalCredits": "total credits"
     }
   },
   "organisms": {

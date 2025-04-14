@@ -84,4 +84,13 @@ export class SubscriptionController {
     this.logger.log(`Cancelling subscription: ${id}`);
     return this.subscriptionService.cancelSubscription(id);
   }
+
+  @ApiOperation({ summary: 'Get remaining credits for user ID' })
+  @ApiParam({ name: 'supabaseId', description: 'Supabase User ID' })
+  @ApiResponse({ status: 200, description: 'Returns the remaining credits for the user' })
+  @Get('user/:supabaseId/credits-info')
+  async getCreditsInfo(@Param('supabaseId') supabaseId: string): Promise<{ remainingCredits: number; totalCredits: number; usedCredits: number }> {
+    this.logger.log(`Getting credits info for user ID: ${supabaseId}`);
+    return this.subscriptionService.getCreditsInfo(supabaseId);
+  }
 }

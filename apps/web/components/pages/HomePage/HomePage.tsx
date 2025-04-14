@@ -79,7 +79,7 @@ const HomePage = ({ dictionary }: HomePageProps) => {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 ">
-        <CreditsDisplay usedCredits={150} totalCredits={1000} />
+        <CreditsDisplay usedCredits={150} totalCredits={1000} dictionary={dictionary} />
         <PlanDisplay planName="The Grumpy Dev" price="€20" period="monthly" features={mockPlanFeatures} isCurrentPlan={true} />
       </div>
 

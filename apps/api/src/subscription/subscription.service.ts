@@ -4,11 +4,17 @@ import { Subscription } from '@prisma/client';
 import { SubscriptionCredits } from './enum/credits.enum';
 import { SubscriptionPlan } from './enum/plans.enum';
 import { SubscriptionStatus } from './enum/status.enum';
+import { UserService } from '../user/user.service';
+import { ReviewService } from '../review/review.service';
 @Injectable()
 export class SubscriptionService {
   private readonly logger;
 
-  constructor(private readonly prisma: PrismaService) {
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly userService: UserService,
+    private readonly reviewService: ReviewService,
+  ) {
     this.logger = new Logger(SubscriptionService.name);
   }
 
@@ -158,5 +164,22 @@ export class SubscriptionService {
   async isSubscriptionActive(status: SubscriptionStatus) {
     this.logger.log(`Checking subscription status: ${status}`);
     return status === SubscriptionStatus.ACTIVE;
+  }
+
+  /**
+   * Gets the remaining credits for a user
+   * @param supabaseId - The unique identifier of the user
+   * @returns {Promise<number>} The remaining credits for the user
+   */
+  async getCreditsInfo(supabaseId: string) {
+    this.logger.log(`Getting remaining credits for user: ${supabaseId}`);
+    const user = await this.userService.getUserBySupabaseId(supabaseId);
+    const reviews = await this.reviewService.getAllReviewsByUserId(user.id);
+    const currentCredits = reviews.reduce((acc, review) => acc + review.creditsUsed, 0);
+    return {
+      remainingCredits: user.subscription.credits - currentCredits,
+      totalCredits: user.subscription.credits,
+      usedCredits: currentCredits,
+    };
   }
 }

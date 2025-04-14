@@ -40,6 +40,20 @@ export class ReviewService {
   }
 
   /**
+   * Gets all reviews created by a specific user
+   * @param userId - The unique identifier of the user
+   * @returns {Promise<Review[]>} Array of reviews by the user
+   */
+  async getAllReviewsByUserId(userId: string) {
+    this.logger.debug(`Getting all reviews by user id: ${userId}`);
+    return this.prisma.review.findMany({
+      where: {
+        userId,
+      },
+    });
+  }
+
+  /**
    * Gets all reviews for a specific pull request
    * @param pullRequestId - The unique identifier of the pull request
    * @returns {Promise<Review[]>} Array of reviews for the pull request
