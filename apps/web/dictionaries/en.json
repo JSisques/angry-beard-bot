@@ -61,6 +61,20 @@
     "pullRequestList": {
       "title": "Pull Requests",
       "noPullRequests": "No pull requests found"
+    },
+    "botConfiguration": {
+      "botPersonality": "Bot Personality",
+      "languageSettings": "Language Settings",
+      "languageSettingsDescription": "Configure the language of the bot",
+      "grumpinessLevel": "Grumpiness Level",
+      "grumpinessLevelDescription": "How grumpy and sarcastic the bot should be",
+      "technicalityLevel": "Technicality Level",
+      "technicalityLevelDescription": "How technical and detailed the feedback should be",
+      "detailLevel": "Detail Level",
+      "detailLevelDescription": "How thorough the code review should be",
+      "ignoredExtensions": "Ignored Extensions",
+      "addFileExtensions": "Add file extensions that should be ignored during code review",
+      "selectLanguage": "Select a language"
     }
   },
   "templates": {
