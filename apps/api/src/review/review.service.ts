@@ -28,12 +28,14 @@ export class ReviewService {
    * @param userId - The unique identifier of the user
    * @returns {Promise<Review[]>} Array of reviews by the user
    */
-  async getReviewsByUserId(userId: string) {
+  async getReviewsByUserId(userId: string, page: number) {
     this.logger.debug(`Getting reviews by user id: ${userId}`);
     return this.prisma.review.findMany({
       where: {
         userId,
       },
+      skip: (page - 1) * 10,
+      take: 10,
     });
   }
 

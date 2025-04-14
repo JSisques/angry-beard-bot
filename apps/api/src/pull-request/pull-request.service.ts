@@ -31,10 +31,12 @@ export class PullRequestService {
     });
   }
 
-  async getPullRequestsByRepositories(repositories: Repository[]) {
+  async getPullRequestsByRepositories(repositories: Repository[], page: number) {
     this.logger.debug(`Getting pull requests by repositories: ${repositories.map(repository => repository.id)}`);
     return this.prisma.pullRequest.findMany({
       where: { repositoryId: { in: repositories.map(repository => repository.id) } },
+      skip: (page - 1) * 10,
+      take: 10,
     });
   }
 

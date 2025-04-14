@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Body, Put, Delete, Logger } from '@nestjs/common';
+import { Controller, Get, Param, Post, Body, Put, Delete, Logger, Query } from '@nestjs/common';
 import { PullRequestService } from './pull-request.service';
 import { PullRequestDto } from './dto/pull-request.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -39,10 +39,10 @@ export class PullRequestController {
   })
   @ApiResponse({ status: 404, description: 'No pull requests found' })
   @Get('user/:supabaseId')
-  async getPullRequestsBySupabaseId(@Param('supabaseId') supabaseId: string) {
+  async getPullRequestsBySupabaseId(@Param('supabaseId') supabaseId: string, @Query('page') page: number) {
     this.logger.debug(`Getting pull requests by user id: ${supabaseId}`);
     const user = await this.userService.getUserBySupabaseId(supabaseId);
-    return this.pullRequestService.getPullRequestsByRepositories(user.repositories);
+    return this.pullRequestService.getPullRequestsByRepositories(user.repositories, page);
   }
 
   @ApiOperation({

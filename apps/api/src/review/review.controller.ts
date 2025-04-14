@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Logger, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Logger, Param, Post, Put, Query } from '@nestjs/common';
 import { ReviewService } from './review.service';
 import { UserService } from 'src/user/user.service';
 import { CreateReviewDto } from './dto/create-review.dto';
@@ -15,10 +15,10 @@ export class ReviewController {
   }
 
   @Get('/user/:supabaseId')
-  async getReviewsByUserSupabaseId(@Param('supabaseId') supabaseId: string) {
+  async getReviewsByUserSupabaseId(@Param('supabaseId') supabaseId: string, @Query('page') page: number) {
     this.logger.debug(`Getting reviews by user supabase id: ${supabaseId}`);
     const user = await this.userService.getUserBySupabaseId(supabaseId);
-    return this.reviewService.getReviewsByUserId(user.id);
+    return this.reviewService.getReviewsByUserId(user.id, page);
   }
 
   @Get('/pull-request/:pullRequestId')

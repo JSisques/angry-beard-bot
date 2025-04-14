@@ -15,30 +15,12 @@ import { ConnectedRepos } from '@/components/molecules/ConnectedRepos/ConnectedR
 import { RecentReviews } from '@/components/molecules/RecentReviews/RecentReviews';
 import { useSession } from '@/hooks/use-session';
 import Loading from '@/app/loading';
-import { useReviews } from '@/components/molecules/RecentReviews/RecentReviews.service';
 
 const HomePage = ({ dictionary }: HomePageProps) => {
   const router = useRouter();
-  const [currentPage, setCurrentPage] = useState(1);
   const { user } = useSession();
 
-  const { data: reviews, isLoading, error } = useReviews(user?.id || '');
-
-  console.log(JSON.stringify(reviews, null, 2));
-
   if (!user) return <Loading />;
-
-  // Mock data - Replace with actual data from your API
-  const mockPullRequests = [
-    {
-      id: '1',
-      title: 'Add new feature',
-      repository: 'repo-name',
-      status: 'open' as const,
-      createdAt: '2024-04-12',
-    },
-    // Add more mock PRs as needed
-  ];
 
   // Mock data for plan display
   const mockPlanFeatures = [
@@ -83,28 +65,6 @@ const HomePage = ({ dictionary }: HomePageProps) => {
     },
   ];
 
-  // Mock data for recent reviews
-  const mockReviews = [
-    {
-      id: '1',
-      repository: 'javichu/angry-beard-bot',
-      pullRequestTitle: 'Add new feature',
-      pullRequestNumber: 42,
-      date: '2024-04-12',
-      status: 'approved' as const,
-      commentCount: 3,
-    },
-    {
-      id: '2',
-      repository: 'javichu/my-project',
-      pullRequestTitle: 'Fix bug in login flow',
-      pullRequestNumber: 15,
-      date: '2024-04-10',
-      status: 'changes_requested' as const,
-      commentCount: 5,
-    },
-  ];
-
   return (
     <RootTemplate dictionary={dictionary}>
       <div className="flex justify-between items-center">
@@ -133,14 +93,8 @@ const HomePage = ({ dictionary }: HomePageProps) => {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
-        <PullRequestList
-          dictionary={dictionary}
-          pullRequests={mockPullRequests}
-          currentPage={currentPage}
-          totalPages={5}
-          onPageChange={setCurrentPage}
-        />
-        <RecentReviews reviews={reviews} dictionary={dictionary} />
+        <PullRequestList dictionary={dictionary} />
+        <RecentReviews dictionary={dictionary} />
       </div>
     </RootTemplate>
   );

@@ -5,10 +5,10 @@ import { Review } from '@/types/Review/Review.type';
 // Types
 
 // React Query Hooks
-export const useReviews = (supabaseId: string) => {
+export const useReviews = (supabaseId: string, page: number) => {
   return useQuery({
-    queryKey: ['reviews', supabaseId],
-    queryFn: () => getReviewsBySupabaseId(supabaseId),
+    queryKey: ['reviews', supabaseId, page],
+    queryFn: () => getReviewsBySupabaseId(supabaseId, page),
     enabled: !!supabaseId,
   });
 };
@@ -36,8 +36,8 @@ export const useDeleteReview = () => {
 };
 
 // API Functions
-export const getReviewsBySupabaseId = async (supabaseId: string): Promise<Review[]> => {
-  return get<Review[]>(`/review/user/${supabaseId}`);
+export const getReviewsBySupabaseId = async (supabaseId: string, page: number): Promise<Review[]> => {
+  return get<Review[]>(`/review/user/${supabaseId}?page=${page}`);
 };
 
 export const getReviewsByPullRequestId = async (pullRequestId: string): Promise<Review[]> => {

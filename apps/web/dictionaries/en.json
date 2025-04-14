@@ -74,9 +74,9 @@
       "title": "Bot Settings",
       "description": "Configure the bot to your liking"
     },
-    "pullRequestList": {
+    "pullRequests": {
       "title": "Pull Requests",
-      "noPullRequests": "No pull requests found"
+      "description": "View all your pull requests"
     }
   }
 }
