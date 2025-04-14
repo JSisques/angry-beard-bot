@@ -1,7 +1,7 @@
 {
   "common": {
     "appName": "Angry Beard Bot",
-    "appDescription": "AI-powered code review bot with personality",
+    "appDescription": "Bot de revisión de código con personalidad impulsado por IA",
     "loading": "Cargando...",
     "loadingDescription": "Cargando la aplicación...",
     "accept": "Aceptar",
@@ -10,13 +10,116 @@
     "delete": "Eliminar",
     "edit": "Editar",
     "close": "Cerrar",
+    "github": "Github"
+  },
+  "auth": {
+    "login": "Iniciar sesión",
+    "signUp": "Registrarse",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
     "logout": "Cerrar sesión",
-    "login": "Iniciar sesión"
+    "welcomeBack": "¡Bienvenido de nuevo!",
+    "loginToYourAccount": "Inicia sesión en tu cuenta de Acme Inc",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "forgotPasswordDescription": "¿Olvidaste tu contraseña? Ingresa tu correo electrónico y te enviaremos un enlace para restablecerla.",
+    "forgotPasswordButton": "Restablecer contraseña",
+    "orContinueWith": "O continúa con"
   },
   "sidebar": {
     "home": "Inicio",
-    "botSettings": "Configuración del bot",
+    "botSettings": "Configuración del Bot",
     "settings": "Configuración",
-    "logout": "Cerrar sesión"
+    "help": "Ayuda",
+    "pullRequests": "Pull Requests",
+    "reviews": "Revisiones",
+    "files": "Archivos",
+    "integrations": "Integraciones"
+  },
+  "atoms": {
+    "privateRepo": "Repositorio Privado",
+    "publicRepo": "Repositorio Público"
+  },
+  "molecules": {
+    "connectedRepos": {
+      "title": "Repositorios Conectados",
+      "description": "Conecta un repositorio para comenzar a recibir revisiones",
+      "noRepos": "No hay repositorios conectados",
+      "noReposDescription": "Conecta un repositorio para comenzar a recibir revisiones"
+    },
+    "ignoreFiles": {
+      "placeholder": "Agregar extensiones de archivo (ej. log, txt, md)",
+      "add": "Agregar",
+      "remove": "Eliminar"
+    },
+    "pullRequestList": {
+      "title": "Pull Requests",
+      "noPullRequests": "No se encontraron pull requests"
+    },
+    "usageStats": {
+      "title": "Estadísticas de Uso",
+      "noStats": "No se encontraron estadísticas"
+    },
+    "creditsDisplay": {
+      "title": "Uso de Créditos",
+      "remainingCredits": "créditos restantes",
+      "usedCredits": "créditos usados",
+      "totalCredits": "créditos totales"
+    },
+    "recentReviews": {
+      "title": "Revisiones Recientes",
+      "noReviews": "No se encontraron revisiones",
+      "noReviewsDescription": "No se encontraron revisiones",
+      "creditsUsed": "créditos usados"
+    }
+  },
+  "organisms": {
+    "pullRequestList": {
+      "title": "Pull Requests",
+      "noPullRequests": "No se encontraron pull requests"
+    },
+    "botConfiguration": {
+      "botPersonality": "Personalidad del Bot",
+      "languageSettings": "Configuración de Idioma",
+      "languageSettingsDescription": "Configura el idioma del bot",
+      "grumpinessLevel": "Nivel de Malhumor",
+      "grumpinessLevelDescription": "Qué tan gruñón y sarcástico debe ser el bot",
+      "technicalityLevel": "Nivel Técnico",
+      "technicalityLevelDescription": "Qué tan técnica y detallada debe ser la retroalimentación",
+      "detailLevel": "Nivel de Detalle",
+      "detailLevelDescription": "Qué tan exhaustiva debe ser la revisión de código",
+      "ignoredExtensions": "Extensiones Ignoradas",
+      "addFileExtensions": "Agregar extensiones de archivo que deben ignorarse durante la revisión",
+      "selectLanguage": "Seleccionar un idioma"
+    }
+  },
+  "templates": {
+    "pullRequestList": {
+      "title": "Pull Requests",
+      "noPullRequests": "No se encontraron pull requests"
+    }
+  },
+  "pages": {
+    "botSettings": {
+      "title": "Configuración del Bot",
+      "description": "Configura el bot a tu gusto"
+    },
+    "pullRequests": {
+      "title": "Pull Requests",
+      "description": "Ver todos tus pull requests"
+    },
+    "home": {
+      "title": "Inicio",
+      "description": "Bienvenido a la página de inicio"
+    },
+    "notFound": {
+      "title": "No Encontrado",
+      "description": "La página que buscas no existe",
+      "goHome": "Ir al Inicio"
+    },
+    "reviews": {
+      "title": "Revisiones",
+      "description": "Ver todas tus revisiones",
+      "buttonText": "Agregar Revisión"
+    }
   }
 }
