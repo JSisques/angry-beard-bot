@@ -11,39 +11,34 @@ export const routes = {
     icon: Bot,
     name: 'botSettings',
   },
-  settings: {
-    path: '/settings',
-    icon: Settings2,
-    name: 'settings',
-  },
-  help: {
-    path: '/help',
-    icon: HelpCircle,
-    name: 'help',
-  },
   pullRequests: {
     path: '/pull-requests',
     icon: GitPullRequest,
     name: 'pullRequests',
   },
-  code: {
-    path: '/code',
+  reviews: {
+    path: '/reviews',
     icon: Code2,
-    name: 'code',
+    name: 'reviews',
   },
   files: {
     path: '/files',
     icon: FileCode2,
     name: 'files',
   },
-  profile: {
-    path: '/profile',
-    icon: User,
-    name: 'profile',
-  },
   integrations: {
     path: '/integrations',
     icon: Link,
     name: 'integrations',
+  },
+  settings: {
+    path: '/settings',
+    icon: Settings2,
+    name: 'settings',
+  },
+  help: {
+    path: 'https://docs.angrybeardbot.com',
+    icon: HelpCircle,
+    name: 'help',
   },
 };

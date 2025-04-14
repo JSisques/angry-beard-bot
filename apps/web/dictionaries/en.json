@@ -31,11 +31,9 @@
     "settings": "Settings",
     "help": "Help",
     "pullRequests": "Pull Requests",
-    "code": "Code",
+    "reviews": "Reviews",
     "files": "Files",
-    "integrations": "Integrations",
-    "profile": "Profile",
-    "logout": "Logout"
+    "integrations": "Integrations"
   },
 
   "atoms": {
@@ -67,6 +65,12 @@
       "remainingCredits": "remaining credits",
       "usedCredits": "used credits",
       "totalCredits": "total credits"
+    },
+    "recentReviews": {
+      "title": "Recent Reviews",
+      "noReviews": "No reviews found",
+      "noReviewsDescription": "No reviews found",
+      "creditsUsed": "credits used"
     }
   },
   "organisms": {
@@ -113,6 +117,11 @@
       "title": "Not Found",
       "description": "The page you are looking for does not exist",
       "goHome": "Go Home"
+    },
+    "reviews": {
+      "title": "Reviews",
+      "description": "View all your reviews",
+      "buttonText": "Add Review"
     }
   }
 }

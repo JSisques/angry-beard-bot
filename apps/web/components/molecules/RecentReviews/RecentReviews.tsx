@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Card } from '@/components/atoms/card';
 import { RecentReviewsProps } from './RecentReviews.interface';
@@ -5,19 +7,20 @@ import { Pagination, PaginationPrevious, PaginationLink, PaginationNext, Paginat
 import { usePagination } from '@/hooks/usePagination';
 import { useReviews } from './RecentReviews.service';
 import { useSession } from '@/hooks/use-session';
-export const RecentReviews: React.FC<RecentReviewsProps> = ({}) => {
+
+export const RecentReviews: React.FC<RecentReviewsProps> = ({ dictionary }) => {
   const { user } = useSession();
   const reviewsPagination = usePagination();
   const { data: reviews, isLoading, error } = useReviews(user?.id || '', reviewsPagination.currentPage);
 
   return (
     <Card className="p-6">
-      <h3 className="text-lg font-semibold mb-4">Recent Reviews</h3>
+      <h3 className="text-lg font-semibold mb-4">{dictionary.molecules.recentReviews.title}</h3>
 
       {reviews?.length === 0 ? (
         <div className="text-center py-6 text-muted-foreground">
-          <p>No reviews yet</p>
-          <p className="text-sm mt-1">Reviews will appear here once the bot has reviewed your PRs</p>
+          <p>{dictionary.molecules.recentReviews.noReviews}</p>
+          <p className="text-sm mt-1">{dictionary.molecules.recentReviews.noReviewsDescription}</p>
         </div>
       ) : (
         <div className="space-y-4">
@@ -32,7 +35,9 @@ export const RecentReviews: React.FC<RecentReviewsProps> = ({}) => {
 
               <div className="flex justify-between items-center mt-2">
                 <span className="text-sm text-muted-foreground">{new Date(review.createdAt).toLocaleDateString()}</span>
-                <span className="text-sm text-muted-foreground">{review.creditsUsed} credits used</span>
+                <span className="text-sm text-muted-foreground">
+                  {review.creditsUsed} {dictionary.molecules.recentReviews.creditsUsed}
+                </span>
               </div>
             </div>
           ))}
