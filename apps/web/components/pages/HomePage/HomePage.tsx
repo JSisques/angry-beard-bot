@@ -15,6 +15,7 @@ import { ConnectedRepos } from '@/components/molecules/ConnectedRepos/ConnectedR
 import { RecentReviews } from '@/components/molecules/RecentReviews/RecentReviews';
 import { useSession } from '@/hooks/use-session';
 import Loading from '@/app/loading';
+import PageHeader from '@/components/organisms/PageHeader/PageHeader';
 
 const HomePage = ({ dictionary }: HomePageProps) => {
   const router = useRouter();
@@ -67,16 +68,7 @@ const HomePage = ({ dictionary }: HomePageProps) => {
 
   return (
     <RootTemplate dictionary={dictionary}>
-      <div className="flex justify-between items-center">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold">{dictionary.pages.home.title}</h1>
-          <p className="text-sm text-muted-foreground">{dictionary.pages.home.description}</p>
-        </div>
-
-        <Button onClick={() => router.push(routes.botSettings.path)} className="flex items-center space-x-2">
-          <span>{dictionary.pages.home.settings}</span>
-        </Button>
-      </div>
+      <PageHeader title={dictionary.pages.home.title} description={dictionary.pages.home.description} />
 
       <div className="grid gap-6 md:grid-cols-2 ">
         <CreditsDisplay usedCredits={150} totalCredits={1000} dictionary={dictionary} />

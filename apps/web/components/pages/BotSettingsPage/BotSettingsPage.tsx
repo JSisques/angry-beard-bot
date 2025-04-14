@@ -8,6 +8,7 @@ import { Button } from '@/components/atoms/button';
 import { useSession } from '@/hooks/use-session';
 import Loading from '@/app/loading';
 import { useBotConfig, useUpdateBotConfig } from '@/services/botConfig.service';
+import PageHeader from '@/components/organisms/PageHeader/PageHeader';
 
 const BotSettingsPage = ({ dictionary }: BotSettingsPageProps) => {
   const { user } = useSession();
@@ -39,15 +40,12 @@ const BotSettingsPage = ({ dictionary }: BotSettingsPageProps) => {
 
   return (
     <RootTemplate dictionary={dictionary}>
-      <div className="flex justify-between items-center">
-        <div className="flex flex-col gap-2">
-          <h1 className="text-3xl font-bold">{dictionary.pages.botSettings.title}</h1>
-          <p className="text-sm text-muted-foreground">{dictionary.pages.botSettings.description}</p>
-        </div>
-        <Button onClick={handleSave} className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90">
-          {dictionary.common.save}
-        </Button>
-      </div>
+      <PageHeader
+        title={dictionary.pages.botSettings.title}
+        description={dictionary.pages.botSettings.description}
+        buttonText={dictionary.common.save}
+        buttonOnClick={handleSave}
+      />
 
       <BotConfiguration
         dictionary={dictionary}

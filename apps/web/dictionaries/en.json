@@ -110,8 +110,7 @@
     },
     "home": {
       "title": "Home",
-      "description": "Welcome to the home page",
-      "settings": "Settings"
+      "description": "Welcome to the home page"
     },
     "notFound": {
       "title": "Not Found",
