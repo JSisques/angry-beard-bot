@@ -23,14 +23,6 @@ const BotSettingsPage = ({ dictionary }: BotSettingsPageProps) => {
   if (!user) return <Loading />;
 
   const handleSave = () => {
-    console.log('Saving configuration...', {
-      id: botConfig?.id,
-      language,
-      grumpinessLevel,
-      technicalityLevel,
-      detailLevel,
-      ignoredExtensions,
-    });
     if (!botConfig?.id) {
       console.error('No bot config ID found');
       return;
