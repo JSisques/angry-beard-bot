@@ -7,6 +7,7 @@
     "accept": "Accept",
     "cancel": "Cancel",
     "save": "Save",
+    "saving": "Saving...",
     "delete": "Delete",
     "edit": "Edit",
     "close": "Close",
@@ -91,6 +92,45 @@
       "ignoredExtensions": "Ignored Extensions",
       "addFileExtensions": "Add file extensions that should be ignored during code review",
       "selectLanguage": "Select a language"
+    },
+    "profileForm": {
+      "title": "Profile",
+      "description": "View your profile",
+      "updateSuccess": "Profile updated successfully",
+      "updateError": "Failed to update profile",
+      "changeAvatar": "Change Avatar",
+      "avatarDescription": "Change the avatar of your profile",
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "Enter your full name",
+      "email": "Email"
+    },
+    "securitySettings": {
+      "passwordUpdateSuccess": "Password updated successfully",
+      "passwordUpdateError": "Failed to update password",
+      "twoFactorEnabled": "Two-factor authentication enabled",
+      "twoFactorDisabled": "Two-factor authentication disabled",
+      "twoFactorError": "Failed to update two-factor authentication",
+      "twoFactorStatus": "Two-factor authentication status",
+      "twoFactorDescription": "Enable or disable two-factor authentication",
+      "changePassword": "Change Password",
+      "changePasswordDescription": "Change the password for your account",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password"
+    },
+    "notificationPreferences": {
+      "title": "Notification Preferences",
+      "description": "Configure your notification preferences",
+      "emailNotifications": "Email Notifications",
+      "emailNotificationsDescription": "Enable or disable email notifications",
+      "pullRequestReviews": "Pull Request Reviews",
+      "pullRequestReviewsDescription": "Enable or disable pull request reviews",
+      "codeComments": "Code Comments",
+      "codeCommentsDescription": "Enable or disable code comments",
+      "securityAlerts": "Security Alerts",
+      "securityAlertsDescription": "Enable or disable security alerts",
+      "weeklyDigest": "Weekly Digest",
+      "weeklyDigestDescription": "Enable or disable weekly digest"
     }
   },
   "templates": {
@@ -121,6 +161,15 @@
       "title": "Reviews",
       "description": "View all your reviews",
       "buttonText": "Add Review"
+    },
+    "profile": {
+      "title": "Profile",
+      "description": "View your profile",
+      "tabs": {
+        "profile": "Profile",
+        "security": "Security",
+        "notifications": "Notifications"
+      }
     }
   }
 }

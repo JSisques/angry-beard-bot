@@ -82,7 +82,7 @@ const AppSidebar = ({ dictionary, user }: AppSidebarProps) => {
 
           {/* User section */}
           <Link
-            href="/"
+            href="/profile"
             className={cn(
               'mt-auto pt-4 border-t border-gray-200',
               'flex items-center gap-3 p-2 rounded-md hover:bg-gray-100 transition-colors',
