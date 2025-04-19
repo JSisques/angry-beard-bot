@@ -14,13 +14,15 @@ export async function GET(request: Request) {
 
     const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
+    console.log('data', JSON.stringify(data, null, 2));
+
     if (error) {
       console.error('Error exchanging code for session:', error);
     }
 
-    console.log('data', data.user);
+    console.debug('data', data);
 
-    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/github`, data.user);
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/github`, data);
 
     return NextResponse.redirect(new URL('/', request.url));
   } catch (error) {

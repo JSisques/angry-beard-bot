@@ -1,8 +1,10 @@
 import { Controller, Post, Body, Get, Logger } from '@nestjs/common';
 import { SupabaseService } from '../supabase/supabase.service';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
-import { GitHubUser } from './interface/github-user.interface';
+import { AuthRequest } from './interface/auth-request.interface';
 import { UserService } from 'src/user/user.service';
+import { Public } from './decorators/public.decorator';
+
 @ApiTags('Authentication')
 @Controller('auth')
 export class AuthController {
@@ -15,6 +17,7 @@ export class AuthController {
     this.logger = new Logger(AuthController.name);
   }
 
+  @Public()
   @Post('register')
   @ApiOperation({ summary: 'Register a new user' })
   @ApiBody({
@@ -35,6 +38,7 @@ export class AuthController {
     return { user };
   }
 
+  @Public()
   @Post('login')
   @ApiOperation({ summary: 'Login user' })
   @ApiBody({
@@ -65,32 +69,34 @@ export class AuthController {
     return { session };
   }
 
+  @Public()
   @Post('github')
   @ApiOperation({ summary: 'Register or update user with GitHub data' })
-  @ApiBody({ type: GitHubUser })
+  //@ApiBody({ type: AuthRequest as ObjectType<AuthRequest> })
   @ApiResponse({ status: 201, description: 'User successfully registered/updated' })
   @ApiResponse({ status: 400, description: 'Invalid input' })
-  async handleGithubAuth(@Body() githubUser: GitHubUser) {
-    this.logger.log(`Processing GitHub authentication for user: ${githubUser.email}`);
+  async handleGithubAuth(@Body() authRequest: AuthRequest) {
+    this.logger.log(`Processing GitHub authentication for user: ${JSON.stringify(authRequest, null, 2)}`);
 
     try {
-      if (!githubUser.email) {
+      if (!authRequest.user.email) {
         throw new Error('Email is required');
       }
 
-      const existingUser = await this.userService.getUserByEmail(githubUser.email);
+      const existingUser = await this.userService.getUserBySupabaseId(authRequest.user.id);
 
-      let user = existingUser;
+      let currentUser = existingUser;
 
       if (!existingUser) {
-        user = await this.userService.createUser({
-          email: githubUser.email,
-          name: githubUser.user_metadata.name,
-          githubId: githubUser.id,
-          providerId: githubUser.user_metadata.provider_id,
+        currentUser = await this.userService.createUser({
+          email: authRequest.user.email,
+          name: authRequest.user.user_metadata.name,
+          githubId: authRequest.user.id,
+          providerId: authRequest.user.user_metadata.provider_id,
+          supabaseId: authRequest.user.id,
         });
       }
-      return { user };
+      return { user: currentUser };
     } catch (error) {
       this.logger.error(`Error processing GitHub authentication: ${error.message}`);
       throw error;

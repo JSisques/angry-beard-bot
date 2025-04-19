@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { PullRequestDto } from './dto/pull-request.dto';
 import { CreatePullRequestDto } from './dto/create-pull-request.dto';
+import { Repository } from '@prisma/client';
 @Injectable()
 export class PullRequestService {
   private readonly logger;
@@ -20,6 +21,22 @@ export class PullRequestService {
     this.logger.debug(`Getting pull request by github id: ${githubId}`);
     return this.prisma.pullRequest.findUnique({
       where: { githubId },
+    });
+  }
+
+  async getPullRequestsByRepositoryId(repositoryId: string) {
+    this.logger.debug(`Getting pull requests by repository id: ${repositoryId}`);
+    return this.prisma.pullRequest.findMany({
+      where: { repositoryId },
+    });
+  }
+
+  async getPullRequestsByRepositories(repositories: Repository[], page: number) {
+    this.logger.debug(`Getting pull requests by repositories: ${repositories.map(repository => repository.id)}`);
+    return this.prisma.pullRequest.findMany({
+      where: { repositoryId: { in: repositories.map(repository => repository.id) } },
+      skip: (page - 1) * 10,
+      take: 10,
     });
   }
 

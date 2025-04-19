@@ -8,8 +8,11 @@ async function bootstrap() {
 
   // Global configuration
   app.enableCors();
+  logger.log('CORS enabled');
   app.setGlobalPrefix('api/v1');
+  logger.log('Global prefix set to api/v1');
   app.useGlobalPipes(new ValidationPipe());
+  logger.log('Validation pipe enabled');
 
   // Swagger configuration
   const config = new DocumentBuilder()
@@ -28,17 +31,21 @@ async function bootstrap() {
       'access-token',
     )
     .build();
+  logger.log('Swagger configuration completed');
 
   const document = SwaggerModule.createDocument(app, config);
+  logger.log('Swagger document created');
+
   SwaggerModule.setup('docs', app, document, {
     swaggerOptions: {
       persistAuthorization: true,
     },
     customSiteTitle: 'API Documentation',
   });
+  logger.log('Swagger setup completed');
 
   // Start server
-  await app.listen(process.env.API_PORT ?? 3000);
+  await app.listen(process.env.PORT ?? 3000);
   const appUrl = await app.getUrl();
   logger.log(`🚀 Server ready at ${appUrl}`);
   logger.log(`🚀 API Documentation: ${appUrl}/docs`);

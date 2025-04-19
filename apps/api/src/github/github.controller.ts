@@ -1,17 +1,36 @@
-import { Controller, Post, Body, Logger } from '@nestjs/common';
+import { Controller, Logger, Post, Body } from '@nestjs/common';
 import { GithubWebhookDto } from './dto/webhook.github.dto';
-import { RepositoryService } from 'src/repository/repository.service';
 import { GithubService } from './github.service';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Public } from 'src/auth/decorators/public.decorator';
 
-@Controller('github/webhook')
-export class GithubWebhookController {
+@Public()
+@ApiTags('GitHub')
+@Controller('github')
+export class GithubController {
   private readonly logger;
 
   constructor(private readonly githubService: GithubService) {
-    this.logger = new Logger(GithubWebhookController.name);
+    this.logger = new Logger(GithubController.name);
   }
 
-  @Post()
+  @ApiOperation({
+    summary: 'Handle GitHub webhook events',
+    description: 'Processes incoming GitHub webhook events for pull request and repository actions',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Webhook processed successfully',
+    schema: {
+      properties: {
+        message: {
+          type: 'string',
+          example: 'Webhook received',
+        },
+      },
+    },
+  })
+  @Post('/webhook')
   async webhook(@Body() body: GithubWebhookDto) {
     this.logger.debug(`Webhook received with action: ${body.action}`);
 
@@ -28,12 +47,14 @@ export class GithubWebhookController {
         this.logger.debug(`Repository edited: ${body.repository.id}`);
         break;
       case 'submitted':
-        this.logger.debug(`Review submitted: ${body.repository.id}`);
+        this.logger.debug(`Review submitted for pull request: ${body.pull_request.id}`);
         break;
       case 'synchronize':
         this.logger.debug(`Pull request synchronized: ${body.pull_request.id}`);
         this.githubService.handlePullRequestSynchronized(body);
-
+        break;
+      case 'created':
+        this.logger.debug(`Review created for repository: ${body.repository.id}`);
         break;
       default:
         this.logger.debug(`Unknown action: ${body.action}`);

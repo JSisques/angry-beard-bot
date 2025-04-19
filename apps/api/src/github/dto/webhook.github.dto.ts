@@ -195,7 +195,7 @@ export interface GithubReview {
 }
 
 export interface GithubInstallation {
-  id: string;
+  id: number;
   node_id: string;
 }
 

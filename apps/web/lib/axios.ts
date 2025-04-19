@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { supabase } from './supabase/client';
 
 /**
  * Custom Axios instance configured for API requests
@@ -21,17 +22,21 @@ const api = axios.create({
 
 /**
  * Request interceptor to handle authentication
- * - Checks for auth token in localStorage
- * - Adds Bearer token to request headers if found
+ * - Gets the current session from Supabase
+ * - Adds the access token to request headers if available
  */
 api.interceptors.request.use(
-  config => {
-    // Get token from localStorage (if available)
-    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+  async config => {
+    try {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
 
-    // If token exists, add it to the headers
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      if (session?.access_token) {
+        config.headers.Authorization = `Bearer ${session.access_token}`;
+      }
+    } catch (error) {
+      console.error('Error getting session:', error);
     }
 
     return config;
@@ -53,7 +58,7 @@ api.interceptors.response.use(
   response => {
     return response;
   },
-  error => {
+  async error => {
     // Handle specific error cases
     if (error.response) {
       // The request was made and the server responded with a status code
@@ -62,29 +67,46 @@ api.interceptors.response.use(
 
       // Handle 401 Unauthorized errors (token expired or invalid)
       if (status === 401) {
-        // Clear token and redirect to login if in browser
-        if (typeof window !== 'undefined') {
-          localStorage.removeItem('token');
-          // You might want to redirect to login page here
-          // window.location.href = '/login';
+        try {
+          // Try to refresh the session
+          const {
+            data: { session },
+            error: refreshError,
+          } = await supabase.auth.refreshSession();
+
+          if (refreshError) {
+            // If refresh fails, sign out the user
+            await supabase.auth.signOut();
+            if (typeof window !== 'undefined') {
+              window.location.href = '/auth';
+            }
+          } else if (session) {
+            // If refresh succeeds, retry the original request
+            const originalRequest = error.config;
+            originalRequest.headers.Authorization = `Bearer ${session.access_token}`;
+            return api(originalRequest);
+          }
+        } catch (refreshError) {
+          console.error('Error refreshing session:', refreshError);
+          await supabase.auth.signOut();
+          if (typeof window !== 'undefined') {
+            window.location.href = '/auth';
+          }
         }
       }
 
       // Handle 403 Forbidden errors
       if (status === 403) {
-        // Handle forbidden access
         console.error('Access forbidden');
       }
 
       // Handle 404 Not Found errors
       if (status === 404) {
-        // Handle not found
         console.error('Resource not found');
       }
 
       // Handle 500 Internal Server errors
       if (status === 500) {
-        // Handle server error
         console.error('Server error');
       }
     } else if (error.request) {

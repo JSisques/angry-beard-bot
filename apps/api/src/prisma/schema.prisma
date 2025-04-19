@@ -33,14 +33,22 @@ enum PullRequestStatus {
   MERGED
 }
 
+enum ReviewSource {
+  GITHUB
+  GITLAB
+}
+
 model User {
   id           String        @id @default(uuid())
   email        String        @unique
   name         String?
+  supabaseId   String?       @unique
   githubId     String?       @unique
   providerId   String?       @unique
   subscription Subscription?
   repositories Repository[]
+  reviews      Review[]
+  botConfig    BotConfig?
   onboarded    Boolean       @default(false)
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
@@ -52,8 +60,9 @@ model Subscription {
   user      User               @relation(fields: [userId], references: [id], onDelete: Cascade)
   plan      SubscriptionPlan   @default(FREE)
   status    SubscriptionStatus @default(ACTIVE)
+  credits   Int                @default(20)
   startDate DateTime           @default(now())
-  endDate   DateTime?
+  endDate   DateTime?          
   createdAt DateTime           @default(now())
   updatedAt DateTime           @updatedAt
 }
@@ -66,9 +75,6 @@ model Repository {
   hasWiki  Boolean @default(false)
   githubId String? @unique
 
-  botConfigId String?
-  botConfig   BotConfig?
-
   ownerId String
   owner   User   @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 
@@ -80,27 +86,16 @@ model Repository {
 
 model BotConfig {
   id                String            @id @default(uuid())
-  repositoryId      String            @unique
-  repository        Repository        @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
+  userId            String            @unique
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
   grumpinessLevel   BotLevel          @default(MODERATE)
   technicalityLevel BotLevel          @default(MODERATE)
   detailLevel       BotLevel          @default(MODERATE)
   language          String            @default("en")
   autoApprove       Boolean           @default(false)
-  reviewFocusAreas  ReviewFocusArea[]
+  ignoredExtensions String[]          @default(["md", "txt", "lock", "json", "yml", "yaml", "env", "toml", "ini", "png", "jpg", "jpeg", "gif", "svg", "ico", "webp", "mp4", "webm", "mp3", "wav", "d.ts", "map", "snap", "golden", "wasm", "woff", "woff2", "ttf", "otf", "eot", "scss", "sass"])
   createdAt         DateTime          @default(now())
   updatedAt         DateTime          @updatedAt
-}
-
-model ReviewFocusArea {
-  id          String    @id @default(uuid())
-  name        String // e.g., "Code Style", "Best Practices", "Documentation"
-  botConfigId String
-  botConfig   BotConfig @relation(fields: [botConfigId], references: [id], onDelete: Cascade)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  @@unique([name, botConfigId])
 }
 
 model PullRequest {
@@ -130,6 +125,7 @@ model PullRequest {
   repositoryId      String
   repository        Repository        @relation(fields: [repositoryId], references: [id], onDelete: Cascade)
   status            PullRequestStatus @default(PENDING)
+  reviews           Review[]
 
   comments Comment[]
 
@@ -143,6 +139,22 @@ model Comment {
   content       String
   filePath      String?
   lineNumber    Int?
+  pullRequestId String
+  pullRequest   PullRequest @relation(fields: [pullRequestId], references: [id], onDelete: Cascade)
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model Review {
+  id            String      @id @default(uuid())
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comment       String?
+  source        ReviewSource?
+  githubCommentId Int?
+  filename      String?
+  patch         String?
+  creditsUsed   Int         @default(1)
   pullRequestId String
   pullRequest   PullRequest @relation(fields: [pullRequestId], references: [id], onDelete: Cascade)
   createdAt     DateTime    @default(now())
